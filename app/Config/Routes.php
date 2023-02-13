@@ -31,6 +31,22 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+// route group admin
+$routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($routes) {
+    $routes->get('dashboard', 'Admin::dashboard');
+
+    $routes->group('jasa_servis', function ($routes) {
+        $routes->get('/', 'Admin::jasa_servis');
+        $routes->post('/', 'Admin::tambah_jasa_servis');
+        $routes->put('/', 'Admin::jasa_servis');
+    });
+
+    // handle route not found
+    // $routes->addRedirect('/', 'admin/dashboard');
+    // $routes->addRedirect('(:any)', 'admin/dashboard');
+});
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

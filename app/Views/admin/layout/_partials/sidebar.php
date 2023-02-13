@@ -1,3 +1,7 @@
+<?php
+$uri = service('uri');
+?>
+
 <nav id="sidebar" class="sidebar js-sidebar">
   <div class="sidebar-content js-simplebar">
     <a class="sidebar-brand" href="index.html">
@@ -6,8 +10,8 @@
 
     <ul class="sidebar-nav">
 
-      <li class="sidebar-item active">
-        <a class="sidebar-link" href="index.html">
+      <li class="sidebar-item <?php if ($uri->getSegment(2) == 'dashboard') echo 'active' ?>">
+        <a class="sidebar-link" href="<?= base_url('admin/dashboard') ?>">
           <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
         </a>
       </li>
@@ -16,8 +20,8 @@
         Penjualan
       </li>
 
-      <li class="sidebar-item">
-        <a class="sidebar-link" href="pages-profile.html">
+      <li class="sidebar-item <?php if ($uri->getSegment(2) == 'penjualan') echo 'active' ?>">
+        <a class="sidebar-link" href="<?= base_url('admin/penjualan') ?>">
           <i class="align-middle" data-feather="user"></i> <span class="align-middle">Data Penjualan</span>
         </a>
       </li>
@@ -50,9 +54,9 @@
         </a>
       </li>
 
-      <li class="sidebar-item">
-        <a class="sidebar-link" href="ui-forms.html">
-          <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Jenis Servis</span>
+      <li class="sidebar-item <?php if ($uri->getSegment(2) == 'jasa_servis') echo 'active' ?>">
+        <a class="sidebar-link" href="<?= base_url('admin/jasa_servis') ?>">
+          <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Jasa Servis</span>
         </a>
       </li>
 
