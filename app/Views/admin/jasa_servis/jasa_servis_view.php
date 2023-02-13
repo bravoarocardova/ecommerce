@@ -26,16 +26,20 @@
             <thead>
               <tr>
                 <th>Jasa Servis</th>
-                <th class="d-none d-xl-table-cell">Kategori</th>
+                <th>Kategori</th>
                 <th>Biaya</th>
+                <th>Aksi</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Project Apollo</td>
-                <td>31/06/2021</td>
-                <td>Rp. dfjaio</td>
-              </tr>
+              <?php foreach ($jasa_servis as $j) : ?>
+                <tr>
+                  <td><?= $j['nama_jasa'] ?></td>
+                  <td><?= $j['kategori'] ?></td>
+                  <td><?= $j['biaya_jasa'] ?></td>
+                  <td>Edit|Hapus</td>
+                </tr>
+              <?php endforeach ?>
             </tbody>
           </table>
         </div>

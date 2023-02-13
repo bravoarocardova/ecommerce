@@ -17,8 +17,10 @@ class Admin extends BaseController
   // jasa servis
   public function jasa_servis()
   {
+    $jasaServisM  = new JasaServisM();
+
     return view('admin/jasa_servis/jasa_servis_view', [
-      'validation' => \Config\Services::validation()
+      'jasa_servis' => $jasaServisM->findAll()
     ]);
   }
 
