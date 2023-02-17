@@ -1,6 +1,4 @@
-<?php
-$uri = service('uri');
-?>
+<?php $uri = service('uri'); ?>
 
 <nav id="sidebar" class="sidebar js-sidebar">
   <div class="sidebar-content js-simplebar">
@@ -10,7 +8,7 @@ $uri = service('uri');
 
     <ul class="sidebar-nav">
 
-      <li class="sidebar-item <?php if ($uri->getSegment(2) == 'dashboard') echo 'active' ?>">
+      <li class="sidebar-item <?php if (!empty($uri->getSegments()) && $uri->getSegment(2) == 'dashboard') echo 'active' ?>">
         <a class="sidebar-link" href="<?= base_url('admin/dashboard') ?>">
           <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
         </a>
@@ -20,7 +18,7 @@ $uri = service('uri');
         Penjualan
       </li>
 
-      <li class="sidebar-item <?php if ($uri->getSegment(2) == 'penjualan') echo 'active' ?>">
+      <li class="sidebar-item <?php if (!empty($uri->getSegments()) && $uri->getSegment(2) == 'penjualan') echo 'active' ?>">
         <a class="sidebar-link" href="<?= base_url('admin/penjualan') ?>">
           <i class="align-middle" data-feather="user"></i> <span class="align-middle">Data Penjualan</span>
         </a>
@@ -54,7 +52,7 @@ $uri = service('uri');
         </a>
       </li>
 
-      <li class="sidebar-item <?php if ($uri->getSegment(2) == 'jasa_servis') echo 'active' ?>">
+      <li class="sidebar-item <?php if (!empty($uri->getSegments()) && $uri->getSegment(2) == 'jasa_servis') echo 'active' ?>">
         <a class="sidebar-link" href="<?= base_url('admin/jasa_servis') ?>">
           <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Jasa Servis</span>
         </a>

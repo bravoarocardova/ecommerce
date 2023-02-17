@@ -7,7 +7,13 @@ use App\Models\JasaServisM;
 
 class Admin extends BaseController
 {
-  protected $helpers = ['form'];
+
+  private $jasaServisM;
+
+  public function __construct()
+  {
+    $this->jasaServisM  = new JasaServisM();
+  }
 
   public function dashboard()
   {
@@ -17,10 +23,8 @@ class Admin extends BaseController
   // jasa servis
   public function jasa_servis()
   {
-    $jasaServisM  = new JasaServisM();
-
     return view('admin/jasa_servis/jasa_servis_view', [
-      'jasa_servis' => $jasaServisM->findAll()
+      'jasa_servis' => $this->jasaServisM->findAll()
     ]);
   }
 
@@ -57,17 +61,33 @@ class Admin extends BaseController
     ])) {
       return redirect()->back()->withInput();
     } else {
-      $jasaServisM  = new JasaServisM();
+
       $post = $this->request->getPost();
       $data = [
         'nama_jasa' => $post['nama_jasa'],
         'kategori' => $post['kategori'],
         'biaya_jasa' => $post['biaya_jasa']
       ];
-      $jasaServisM->save($data);
-      return redirect()->to(base_url('/admin/jasa_servis'))->with('msg', 'Berhasil tambah data.');
+      $this->jasaServisM->save($data);
+      return redirect()->to(base_url() . '/admin/jasa_servis')->with('msg', 'Berhasil tambah data.');
     }
   }
+
+  public function delete_jasa_servis($id = null)
+  {
+    if ($id == null) {
+      // throw new \CodeIgniter\Exceptions\PageNotFoundException('Tidak Ditemukan');
+      return redirect()->back();
+    }
+    $hapus = $this->jasaServisM->delete($id);
+    if ($hapus) {
+      $msg = 'Berhasil dihapus.';
+    } else {
+      $msg = 'Gagal dihapus.';
+    }
+    return redirect()->to(base_url() . '/admin/jasa_servis/')->with('msg', $msg);
+  }
+
   // end jasa servis
 
 

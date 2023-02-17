@@ -32,13 +32,17 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 
 // route group admin
+// $routes->delete('/admin/jasa_servis/(:num)', 'Admin\Admin::delete_jasa_servis/$1');
+
 $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($routes) {
     $routes->get('dashboard', 'Admin::dashboard');
 
     $routes->group('jasa_servis', function ($routes) {
+
         $routes->get('/', 'Admin::jasa_servis');
         $routes->post('/', 'Admin::tambah_jasa_servis');
-        $routes->put('/', 'Admin::jasa_servis');
+        // $routes->put('/', 'Admin::jasa_servis');
+        $routes->delete('(:num)', 'Admin::delete_jasa_servis/$1');
     });
 
     // handle route not found

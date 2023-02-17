@@ -37,7 +37,13 @@
                   <td><?= $j['nama_jasa'] ?></td>
                   <td><?= $j['kategori'] ?></td>
                   <td><?= $j['biaya_jasa'] ?></td>
-                  <td>Edit|Hapus</td>
+                  <td>Edit|
+                    <form action="<?= base_url() . '/admin/jasa_servis/' . $j['id_jasa_servis'] ?>" method="POST" class="d-inline">
+                      <?= csrf_field() ?>
+                      <input type="hidden" name="_method" value="DELETE">
+                      <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')">Delete</button>
+                    </form>
+                  </td>
                 </tr>
               <?php endforeach ?>
             </tbody>
