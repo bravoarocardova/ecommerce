@@ -35,9 +35,9 @@
                   <td><?= $d['nama_pelanggan'] ?></td>
                   <td><?= $d['created_at'] ?></td>
                   <td>
-                    <button class="btn btn-info">
+                    <a class="btn btn-info" href="<?= base_url() . '/admin/servis/' . $d['no_transaksi'] ?>">
                       <i class="align-middle" data-feather="eye"></i> Lihat
-                    </button>
+                    </a>
                     |
                     <form action="<?= base_url() . '/admin/servis/' . $d['no_transaksi'] ?>" method="POST" class="d-inline">
                       <?= csrf_field() ?>

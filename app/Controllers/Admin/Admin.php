@@ -24,14 +24,27 @@ class Admin extends BaseController
   }
 
   // servis
-  public function servis()
+  public function data_servis()
   {
     return view('admin/servis/data_servis_view', [
       'data_servis' => $this->dataServisM->findAll()
     ]);
   }
 
-  public function tambah_servis()
+  public function detail_data_servis($kode = null)
+  {
+
+    $detail_servis = $this->dataServisM->find($kode);
+    if ($detail_servis == null) {
+      throw new \CodeIgniter\Exceptions\PageNotFoundException("Tidak ditemukan");
+    }
+    d($detail_servis);
+    // return view('admin/servis/data_servis_view', [
+    //   'detail_servis' => $detail_servis
+    // ]);
+  }
+
+  public function tambah_data_servis()
   {
     if (!$this->validate([
       'no_transaksi' => [
@@ -87,6 +100,23 @@ class Admin extends BaseController
       }
       return redirect()->to(base_url() . '/admin/servis')->with('msg', myAlert($type, $msg));
     }
+  }
+
+  public function delete_data_servis($kode = null)
+  {
+    if ($kode == null) {
+      // throw new \CodeIgniter\Exceptions\PageNotFoundException('Tidak Ditemukan');
+      return redirect()->back();
+    }
+    $hapus = $this->dataServisM->delete($kode);
+    if ($hapus) {
+      $type = 'success';
+      $msg = 'Berhasil dihapus.';
+    } else {
+      $type = 'danger';
+      $msg = 'Gagal dihapus.';
+    }
+    return redirect()->to(base_url() . '/admin/servis')->with('msg', myAlert($type, $msg));
   }
   // end servis
 
