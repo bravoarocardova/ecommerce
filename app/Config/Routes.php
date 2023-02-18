@@ -41,7 +41,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
 
         $routes->get('/', 'Admin::jasa_servis');
         $routes->post('/', 'Admin::tambah_jasa_servis');
-        // $routes->put('/', 'Admin::jasa_servis');
+        $routes->put('/', 'Admin::update_jasa_servis');
         $routes->delete('(:num)', 'Admin::delete_jasa_servis/$1');
     });
 

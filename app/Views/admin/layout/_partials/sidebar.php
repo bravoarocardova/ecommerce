@@ -46,8 +46,8 @@
         Servis
       </li>
 
-      <li class="sidebar-item">
-        <a class="sidebar-link" href="ui-buttons.html">
+      <li class="sidebar-item <?php if (!empty($uri->getSegments()) && $uri->getSegment(2) == 'servis') echo 'active' ?>">
+        <a class="sidebar-link" href="<?= base_url('admin/servis') ?>">
           <i class="align-middle" data-feather="square"></i> <span class="align-middle">Data Servis</span>
         </a>
       </li>

@@ -85,7 +85,26 @@ class Admin extends BaseController
     } else {
       $msg = 'Gagal dihapus.';
     }
-    return redirect()->to(base_url() . '/admin/jasa_servis/')->with('msg', $msg);
+    return redirect()->to(base_url() . '/admin/jasa_servis')->with('msg', $msg);
+  }
+
+  public function update_jasa_servis()
+  {
+    $post = $this->request->getPost();
+    $data = [
+      'id_jasa_servis' => $post['id_jasa_servis'],
+      'nama_jasa' => $post['nama_jasa'],
+      'kategori' => $post['kategori'],
+      'biaya_jasa' => $post['biaya_jasa']
+    ];
+
+    $update = $this->jasaServisM->save($data);
+    if ($update) {
+      $msg = 'Berhasil diubah.';
+    } else {
+      $msg = 'Gagal diubah.';
+    }
+    return redirect()->to(base_url() . '/admin/jasa_servis')->with('msg', $msg);
   }
 
   // end jasa servis
