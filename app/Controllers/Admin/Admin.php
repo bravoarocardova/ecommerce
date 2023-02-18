@@ -3,22 +3,92 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Models\DataServisM;
 use App\Models\JasaServisM;
 
 class Admin extends BaseController
 {
 
   private $jasaServisM;
+  private $dataServisM;
 
   public function __construct()
   {
     $this->jasaServisM  = new JasaServisM();
+    $this->dataServisM  = new DataServisM();
   }
 
   public function dashboard()
   {
     return view('admin/dashboard');
   }
+
+  // servis
+  public function servis()
+  {
+    return view('admin/servis/data_servis_view', [
+      'data_servis' => $this->dataServisM->findAll()
+    ]);
+  }
+
+  public function tambah_servis()
+  {
+    if (!$this->validate([
+      'no_transaksi' => [
+        'label' => 'No Transaksi',
+        'rules' => 'is_unique[data_servis.no_transaksi]'
+      ],
+      'nama_pelanggan' => [
+        'label' => 'Nama Pelanggan',
+        'rules' => 'required|min_length[4]|max_length[100]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+        ],
+      ],
+      'alamat_pelanggan' => [
+        'label' => 'Alamat Pelanggan',
+        'rules' => 'required|min_length[4]|max_length[100]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+        ],
+      ],
+      'no_telp_pelanggan' => [
+        'label' => 'No Telpon Pelanggan',
+        'rules' => 'required|numeric|min_length[4]|max_length[15]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+          'numeric' => '{field} Harus Angka'
+        ],
+      ],
+    ])) {
+      return redirect()->back()->withInput()->with('msg', myAlert('danger', 'Gagal simpan, cek ulang data'));
+    } else {
+
+      $post = $this->request->getPost();
+      $data = [
+        'no_transaksi' => createNoTransaksi('TSV', $this->dataServisM, 'no_transaksi'),
+        'nama_pelanggan' => $post['nama_pelanggan'],
+        'alamat_pelanggan' => $post['alamat_pelanggan'],
+        'no_telp_pelanggan' => $post['no_telp_pelanggan']
+      ];
+      $simpan = $this->dataServisM->save($data);
+      if ($simpan) {
+        $type = 'success';
+        $msg = 'Berhasil tambah data.';
+      } else {
+        $type = 'danger';
+        $msg = 'Gagal tambah data.';
+      }
+      return redirect()->to(base_url() . '/admin/servis')->with('msg', myAlert($type, $msg));
+    }
+  }
+  // end servis
 
   // jasa servis
   public function jasa_servis()
@@ -69,7 +139,7 @@ class Admin extends BaseController
         'biaya_jasa' => $post['biaya_jasa']
       ];
       $this->jasaServisM->save($data);
-      return redirect()->to(base_url() . '/admin/jasa_servis')->with('msg', 'Berhasil tambah data.');
+      return redirect()->to(base_url() . '/admin/jasa_servis')->with('msg', myAlert('success', 'Berhasil tambah data.'));
     }
   }
 
@@ -81,11 +151,13 @@ class Admin extends BaseController
     }
     $hapus = $this->jasaServisM->delete($id);
     if ($hapus) {
+      $type = 'success';
       $msg = 'Berhasil dihapus.';
     } else {
+      $type = 'danger';
       $msg = 'Gagal dihapus.';
     }
-    return redirect()->to(base_url() . '/admin/jasa_servis')->with('msg', $msg);
+    return redirect()->to(base_url() . '/admin/jasa_servis')->with('msg', myAlert($type, $msg));
   }
 
   public function update_jasa_servis()
@@ -100,11 +172,13 @@ class Admin extends BaseController
 
     $update = $this->jasaServisM->save($data);
     if ($update) {
+      $type = 'success';
       $msg = 'Berhasil diubah.';
     } else {
+      $type = 'danger';
       $msg = 'Gagal diubah.';
     }
-    return redirect()->to(base_url() . '/admin/jasa_servis')->with('msg', $msg);
+    return redirect()->to(base_url() . '/admin/jasa_servis')->with('msg', myAlert($type, $msg));
   }
 
   // end jasa servis

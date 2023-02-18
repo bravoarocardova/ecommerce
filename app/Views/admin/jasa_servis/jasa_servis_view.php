@@ -3,10 +3,7 @@
 
 <div class="container-fluid p-0">
   <?php if (session()->has('msg')) : ?>
-    <div class="alert alert-success" role="alert">
-      <?= session()->getFlashdata('msg') ?>
-    </div>
-    <h1 class="h3 mb-3"><strong>Jasa</strong> Servis</h1>
+    <?= session()->getFlashdata('msg') ?>
   <?php endif ?>
 
   <div class="row">
@@ -33,13 +30,13 @@
                   <td><?= $j['biaya_jasa'] ?></td>
                   <td>
                     <button class="btn btn-warning" onclick="buttonEditClick(this)" data-id_jasa_servis="<?= $j['id_jasa_servis'] ?>" data-nama_jasa="<?= $j['nama_jasa'] ?>" data-kategori="<?= $j['kategori'] ?>" data-biaya_jasa="<?= $j['biaya_jasa'] ?>">
-                      Edit
+                      <i class="align-middle" data-feather="edit-3"></i> Edit
                     </button>
                     |
                     <form action="<?= base_url() . '/admin/jasa_servis/' . $j['id_jasa_servis'] ?>" method="POST" class="d-inline">
                       <?= csrf_field() ?>
                       <input type="hidden" name="_method" value="DELETE">
-                      <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')">Delete</button>
+                      <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="align-middle" data-feather="trash-2"></i> Delete</button>
                     </form>
                   </td>
                 </tr>
@@ -85,7 +82,7 @@
                 <?= validation_show_error('biaya_jasa') ?>
               </div>
             </div>
-            <button type="submit" class="btn btn-success" id="btn_form_submit">Simpan</button>
+            <button type="submit" class="btn btn-success" id="btn_form_submit"><i class="align-middle" data-feather="check"></i> Simpan</button>
           </form>
 
         </div>
@@ -129,7 +126,7 @@
     const btn_form_submit = document.getElementById('btn_form_submit');
     btn_form_submit.classList.remove('btn-success');
     btn_form_submit.classList.add('btn-warning');
-    btn_form_submit.innerText = "Ubah";
+    btn_form_submit.innerText = 'Ubah';
 
     const btn_cancel = document.getElementById('btn_cancel');
     if (btn_cancel === null) {
