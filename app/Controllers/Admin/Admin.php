@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Models\BarangServisM;
 use App\Models\DataServisM;
 use App\Models\JasaServisM;
 
@@ -11,11 +12,13 @@ class Admin extends BaseController
 
   private $jasaServisM;
   private $dataServisM;
+  private $barangServisM;
 
   public function __construct()
   {
     $this->jasaServisM  = new JasaServisM();
     $this->dataServisM  = new DataServisM();
+    $this->barangServisM  = new BarangServisM();
   }
 
   public function dashboard()
@@ -31,17 +34,104 @@ class Admin extends BaseController
     ]);
   }
 
-  public function detail_data_servis($kode = null)
+  public function barang_data_servis($kode = null)
   {
-
     $detail_servis = $this->dataServisM->find($kode);
+
     if ($detail_servis == null) {
       throw new \CodeIgniter\Exceptions\PageNotFoundException("Tidak ditemukan");
     }
-    d($detail_servis);
-    // return view('admin/servis/data_servis_view', [
-    //   'detail_servis' => $detail_servis
-    // ]);
+    return view('admin/servis/barang_data_servis_view', [
+      'detail_servis' => $detail_servis,
+      'barang_servis' => $this->barangServisM->findAll()
+    ]);
+  }
+
+
+  public function tambah_barang_servis($noTransaksi = null)
+  {
+    if (!$this->validate([
+      'kd_barang_servis' => [
+        'label' => 'Kode Barang',
+        'rules' => 'is_unique[data_servis.no_transaksi]'
+      ],
+      'nama_barang_servis' => [
+        'label' => 'Nama Barang Servis',
+        'rules' => 'required|min_length[4]|max_length[100]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+        ],
+      ],
+      'kelengkapan' => [
+        'label' => 'Kelengkapan',
+        'rules' => 'required|min_length[4]|max_length[100]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+        ],
+      ],
+      'kerusakan' => [
+        'label' => 'Kerusakan',
+        'rules' => 'required|min_length[4]|max_length[100]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+        ],
+      ],
+      'jumlah' => [
+        'label' => 'Jumlah',
+        'rules' => 'required|numeric|min_length[1]|max_length[15]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+          'numeric' => '{field} Harus Angka'
+        ],
+      ],
+    ])) {
+      return redirect()->back()->withInput()->with('msg', myAlert('danger', 'Gagal simpan, cek ulang data'));
+    } else {
+      $post = $this->request->getPost();
+      $data = [
+        'kd_barang_servis' => createNoTransaksi('KBS', $this->barangServisM, 'kd_barang_servis'),
+        'no_transaksi' => $noTransaksi,
+        'nama_barang_servis' => $post['nama_barang_servis'],
+        'kelengkapan' => $post['kelengkapan'],
+        'kerusakan' => $post['kerusakan'],
+        'jumlah' => $post['jumlah']
+      ];
+      d($data);
+      $simpan = $this->barangServisM->save($data);
+      if ($simpan) {
+        $type = 'success';
+        $msg = 'Berhasil tambah data.';
+      } else {
+        $type = 'danger';
+        $msg = 'Gagal tambah data.';
+      }
+      return redirect()->back()->with('msg', myAlert($type, $msg));
+    }
+  }
+
+  public function delete_barang_servis($kode = null)
+  {
+    if ($kode == null) {
+      // throw new \CodeIgniter\Exceptions\PageNotFoundException('Tidak Ditemukan');
+      return redirect()->back();
+    }
+    $hapus = $this->barangServisM->delete($kode);
+    if ($hapus) {
+      $type = 'success';
+      $msg = 'Berhasil dihapus.';
+    } else {
+      $type = 'danger';
+      $msg = 'Gagal dihapus.';
+    }
+    return redirect()->back()->with('msg', myAlert($type, $msg));
   }
 
   public function tambah_data_servis()
@@ -98,7 +188,7 @@ class Admin extends BaseController
         $type = 'danger';
         $msg = 'Gagal tambah data.';
       }
-      return redirect()->to(base_url() . '/admin/servis')->with('msg', myAlert($type, $msg));
+      return redirect()->back()->with('msg', myAlert($type, $msg));
     }
   }
 
@@ -116,7 +206,7 @@ class Admin extends BaseController
       $type = 'danger';
       $msg = 'Gagal dihapus.';
     }
-    return redirect()->to(base_url() . '/admin/servis')->with('msg', myAlert($type, $msg));
+    return redirect()->back()->with('msg', myAlert($type, $msg));
   }
   // end servis
 
@@ -169,7 +259,7 @@ class Admin extends BaseController
         'biaya_jasa' => $post['biaya_jasa']
       ];
       $this->jasaServisM->save($data);
-      return redirect()->to(base_url() . '/admin/jasa_servis')->with('msg', myAlert('success', 'Berhasil tambah data.'));
+      return redirect()->back()->with('msg', myAlert('success', 'Berhasil tambah data.'));
     }
   }
 
@@ -187,7 +277,7 @@ class Admin extends BaseController
       $type = 'danger';
       $msg = 'Gagal dihapus.';
     }
-    return redirect()->to(base_url() . '/admin/jasa_servis')->with('msg', myAlert($type, $msg));
+    return redirect()->back()->with('msg', myAlert($type, $msg));
   }
 
   public function update_jasa_servis()
@@ -208,7 +298,7 @@ class Admin extends BaseController
       $type = 'danger';
       $msg = 'Gagal diubah.';
     }
-    return redirect()->to(base_url() . '/admin/jasa_servis')->with('msg', myAlert($type, $msg));
+    return redirect()->back()->with('msg', myAlert($type, $msg));
   }
 
   // end jasa servis

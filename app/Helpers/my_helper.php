@@ -23,12 +23,13 @@ function myAlert($type, $msg)
  * @param string $kode
  * @param Model $model
  * @param int $offset field - $kode
+ * @param int $length panjang String 0
  * @return string 
  */
-function createNoTransaksi($kode, Model $model, $field, $offset = 3)
+function createNoTransaksi($kode, Model $model, $field, $offset = 3, $length = 8)
 {
   $lastKode = $model->selectMax($field)->first();
   $lastKode = (int) substr($lastKode[$field], $offset);
   $lastKode++;
-  return $kode . sprintf("%08s", $lastKode);
+  return $kode . sprintf("%0" . $length . "s", $lastKode);
 }
