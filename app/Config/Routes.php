@@ -37,25 +37,27 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
 
     $routes->get('dashboard', 'Admin::dashboard');
 
+    // Servis
     $routes->group('servis', function ($routes) {
-        $routes->get('/', 'Admin::data_servis');
-        $routes->post('/', 'Admin::tambah_data_servis');
-        $routes->delete('(:segment)', 'Admin::delete_data_servis/$1');
+        $routes->get('/', 'DataServis::data_servis');
+        $routes->post('/', 'DataServis::tambah_data_servis');
+        $routes->delete('(:segment)', 'DataServis::delete_data_servis/$1');
 
         $routes->group('(:any)/barang', function ($routes) {
-            $routes->get('/', 'Admin::barang_data_servis/$1');
-            $routes->post('/', 'Admin::tambah_barang_servis/$1');
-            $routes->put('/', 'Admin::update_barang_servis');
-            $routes->delete('(:segment)', 'Admin::delete_barang_servis/$2');
+            $routes->get('/', 'DataServis::barang_data_servis/$1');
+            $routes->post('/', 'DataServis::tambah_barang_servis/$1');
+            $routes->put('/', 'DataServis::update_barang_servis');
+            $routes->delete('(:segment)', 'DataServis::delete_barang_servis/$2');
         });
     });
 
+    // Jasa Servis
     $routes->group('jasa_servis', function ($routes) {
 
-        $routes->get('/', 'Admin::jasa_servis');
-        $routes->post('/', 'Admin::tambah_jasa_servis');
-        $routes->put('/', 'Admin::update_jasa_servis');
-        $routes->delete('(:num)', 'Admin::delete_jasa_servis/$1');
+        $routes->get('/', 'JasaServis::jasa_servis');
+        $routes->post('/', 'JasaServis::tambah_jasa_servis');
+        $routes->put('/', 'JasaServis::update_jasa_servis');
+        $routes->delete('(:num)', 'JasaServis::delete_jasa_servis/$1');
     });
 
 
