@@ -104,7 +104,6 @@ class Admin extends BaseController
         'kerusakan' => $post['kerusakan'],
         'jumlah' => $post['jumlah']
       ];
-      d($data);
       $simpan = $this->barangServisM->save($data);
       if ($simpan) {
         $type = 'success';
@@ -130,6 +129,28 @@ class Admin extends BaseController
     } else {
       $type = 'danger';
       $msg = 'Gagal dihapus.';
+    }
+    return redirect()->back()->with('msg', myAlert($type, $msg));
+  }
+
+  public function update_barang_servis()
+  {
+    $post = $this->request->getPost();
+    $data = [
+      'kd_barang_servis' => $post['kd_barang_servis'],
+      'nama_barang_servis' => $post['nama_barang_servis'],
+      'kelengkapan' => $post['kelengkapan'],
+      'kerusakan' => $post['kerusakan'],
+      'jumlah' => $post['jumlah']
+    ];
+
+    $update = $this->barangServisM->save($data);
+    if ($update) {
+      $type = 'success';
+      $msg = 'Berhasil diubah.';
+    } else {
+      $type = 'danger';
+      $msg = 'Gagal diubah.';
     }
     return redirect()->back()->with('msg', myAlert($type, $msg));
   }

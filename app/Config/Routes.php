@@ -45,6 +45,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
         $routes->group('(:any)/barang', function ($routes) {
             $routes->get('/', 'Admin::barang_data_servis/$1');
             $routes->post('/', 'Admin::tambah_barang_servis/$1');
+            $routes->put('/', 'Admin::update_barang_servis');
             $routes->delete('(:segment)', 'Admin::delete_barang_servis/$2');
         });
     });
