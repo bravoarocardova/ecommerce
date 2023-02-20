@@ -42,7 +42,7 @@
                         </a>
                       </div>
                       <div class="col">
-                        <a class="btn btn-warning" href="<?= base_url() . '/admin/servis/' . $d['no_transaksi'] . '/servis' ?>">
+                        <a class="btn btn-warning" href="<?= base_url() . '/admin/servis/' . $d['no_transaksi'] ?>">
                           <i class="align-middle" data-feather="settings"></i> Servis
                         </a>
                       </div>

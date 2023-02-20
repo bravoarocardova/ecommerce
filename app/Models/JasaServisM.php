@@ -14,4 +14,10 @@ class JasaServisM extends Model
   protected $returnType     = 'array';
 
   protected $allowedFields = ['nama_jasa', 'biaya_jasa', 'kategori'];
+
+  // Dates
+  protected $useTimestamps = true;
+  protected $dateFormat    = 'datetime';
+  protected $createdField  = 'created_at';
+  protected $updatedField  = 'updated_at';
 }

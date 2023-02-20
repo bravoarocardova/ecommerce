@@ -48,6 +48,12 @@
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalInsertBarangServis">
             <i class="align-middle" data-feather="plus-circle"></i> Tambah Barang
           </button>
+          <?php if ($barang_servis) : ?>
+            <a href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] ?>" class="btn btn-success">
+              <i class="align-middle" data-feather="settings"></i>
+              Lanjut Servis
+            </a>
+          <?php endif ?>
         </div>
         <div class="card-body">
           <table class="table table-hover my-0" id="dataServis">
@@ -56,7 +62,6 @@
                 <th>Nama Barang</th>
                 <th>Kerusakan</th>
                 <th>Kelengkapan</th>
-                <th>Jumlah</th>
                 <th></th>
               </tr>
             </thead>
@@ -66,9 +71,8 @@
                   <td><?= $b['nama_barang_servis'] ?></td>
                   <td><?= $b['kerusakan'] ?></td>
                   <td><?= $b['kelengkapan'] ?></td>
-                  <td><?= $b['jumlah'] ?></td>
                   <td>
-                    <button class="btn btn-warning" onclick="buttonEditClick(this)" data-bs-toggle="modal" data-bs-target="#modalUpdateBarangServis" data-kd_barang_servis="<?= $b['kd_barang_servis'] ?>" data-nama_barang_servis="<?= $b['nama_barang_servis'] ?>" data-kerusakan="<?= $b['kerusakan'] ?>" data-kelengkapan="<?= $b['kelengkapan'] ?>" data-jumlah="<?= $b['jumlah'] ?>">
+                    <button class="btn btn-warning" onclick="buttonEditClick(this)" data-bs-toggle="modal" data-bs-target="#modalUpdateBarangServis" data-kd_barang_servis="<?= $b['kd_barang_servis'] ?>" data-nama_barang_servis="<?= $b['nama_barang_servis'] ?>" data-kerusakan="<?= $b['kerusakan'] ?>" data-kelengkapan="<?= $b['kelengkapan'] ?>">
                       <i class="align-middle" data-feather="edit-3"></i> Edit
                     </button>
                     |
@@ -122,13 +126,6 @@
               <?= validation_show_error('kerusakan') ?>
             </div>
           </div>
-          <div class="mb-3">
-            <label for="jumlah" class="form-label">Jumlah Barang</label>
-            <input type="number" class="form-control <?= validation_show_error('jumlah') ? 'is-invalid' : '' ?>" id="jumlah" name="jumlah" value="<?= old('jumlah', '1') ?>" placeholder="" required>
-            <div class="invalid-feedback">
-              <?= validation_show_error('jumlah') ?>
-            </div>
-          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -173,13 +170,6 @@
               <?= validation_show_error('kerusakan') ?>
             </div>
           </div>
-          <div class="mb-3">
-            <label for="jumlah_update" class="form-label">Jumlah Barang</label>
-            <input type="number" class="form-control <?= validation_show_error('jumlah') ? 'is-invalid' : '' ?>" id="jumlah_update" name="jumlah" value="<?= old('jumlah', '1') ?>" placeholder="" required>
-            <div class="invalid-feedback">
-              <?= validation_show_error('jumlah') ?>
-            </div>
-          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -198,7 +188,6 @@
     document.getElementById('nama_barang_servis_update').value = data.nama_barang_servis;
     document.getElementById('kelengkapan_update').value = data.kelengkapan;
     document.getElementById('kerusakan_update').value = data.kerusakan;
-    document.getElementById('jumlah_update').value = data.jumlah;
 
     const form = document.getElementById('form-input');
 

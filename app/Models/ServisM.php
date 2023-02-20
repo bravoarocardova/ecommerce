@@ -4,16 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class DataServisM extends Model
+class ServisM extends Model
 {
-  protected $table      = 'data_servis';
-  protected $primaryKey = 'no_transaksi';
+  protected $table      = 'servis';
+  // protected $primaryKey = 'id_jasa_servis';
 
-  protected $useAutoIncrement = false;
+  protected $useAutoIncrement = true;
 
   protected $returnType     = 'array';
 
-  protected $allowedFields = ['nama_pelanggan', 'alamat_pelanggan', 'no_telp_pelanggan', 'status'];
+  protected $allowedFields = ['kd_barang_servis', 'id_jasa_servis', 'biaya_servis'];
 
   // Dates
   protected $useTimestamps = true;

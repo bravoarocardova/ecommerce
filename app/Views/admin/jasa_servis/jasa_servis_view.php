@@ -27,7 +27,7 @@
                 <tr>
                   <td><?= $j['nama_jasa'] ?></td>
                   <td><?= $j['kategori'] ?></td>
-                  <td><?= $j['biaya_jasa'] ?></td>
+                  <td>Rp. <?= number_format($j['biaya_jasa']) ?></td>
                   <td>
                     <button class="btn btn-warning" onclick="buttonEditClick(this)" data-id_jasa_servis="<?= $j['id_jasa_servis'] ?>" data-nama_jasa="<?= $j['nama_jasa'] ?>" data-kategori="<?= $j['kategori'] ?>" data-biaya_jasa="<?= $j['biaya_jasa'] ?>">
                       <i class="align-middle" data-feather="edit-3"></i> Edit

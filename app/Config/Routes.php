@@ -49,6 +49,13 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
             $routes->put('/', 'DataServis::update_barang_servis');
             $routes->delete('(:segment)', 'DataServis::delete_barang_servis/$2');
         });
+
+        $routes->group('(:segment)', function ($routes) {
+            $routes->get('/', 'DataServis::data_servis/$1');
+            $routes->post('/', 'DataServis::tambah_servis_barang/$1');
+            // $routes->put('/', 'DataServis::update_barang_servis');
+            $routes->delete('(:segment)/(:num)', 'DataServis::delete_servis_barang/$2/$3');
+        });
     });
 
     // Jasa Servis
