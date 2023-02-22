@@ -17,3 +17,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css">
 <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<style>
+  @media print {
+    .dataTables_length {
+      display: none;
+    }
+
+    .dataTables_filter {
+      display: none;
+    }
+
+    .dataTables_info {
+      display: none;
+    }
+
+    .dataTables_paginate {
+      display: none;
+    }
+
+    .dataTable>thead>tr>th[class*="sort"]:before,
+    .dataTable>thead>tr>th[class*="sort"]:after {
+      content: "" !important;
+    }
+
+  }
+</style>

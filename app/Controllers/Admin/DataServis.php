@@ -316,4 +316,105 @@ class DataServis extends BaseController
   }
   // End Servis
 
+  // Detail Servis
+  public function detail_servis($noTransaksi = null)
+  {
+
+    if ($noTransaksi != null) {
+      $detail_servis = $this->dataServisM->find($noTransaksi);
+
+      if ($detail_servis == null) {
+        throw new \CodeIgniter\Exceptions\PageNotFoundException("Tidak ditemukan");
+      }
+      $barang_servis = $this->barangServisM->where('no_transaksi', $noTransaksi)->findAll();
+      $barang = [];
+      foreach ($barang_servis as $row) {
+        $barang[] = [
+          'kd_barang_servis' => $row['kd_barang_servis'],
+          'no_transaksi' => $row['no_transaksi'],
+          'nama_barang_servis' => $row['nama_barang_servis'],
+          'kelengkapan' => $row['kelengkapan'],
+          'kerusakan' => $row['kerusakan'],
+          'servis' => $this->servisM->where('kd_barang_servis', $row['kd_barang_servis'])->join('jasa_servis', 'id_jasa_servis')->findAll()
+        ];
+      }
+      $jasaServisM  = new JasaServisM();
+      return view('admin/servis/detail_servis_view', [
+        'detail_servis' => $detail_servis,
+        'barang_servis' => $barang,
+        'jasa_servis' => $jasaServisM->findAll()
+      ]);
+    } else {
+      throw new \CodeIgniter\Exceptions\PageNotFoundException("Tidak ditemukan");
+    }
+  }
+  // End Detail Servis
+
+  // Send
+
+  public function send($noTransaksi)
+  {
+    $dataServis = $this->dataServisM->find($noTransaksi);
+
+    if ($dataServis == null) {
+      throw new \CodeIgniter\Exceptions\PageNotFoundException("Tidak ditemukan");
+    }
+    if ($dataServis['status'] == null) {
+      $update_data = [
+        'no_transaksi' => $noTransaksi,
+        'status' => 'menunggu konfirmasi',
+        'teknisi' => 1
+      ];
+
+      $this->dataServisM->save($update_data);
+      $dataServis = $this->dataServisM->find($noTransaksi);
+    }
+
+    $barangServis = $this->barangServisM->where('no_transaksi', $noTransaksi)->findAll();
+
+    $barang = [];
+    foreach ($barangServis as $row) {
+      $detail_servis = $this->servisM->where('kd_barang_servis', $row['kd_barang_servis'])->join('jasa_servis', 'id_jasa_servis')->findAll();
+
+      $barang[] = [
+        'kd_barang_servis' => $row['kd_barang_servis'],
+        'no_transaksi' => $row['no_transaksi'],
+        'nama_barang_servis' => $row['nama_barang_servis'],
+        'kelengkapan' => $row['kelengkapan'],
+        'kerusakan' => $row['kerusakan'],
+        'servis' => $detail_servis
+      ];
+    }
+
+    $newBarang = '';
+    $totalBayar = 0;
+    foreach ($barang as $b) {
+      $newBarang .= $b['nama_barang_servis'] . ' (';
+      if (empty($b['servis'])) {
+        $newBarang .= 'Tidak Ada Perbaikan';
+      } else {
+        $countServis = count($b['servis']);
+        $j = 0;
+        for ($i = 0; $i < $countServis; $i++) {
+          $j = $i;
+          $totalBayar += $b['servis'][$i]['biaya_servis'];
+          $newBarang .= $b['servis'][$i]['nama_jasa'] . " : Rp. " . number_format($b['servis'][$i]['biaya_servis']);
+          if ($countServis != ++$j) {
+            $newBarang .= ', ';
+          }
+        }
+      }
+      $newBarang .= ') ';
+    }
+
+    $noWa = $dataServis['no_telp_pelanggan'];
+    $text = 'Pelanggan ' . $dataServis['nama_pelanggan'] . ', dengan detail transaksi : ' . $newBarang . '. Total Pembayaran : Rp. ' . number_format($totalBayar) . ', Silahkan konfirmasi (ya) jika anda setuju. ';
+
+    $waSendUrl = "phone=$noWa&text=$text";
+
+    return redirect()->back()->with('waSendUrl', $waSendUrl);
+  }
+
+  // End Send
+
 }

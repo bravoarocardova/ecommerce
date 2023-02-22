@@ -3,35 +3,50 @@
 
 <div class="container-fluid p-0">
 
-  <?php if (session()->has('msg')) : ?>
-    <?= session()->getFlashdata('msg') ?>
-  <?php endif ?>
+  <div class="d-print-none">
+    <?php if (session()->has('msg')) : ?>
+      <?= session()->getFlashdata('msg') ?>
+    <?php endif ?>
+  </div>
+
+  <div class="card d-print-none">
+    <div class="card-body">
+      <a class="btn btn-danger" href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/detail' ?>">
+        <i class="align-middle" data-feather="arrow-left"></i> Kembali ke Detail
+      </a>
+      <a class="btn btn-success" href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/barang' ?>">
+        <i class="align-middle" data-feather="plus-circle"></i> Barang
+      </a>
+    </div>
+  </div>
 
   <div class="row">
     <div class="col-12 col-md-12 col-xl-12 col-xxl-10 d-flex order-2 order-md-1">
       <div class="card flex-fill">
         <div class="card-header">
           <h3>Detail Data Servis</h3>
-          <h4><?= $detail_servis['no_transaksi'] ?></h4>
+          <h4>No Transaksi : <?= $detail_servis['no_transaksi'] ?></h4>
+          <h5>Tanggal Transaksi : <?= $detail_servis['created_at'] ?></h5>
+          <h6>Status : <?= ucwords($detail_servis['status']) . ' ( ' . $detail_servis['updated_at'] . ' ) ' ?> </h6>
         </div>
         <div class="card-body">
           <div class="row">
             <div class="col">
               <div class="mb-3">
-                <label for="nama_pelanggan" class="form-label">Nama Pelanggan</label>
-                <input type="text" class="form-control" id="nama_pelanggan" name="nama_pelanggan" value="<?= $detail_servis['nama_pelanggan'] ?>" placeholder="" required disabled>
+                <h5>Nama Pelanggan</h5>
+                <p><?= $detail_servis['nama_pelanggan'] ?></p>
               </div>
             </div>
             <div class="col">
               <div class="mb-3">
-                <label for="alamat_pelanggan" class="form-label">Alamat Pelanggan</label>
-                <textarea name="alamat_pelanggan" id="alamat_pelanggan" cols="1" rows="1" class="form-control" required disabled><?= $detail_servis['alamat_pelanggan'] ?></textarea>
+                <h5>Alamat Pelanggan</h5>
+                <p><?= $detail_servis['alamat_pelanggan'] ?></p>
               </div>
             </div>
             <div class="col">
               <div class="mb-3">
-                <label for="no_telp_pelanggan" class="form-label">No Telpon Pelanggan</label>
-                <input type="tel" maxlength="15" class="form-control" id="no_telp_pelanggan" name="no_telp_pelanggan" value="<?= $detail_servis['no_telp_pelanggan'] ?>" placeholder="" required disabled>
+                <h5>Nama Pelanggan</h5>
+                <p><?= $detail_servis['no_telp_pelanggan'] ?></p>
               </div>
             </div>
           </div>
@@ -45,44 +60,56 @@
     <div class="col-12 col-md-12 col-xl-12 col-xxl-10 d-flex order-2 order-md-1">
       <div class="card flex-fill">
         <div class="card-header">
-          <?php if (!$barang_servis) : ?>
-            <a href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/barang' ?>" class="btn btn-primary">
-              <i class="align-middle" data-feather="arrow-up-right"></i>
-              Tambahkan Barang
-            </a>
+          <?php if (is_null($detail_servis['status']) || $detail_servis['status'] == 'menunggu konfirmasi') : ?>
+            <?php if (!$barang_servis) : ?>
+              <a href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/barang' ?>" class="btn btn-primary">
+                <i class="align-middle" data-feather="arrow-up-right"></i>
+                Tambahkan Barang
+              </a>
+            <?php endif ?>
           <?php endif ?>
         </div>
         <div class="card-body">
           <ol>
             <?php foreach ($barang_servis as $b) : ?>
-              <h3>
+              <h4>
                 <li><?= $b['nama_barang_servis'] . ' - ' . $b['kerusakan'] ?></li>
-              </h3>
-              <table class="table table-hover my-0" id="dataServiss">
-                <thead>
-                  <tr>
-                    <th>Jasa Servis</th>
-                    <th>Biaya Servis</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php foreach ($b['servis'] as $bservis) : ?>
+              </h4>
+              <?php if (!empty($b['servis'])) : ?>
+
+                <table class="table table-hover my-0 mb-3" id="dataServiss">
+                  <thead>
                     <tr>
-                      <td><?= $bservis['nama_jasa'] . ' - ' . $bservis['kategori'] ?></td>
-                      <td>Rp. <?= number_format($bservis['biaya_jasa']) ?></td>
-                      <td>
-                        <form action="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/' . $bservis['kd_barang_servis'] . '/' . $bservis['id_jasa_servis'] ?>" method="POST" class="d-inline">
-                          <?= csrf_field() ?>
-                          <input type="hidden" name="_method" value="DELETE">
-                          <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="align-middle" data-feather="trash-2"></i> Delete</button>
-                        </form>
-                      </td>
+                      <th class="col-6">Jasa Servis</th>
+                      <th class="col-3">Biaya Servis</th>
+                      <th class="col-3"></th>
                     </tr>
-                  <?php endforeach ?>
-                </tbody>
-              </table>
-              <button class="mb-5 btn btn-info" data-bs-toggle="modal" data-bs-target="#modalInsertServis" data-kd_barang_servis="<?= $b['kd_barang_servis'] ?>" onclick="kd(this)">Tambah Servis</button>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($b['servis'] as $bservis) : ?>
+                      <tr>
+                        <td><?= $bservis['nama_jasa'] . ' - ' . $bservis['kategori'] ?></td>
+                        <td>Rp. <?= number_format($bservis['biaya_jasa']) ?></td>
+                        <td>
+                          <?php if (is_null($detail_servis['status']) || $detail_servis['status'] == 'menunggu konfirmasi') : ?>
+
+                            <form action="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/' . $bservis['kd_barang_servis'] . '/' . $bservis['id_jasa_servis'] ?>" method="POST" class="d-inline">
+                              <?= csrf_field() ?>
+                              <input type="hidden" name="_method" value="DELETE">
+                              <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="align-middle" data-feather="trash-2"></i> Delete</button>
+                            </form>
+                          <?php endif ?>
+                        </td>
+                      </tr>
+                    <?php endforeach ?>
+                  </tbody>
+                </table>
+              <?php else : ?>
+                <p class="text-danger">Tidak Ada Perbaikan</p>
+              <?php endif ?>
+              <?php if (is_null($detail_servis['status']) || $detail_servis['status'] == 'menunggu konfirmasi') : ?>
+                <button class="mb-5 btn btn-info" data-bs-toggle="modal" data-bs-target="#modalInsertServis" data-kd_barang_servis="<?= $b['kd_barang_servis'] ?>" onclick="kd(this)">Tambah Servis</button>
+              <?php endif ?>
             <?php endforeach ?>
           </ol>
 
