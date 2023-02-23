@@ -20,12 +20,34 @@
             <i class="align-middle" data-feather="settings"></i> Servis
           </a>
         </div>
-        <div class="col d-flex justify-content-end">
+        <div class="col">
           <?php if (!empty($barang_servis)) : ?>
-            <a class="btn btn-primary" href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/send' ?>">
-              <i class="align-middle" data-feather="send"></i> Beritahu Pelanggan
-            </a>
+            <?php if (!in_array($detail_servis['status'], ['selesai', 'dibatalkan'])) : ?>
+              <?php if (in_array($detail_servis['status'], ['menunggu konfirmasi', null])) : ?>
+                <a class="btn btn-info" href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/proses' ?>" onclick="return confirm('Konfirmasi ?')">
+                  <i class="align-middle" data-feather="chevrons-right"></i> Konfirmasi dan Proses
+                </a>
+              <?php endif ?>
+              <?php if ($detail_servis['status'] == 'diproses') : ?>
+                <a class="btn btn-info" href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/bayar' ?>">
+                  <i class="align-middle" data-feather="credit-card"></i> Selesaikan dan Bayar
+                </a>
+              <?php endif ?>
+              <a class="btn btn-danger" href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/batalkan' ?>" onclick="return confirm('Batalkan ?')">
+                <i class="align-middle" data-feather="x"></i> Batalkan
+              </a>
+            <?php endif ?>
           <?php endif ?>
+        </div>
+        <div class="col">
+          <div class="d-flex justify-content-end">
+            <?php if (!empty($barang_servis)) : ?>
+              <a class="btn btn-primary" href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/send' ?>">
+                <i class="align-middle" data-feather="send"></i> Beritahu Pelanggan untuk Konfirmasi
+              </a>
+            <?php endif ?>
+          </div>
+
         </div>
       </div>
     </div>

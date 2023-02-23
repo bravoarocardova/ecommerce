@@ -65,6 +65,9 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
         });
 
         $routes->get('(:any)/send', 'DataServis::send/$1');
+        $routes->get('(:any)/proses', 'DataServis::proses_konfirmasi/$1');
+        $routes->get('(:any)/batalkan', 'DataServis::batal_proses/$1');
+        $routes->get('(:any)/bayar', 'DataServis::bayar_proses/$1');
     });
 
     // Jasa Servis

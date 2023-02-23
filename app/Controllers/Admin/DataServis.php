@@ -350,6 +350,88 @@ class DataServis extends BaseController
   }
   // End Detail Servis
 
+  // Proses
+
+  public function proses_konfirmasi($noTransaksi)
+  {
+    $dataServis = $this->dataServisM->find($noTransaksi);
+
+    if ($dataServis == null) {
+      throw new \CodeIgniter\Exceptions\PageNotFoundException("Tidak ditemukan");
+    }
+
+    $barangServis = $this->barangServisM->where('no_transaksi', $noTransaksi)->findAll();
+    if ($barangServis == null) {
+      throw new \CodeIgniter\Exceptions\PageNotFoundException("Tidak ditemukan");
+    }
+    $totalBiaya = 0;
+    foreach ($barangServis as $row) {
+      $detail_servis = $this->servisM->where('kd_barang_servis', $row['kd_barang_servis'])->join('jasa_servis', 'id_jasa_servis')->findAll();
+      if (!empty($detail_servis)) {
+        foreach ($detail_servis as $s) {
+          $totalBiaya += $s['biaya_servis'];
+        }
+      }
+    }
+
+    if (in_array($dataServis['status'], ['menunggu konfirmasi', null])) {
+      $update_data = [
+        'no_transaksi' => $noTransaksi,
+        'status' => 'diproses',
+        'teknisi' => $dataServis['teknisi'] ?? 1,
+        'total_biaya' => $totalBiaya
+      ];
+
+      $this->dataServisM->save($update_data);
+    }
+
+    return redirect()->back()->with('msg', myAlert('success', 'Transaksi telah dikonfirmasi, dan mulai lakukan proses servis'));
+  }
+
+  public function batal_proses($noTransaksi)
+  {
+    $dataServis = $this->dataServisM->find($noTransaksi);
+
+    if ($dataServis == null) {
+      throw new \CodeIgniter\Exceptions\PageNotFoundException("Tidak ditemukan");
+    }
+
+    if (in_array($dataServis['status'], ['menunggu konfirmasi', null, 'diproses'])) {
+      $update_data = [
+        'no_transaksi' => $noTransaksi,
+        'status' => 'dibatalkan',
+        'teknisi' => $dataServis['teknisi'] ?? 1,
+        'total_biaya' => 0
+      ];
+
+      $this->dataServisM->save($update_data);
+    }
+
+    return redirect()->back()->with('msg', myAlert('success', 'Transaksi telah dibatalkan'));
+  }
+
+  public function bayar_proses($noTransaksi)
+  {
+    $dataServis = $this->dataServisM->find($noTransaksi);
+
+    if ($dataServis == null) {
+      throw new \CodeIgniter\Exceptions\PageNotFoundException("Tidak ditemukan");
+    }
+
+    if (in_array($dataServis['status'], ['diproses'])) {
+      $update_data = [
+        'no_transaksi' => $noTransaksi,
+        'status' => 'selesai'
+      ];
+
+      $this->dataServisM->save($update_data);
+    }
+
+    return redirect()->back()->with('msg', myAlert('success', 'Transaksi telah diselesaikan'));
+  }
+
+  // End Proses
+
   // Send
 
   public function send($noTransaksi)
