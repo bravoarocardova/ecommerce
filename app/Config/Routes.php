@@ -35,6 +35,8 @@ $routes->get('/', 'Home::index');
 
 $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($routes) {
 
+    $routes->add('auth/login', 'Auth::login');
+
     $routes->get('dashboard', 'Admin::dashboard');
 
     // Servis
