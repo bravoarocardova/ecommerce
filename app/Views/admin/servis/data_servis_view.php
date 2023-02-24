@@ -29,6 +29,11 @@
             </thead>
             <tbody>
               <?php foreach ($data_servis as $d) : ?>
+                <?php
+                if (in_array($d['status'], ['diproses', 'selesai', 'dibatalkan'])) {
+                  continue;
+                }
+                ?>
                 <tr>
                   <td><?= $d['no_transaksi'] ?></td>
                   <td><?= ucwords($d['status']) ?></td>
@@ -47,6 +52,141 @@
                           <input type="hidden" name="_method" value="DELETE">
                           <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="align-middle" data-feather="trash-2"></i> Delete</button>
                         </form>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              <?php endforeach ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-12 col-xl-12 col-xxl-10 d-flex order-2 order-md-1">
+      <div class="card flex-fill">
+        <div class="card-header">
+          <h3>Data Servis Diproses</h3>
+        </div>
+        <div class="card-body">
+          <table class="table table-hover my-0" id="dataServis2">
+            <thead>
+              <tr>
+                <th>No Transaksi</th>
+                <th>Status</th>
+                <th>Nama Pelanggan</th>
+                <th>Tanggal</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($data_servis as $d) : ?>
+                <?php
+                if (!in_array($d['status'], ['diproses'])) {
+                  continue;
+                }
+                ?>
+                <tr>
+                  <td><?= $d['no_transaksi'] ?></td>
+                  <td><?= ucwords($d['status']) ?></td>
+                  <td><?= $d['nama_pelanggan'] ?></td>
+                  <td><?= $d['created_at'] ?></td>
+                  <td>
+                    <div class="row">
+                      <div class="col">
+                        <a class="btn btn-info" href="<?= base_url() . '/admin/servis/' . $d['no_transaksi'] . '/detail' ?>">
+                          <i class="align-middle" data-feather="eye"></i> Lihat
+                        </a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              <?php endforeach ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-12 col-xl-12 col-xxl-10 d-flex order-2 order-md-1">
+      <div class="card flex-fill">
+        <div class="card-header">
+          <h3>Data Servis Selesai</h3>
+        </div>
+        <div class="card-body">
+          <table class="table table-hover my-0" id="dataServis3">
+            <thead>
+              <tr>
+                <th>No Transaksi</th>
+                <th>Status</th>
+                <th>Nama Pelanggan</th>
+                <th>Tanggal</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($data_servis as $d) : ?>
+                <?php
+                if (!in_array($d['status'], ['selesai'])) {
+                  continue;
+                }
+                ?>
+                <tr>
+                  <td><?= $d['no_transaksi'] ?></td>
+                  <td><?= ucwords($d['status']) ?></td>
+                  <td><?= $d['nama_pelanggan'] ?></td>
+                  <td><?= $d['created_at'] ?></td>
+                  <td>
+                    <div class="row">
+                      <div class="col">
+                        <a class="btn btn-info" href="<?= base_url() . '/admin/servis/' . $d['no_transaksi'] . '/detail' ?>">
+                          <i class="align-middle" data-feather="eye"></i> Lihat
+                        </a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              <?php endforeach ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-12 col-xl-12 col-xxl-10 d-flex order-2 order-md-1">
+      <div class="card flex-fill">
+        <div class="card-header">
+          <h3>Data Servis Dibatalkan</h3>
+        </div>
+        <div class="card-body">
+          <table class="table table-hover my-0" id="dataServis4">
+            <thead>
+              <tr>
+                <th>No Transaksi</th>
+                <th>Status</th>
+                <th>Nama Pelanggan</th>
+                <th>Tanggal</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($data_servis as $d) : ?>
+                <?php
+                if (!in_array($d['status'], ['dibatalkan'])) {
+                  continue;
+                }
+                ?>
+                <tr>
+                  <td><?= $d['no_transaksi'] ?></td>
+                  <td><?= ucwords($d['status']) ?></td>
+                  <td><?= $d['nama_pelanggan'] ?></td>
+                  <td><?= $d['created_at'] ?></td>
+                  <td>
+                    <div class="row">
+                      <div class="col">
+                        <a class="btn btn-info" href="<?= base_url() . '/admin/servis/' . $d['no_transaksi'] . '/detail' ?>">
+                          <i class="align-middle" data-feather="eye"></i> Lihat
+                        </a>
                       </div>
                     </div>
                   </td>
@@ -117,6 +257,9 @@
 <script>
   $(document).ready(function() {
     $('#dataServis').DataTable();
+    $('#dataServis2').DataTable();
+    $('#dataServis3').DataTable();
+    $('#dataServis4').DataTable();
   });
 </script>
 

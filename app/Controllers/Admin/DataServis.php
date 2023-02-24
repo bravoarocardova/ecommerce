@@ -490,7 +490,12 @@ class DataServis extends BaseController
     }
 
     $noWa = $dataServis['no_telp_pelanggan'];
-    $text = 'Pelanggan ' . $dataServis['nama_pelanggan'] . ', dengan detail transaksi : ' . $newBarang . '. Total Pembayaran : Rp. ' . number_format($totalBayar) . ', Silahkan konfirmasi (ya) jika anda setuju. ';
+    $text = 'Pelanggan ' . $dataServis['nama_pelanggan'] . ', dengan detail transaksi : ' . $newBarang . '. Total Pembayaran : Rp. ' . number_format($totalBayar);
+    if ($dataServis['status'] == 'selesai') {
+      $text .= ', Telah Selesai';
+    } else {
+      $text .= ', Silahkan konfirmasi (ya) jika anda setuju. ';
+    }
 
     $waSendUrl = "phone=$noWa&text=$text";
 
