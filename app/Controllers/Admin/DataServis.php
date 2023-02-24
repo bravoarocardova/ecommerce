@@ -427,7 +427,11 @@ class DataServis extends BaseController
       $this->dataServisM->save($update_data);
     }
 
-    return redirect()->back()->with('msg', myAlert('success', 'Transaksi telah diselesaikan'));
+    $totalUang = (int) $this->request->getPost('jumlah_bayar');
+    $totalBiaya = $dataServis['total_biaya'];
+    $kembalian = $totalUang - $totalBiaya;
+
+    return redirect()->back()->with('msg', myAlert('success', 'Transaksi telah diselesaikan,<br> Total uang Rp. ' . number_format($totalUang) . ' dengan kembalian Rp. ' . number_format($kembalian)));
   }
 
   // End Proses

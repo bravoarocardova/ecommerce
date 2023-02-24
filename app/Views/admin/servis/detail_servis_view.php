@@ -29,9 +29,12 @@
                 </a>
               <?php endif ?>
               <?php if ($detail_servis['status'] == 'diproses') : ?>
-                <a class="btn btn-info" href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/bayar' ?>">
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalBayar">
                   <i class="align-middle" data-feather="credit-card"></i> Selesaikan dan Bayar
-                </a>
+                </button>
+                <!-- <a class="btn btn-info" href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/bayar' ?>">
+                  <i class="align-middle" data-feather="credit-card"></i> Selesaikan dan Bayar
+                </a> -->
               <?php endif ?>
               <a class="btn btn-danger" href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/batalkan' ?>" onclick="return confirm('Batalkan ?')">
                 <i class="align-middle" data-feather="x"></i> Batalkan
@@ -160,6 +163,30 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalBayar" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/bayar' ?>" method="post">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Selesaikan dan Bayar</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label for="jumlah_bayar">Jumlah Bayar</label>
+          <input required type="number" min="<?= $total ?>" class="form-control" name="jumlah_bayar" id="jumlah_bayar" placeholder="Minimal <?= $total ?>">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-info">
+            <i class="align-middle" data-feather="credit-card"></i> Selesaikan dan Bayar
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
