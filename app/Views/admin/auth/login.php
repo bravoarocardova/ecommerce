@@ -22,6 +22,9 @@
             <div class="card">
               <div class="card-body">
                 <div class="m-sm-4">
+                  <?php if (session()->has('msg')) : ?>
+                    <?= session()->getFlashdata('msg') ?>
+                  <?php endif ?>
                   <div class="text-center">
                     <h1>Smartcom Store</h1>
                   </div>
