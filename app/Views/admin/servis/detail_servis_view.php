@@ -32,9 +32,6 @@
                 <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalBayar">
                   <i class="align-middle" data-feather="credit-card"></i> Selesaikan dan Bayar
                 </button>
-                <!-- <a class="btn btn-info" href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/bayar' ?>">
-                  <i class="align-middle" data-feather="credit-card"></i> Selesaikan dan Bayar
-                </a> -->
               <?php endif ?>
               <a class="btn btn-danger" href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/batalkan' ?>" onclick="return confirm('Batalkan ?')">
                 <i class="align-middle" data-feather="x"></i> Batalkan
@@ -45,9 +42,16 @@
         <div class="col">
           <div class="d-flex justify-content-end">
             <?php if (!empty($barang_servis)) : ?>
-              <a class="btn btn-primary" href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/send' ?>">
-                <i class="align-middle" data-feather="send"></i> Beritahu Pelanggan untuk Konfirmasi
-              </a>
+              <?php if (!in_array($detail_servis['status'], ['dibatalkan', 'selesai'])) : ?>
+                <a class="btn btn-primary" href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/send' ?>">
+                  <i class="align-middle" data-feather="send"></i>
+                  <?php if (in_array($detail_servis['status'], ['menunggu konfirmasi', null])) : ?>
+                    Beritahu Pelanggan untuk Konfirmasi
+                  <?php else : ?>
+                    Beritahu Pelanggan Servis Selesai
+                  <?php endif ?>
+                </a>
+              <?php endif ?>
             <?php endif ?>
           </div>
 
@@ -222,8 +226,8 @@
 
     var isMobile = mobilecheck();
     var url = 'https://';
-    url += isMobile ? 'api' : 'web';
-    url += '.whatsapp.com/send?<?= session()->getFlashdata('waSendUrl') ?>';
+    // url += isMobile ? 'api' : 'web';
+    url += 'api.whatsapp.com/send?<?= session()->getFlashdata('waSendUrl') ?>';
 
     window.open(url, '_blank');
   </script>

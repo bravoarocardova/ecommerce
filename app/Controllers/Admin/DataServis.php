@@ -385,7 +385,12 @@ class DataServis extends BaseController
       $this->dataServisM->save($update_data);
     }
 
-    return redirect()->back()->with('msg', myAlert('success', 'Transaksi telah dikonfirmasi, dan mulai lakukan proses servis'));
+    $noWa = $dataServis['no_telp_pelanggan'];
+    $text = 'Transaksi telah dikonfirmasi, dan mulai lakukan proses servis';
+
+    $waSendUrl = "phone=$noWa&text=$text";
+
+    return redirect()->back()->with('msg', myAlert('success', $text))->with('waSendUrl', $waSendUrl);
   }
 
   public function batal_proses($noTransaksi)
@@ -495,10 +500,10 @@ class DataServis extends BaseController
 
     $noWa = $dataServis['no_telp_pelanggan'];
     $text = 'Pelanggan ' . $dataServis['nama_pelanggan'] . ', dengan detail transaksi : ' . $newBarang . '. Total Pembayaran : Rp. ' . number_format($totalBayar);
-    if ($dataServis['status'] == 'selesai') {
-      $text .= ', Telah Selesai';
+    if (in_array($dataServis['status'], ['selesai', 'diproses'])) {
+      $text .= '. Transaksi telah selesai, Silahkan mengambil barang';
     } else {
-      $text .= ', Silahkan konfirmasi (ya) jika anda setuju. ';
+      $text .= '. Silahkan konfirmasi (ya) jika anda setuju!. ';
     }
 
     $waSendUrl = "phone=$noWa&text=$text";
