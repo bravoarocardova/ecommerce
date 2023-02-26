@@ -321,7 +321,7 @@ class DataServis extends BaseController
   {
 
     if ($noTransaksi != null) {
-      $detail_servis = $this->dataServisM->find($noTransaksi);
+      $detail_servis = $this->dataServisM->select('data_servis.*, admin.nama')->join('admin', 'data_servis.teknisi = admin.id_admin', 'LEFT')->find($noTransaksi);
 
       if ($detail_servis == null) {
         throw new \CodeIgniter\Exceptions\PageNotFoundException("Tidak ditemukan");
@@ -378,7 +378,7 @@ class DataServis extends BaseController
       $update_data = [
         'no_transaksi' => $noTransaksi,
         'status' => 'diproses',
-        'teknisi' => $dataServis['teknisi'] ?? 1,
+        'teknisi' => $dataServis['teknisi'] ?? session()->get('admin')['id_admin'],
         'total_biaya' => $totalBiaya
       ];
 
@@ -405,7 +405,7 @@ class DataServis extends BaseController
       $update_data = [
         'no_transaksi' => $noTransaksi,
         'status' => 'dibatalkan',
-        'teknisi' => $dataServis['teknisi'] ?? 1,
+        'teknisi' => $dataServis['teknisi'] ?? session()->get('admin')['id_admin'],
         'total_biaya' => 0
       ];
 
@@ -454,7 +454,7 @@ class DataServis extends BaseController
       $update_data = [
         'no_transaksi' => $noTransaksi,
         'status' => 'menunggu konfirmasi',
-        'teknisi' => 1
+        'teknisi' => session()->get('admin')['id_admin']
       ];
 
       $this->dataServisM->save($update_data);

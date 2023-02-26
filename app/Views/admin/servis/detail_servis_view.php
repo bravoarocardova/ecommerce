@@ -80,6 +80,7 @@
           <h4>No Transaksi : <?= $detail_servis['no_transaksi'] ?></h4>
           <h5>Tanggal Transaksi : <?= $detail_servis['created_at'] ?></h5>
           <h6>Status : <?= ucwords($detail_servis['status']) . ' ( ' . $detail_servis['updated_at'] . ' ) ' ?> </h6>
+          <h6>Teknisi : <?= $detail_servis['nama'] ?></h6>
         </div>
         <div class="card-body">
           <div class="row">
@@ -226,8 +227,8 @@
 
     var isMobile = mobilecheck();
     var url = 'https://';
-    // url += isMobile ? 'api' : 'web';
-    url += 'api.whatsapp.com/send?<?= session()->getFlashdata('waSendUrl') ?>';
+    url += isMobile ? 'api' : 'web';
+    url += '.whatsapp.com/send?<?= session()->getFlashdata('waSendUrl') ?>';
 
     window.open(url, '_blank');
   </script>

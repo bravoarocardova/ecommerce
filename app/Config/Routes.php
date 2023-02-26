@@ -81,6 +81,10 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
         $routes->delete('(:num)', 'JasaServis::delete_jasa_servis/$1');
     });
 
+    $routes->group('info_badge', function ($routes) {
+        $routes->get('data_servis', 'InfoBadge::badgeDataServis');
+    });
+
 
     // handle route not found
     // $routes->addRedirect('/', 'admin/dashboard');
