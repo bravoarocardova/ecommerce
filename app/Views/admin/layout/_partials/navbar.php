@@ -13,7 +13,7 @@
           <img src="<?= base_url() . '/img/avatars/' . session()->get('admin')['foto'] ?>" class="avatar img-fluid rounded me-1" alt="<?= session()->get('admin')['nama'] ?>" /> <span class="text-dark"><?= session()->get('admin')['nama'] ?></span>
         </a>
         <div class="dropdown-menu dropdown-menu-end">
-          <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
+          <a class="dropdown-item" href="<?= base_url() . '/admin/pengguna/profile' ?>"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
           <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>

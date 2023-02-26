@@ -96,13 +96,13 @@
         Pengaturan
       </li>
 
-      <!-- <li class="sidebar-item">
-        <a class="sidebar-link" href="charts-chartjs.html">
-          <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Penjualan</span>
+      <li class="sidebar-item <?php if (!empty($uri->getSegments()) && $uri->getSegment(2) == 'pengguna') echo 'active' ?>">
+        <a class="sidebar-link" href="<?= base_url('admin/pengguna') ?>">
+          <i class="align-middle" data-feather="users"></i> <span class="align-middle">Pengguna</span>
         </a>
       </li>
 
-      <li class="sidebar-item">
+      <!-- <li class="sidebar-item">
         <a class="sidebar-link" href="maps-google.html">
           <i class="align-middle" data-feather="map"></i> <span class="align-middle">Servis</span>
         </a>

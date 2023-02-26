@@ -34,7 +34,7 @@
               <button class="nav-link active text-info" id="nav-data_masuk-tab" data-bs-toggle="tab" data-bs-target="#nav-data_masuk" type="button" role="tab" aria-controls="nav-data_masuk" aria-selected="true">Data Masuk <span class="badge bg-danger"><?= $badgeMasuk ?></span></button>
               <button class="nav-link text-warning" id="nav-data_proses-tab" data-bs-toggle="tab" data-bs-target="#nav-data_proses" type="button" role="tab" aria-controls="nav-data_proses" aria-selected="false">Data Diproses <span class="badge bg-danger"><?= $badgeDiproses ?></span></button>
               <button class="nav-link text-success" id="nav-data_selesai-tab" data-bs-toggle="tab" data-bs-target="#nav-data_selesai" type="button" role="tab" aria-controls="nav-data_selesai" aria-selected="false">Data Selesai</button>
-              <button class="nav-link text-danger" id="nav-data_selesai-tab" data-bs-toggle="tab" data-bs-target="#nav-data_dibatalkan" type="button" role="tab" aria-controls="nav-data_dibatalkan" aria-selected="false">Data Dibatalkan</button>
+              <button class="nav-link text-danger" id="nav-data_dibatalkan-tab" data-bs-toggle="tab" data-bs-target="#nav-data_dibatalkan" type="button" role="tab" aria-controls="nav-data_dibatalkan" aria-selected="false">Data Dibatalkan</button>
             </div>
           </nav>
           <div class="tab-content" id="nav-tabContent">

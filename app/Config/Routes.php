@@ -85,6 +85,20 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
         $routes->get('data_servis', 'InfoBadge::badgeDataServis');
     });
 
+    $routes->group('pengguna', function ($routes) {
+        $routes->get('status/(:num)', 'Pengguna::set_status/$1');
+
+        $routes->get('/', 'Pengguna::index');
+        $routes->get('(:num)', 'Pengguna::profile/$1');
+        $routes->get('profile', 'Pengguna::profile');
+
+        $routes->post('/', 'Pengguna::index');
+
+        // $routes->group('profile', function ($routes) {
+        //     $routes->get('(:num)', 'Pengguna::profile/$1');
+        // });
+    });
+
 
     // handle route not found
     // $routes->addRedirect('/', 'admin/dashboard');
