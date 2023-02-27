@@ -33,7 +33,8 @@ class Auth extends BaseController
             'id_admin' => $adminCheck['id_admin'],
             'nama' => $adminCheck['nama'],
             'foto' => $adminCheck['foto'],
-            'role' => $adminCheck['role']
+            'role' => $adminCheck['role'],
+            'isLoggedIn' => TRUE
           ];
 
           session()->set($userAdminSess);
@@ -48,5 +49,11 @@ class Auth extends BaseController
     }
 
     return view('admin/auth/login');
+  }
+
+  public function logout()
+  {
+    session()->destroy();
+    return redirect()->to(base_url() . '/admin/auth/login');
   }
 }

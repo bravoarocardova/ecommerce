@@ -33,9 +33,11 @@ $routes->get('/', 'Home::index');
 
 // route group admin
 
-$routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($routes) {
+$routes->add('admin/auth/login', 'Admin\Auth::login');
+$routes->get('admin/auth/logout', 'Admin\Auth::logout');
 
-    $routes->add('auth/login', 'Auth::login');
+$routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'isLoggedInAdmin'], function ($routes) {
+
 
     $routes->get('dashboard', 'Admin::dashboard');
 
@@ -101,8 +103,8 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
 
 
     // handle route not found
-    // $routes->addRedirect('/', 'admin/dashboard');
-    // $routes->addRedirect('(:any)', 'admin/dashboard');
+    $routes->addRedirect('/', 'admin/dashboard');
+    $routes->addRedirect('(:any)', 'admin/dashboard');
 });
 
 

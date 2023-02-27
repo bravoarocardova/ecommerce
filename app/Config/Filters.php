@@ -21,6 +21,8 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'isLoggedInAdmin' => \App\Filters\IsLoggedInAdminFilter::class,
+        'redirectIfLoggedInAdmin' => \App\Filters\RedirectIfLoggedInAdmin::class
     ];
 
     /**
@@ -60,5 +62,7 @@ class Filters extends BaseConfig
      * Example:
      * 'isLoggedIn' => ['before' => ['account/*', 'profiles/*']]
      */
-    public array $filters = [];
+    public array $filters = [
+        'redirectIfLoggedInAdmin' => ['before' => ['admin/auth/login']]
+    ];
 }
