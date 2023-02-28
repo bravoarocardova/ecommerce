@@ -83,7 +83,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="text-center mb-3">
-                      <img alt="" src="<?= base_url() . '/img/avatars/' . 'default.jpg' ?>" class="rounded img-responsive mt-2" width="128" height="128">
+                      <img alt="" src="<?= base_url() . '/img/avatars/' . $profile_admin['foto'] ?>" class="rounded img-responsive mt-2" width="128" height="128">
                       <div class="mt-2">
                         <label for="foto">
                           <span class="btn btn-primary"><i class="fas fa-upload"></i> Upload</span>

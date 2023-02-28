@@ -90,11 +90,13 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'is
     $routes->group('pengguna', function ($routes) {
         $routes->get('status/(:num)', 'Pengguna::set_status/$1');
 
+        $routes->add('tambah', 'Pengguna::tambah_pengguna');
+
         $routes->get('/', 'Pengguna::index');
         $routes->get('(:num)', 'Pengguna::profile/$1');
         $routes->get('profile', 'Pengguna::profile');
 
-        $routes->post('/', 'Pengguna::index');
+        $routes->delete('(:num)', 'Pengguna::delete_pengguna_admin/$1');
 
         // $routes->group('profile', function ($routes) {
         //     $routes->get('(:num)', 'Pengguna::profile/$1');
