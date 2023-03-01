@@ -46,10 +46,16 @@ class Pengguna extends BaseController
       $id = session()->get('admin')['id_admin'];
     }
 
+    $profile = $this->adminM->find($id);
+
+    if ($profile == null) {
+      throw new \CodeIgniter\Exceptions\PageNotFoundException('Tidak Ditemukan');
+    }
+
     return view(
       'admin/pengguna/profile_view',
       [
-        'profile_admin' => $this->adminM->find($id)
+        'profile_admin' => $profile
       ]
     );
   }
@@ -154,7 +160,7 @@ class Pengguna extends BaseController
           'nama' => $post['nama'],
           'email' => $post['email'],
           'no_telp' => $post['no_telp'],
-          'password' => $post['password'],
+          'password' => password_hash($post['password'], PASSWORD_DEFAULT),
           'foto' => $newFoto,
           'role' => $post['role'],
           'is_active' => $post['status']
@@ -175,6 +181,10 @@ class Pengguna extends BaseController
       // throw new \CodeIgniter\Exceptions\PageNotFoundException('Tidak Ditemukan');
       return redirect()->back();
     }
+    $dataAdmin = $this->adminM->find($id);
+    if ($dataAdmin['foto'] != 'default.jpg') {
+      unlink(base_url() . '/img/avatars/' . $dataAdmin['foto']);
+    }
     $hapus = $this->adminM->delete($id);
     if ($hapus) {
       $type = 'success';
@@ -184,5 +194,159 @@ class Pengguna extends BaseController
       $msg = 'Gagal dihapus.';
     }
     return redirect()->back()->with('msg', myAlert($type, $msg));
+  }
+
+  public function edit_profile()
+  {
+    $post = $this->request->getVar();
+    $dataLama = $this->adminM->find(session()->get('admin')['id_admin']);
+
+    switch ($post['edit']) {
+      case 'profil':
+        if ($dataLama['username'] != $post['username']) {
+          $roleUsername = 'required|min_length[4]|max_length[100]|is_unique[admin.username]';
+        } else {
+          $roleUsername = 'required|min_length[4]|max_length[100]';
+        }
+
+        $ruleFoto = 'mime_in[foto,image/jpg,image/jpeg,image/png]|max_size[foto,4096]';
+        $foto = $this->request->getFile('foto');
+        if ($foto->isValid()) {
+          $ruleFoto = 'uploaded[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]|max_size[foto,4096]';
+        }
+
+        $ruleProfil = [
+          'username' => [
+            'label' => 'Username',
+            'rules' => $roleUsername,
+            'errors' => [
+              'required' => '{field} Harus diisi',
+              'min_length' => '{field} Minimal 4 Karakter',
+              'max_length' => '{field} Maksimal 100 Karakter',
+              'is_unique' => '{field} Sudah Dipakai'
+            ],
+          ],
+          'nama' => [
+            'label' => 'Nama',
+            'rules' => 'required|min_length[4]|max_length[100]',
+            'errors' => [
+              'required' => '{field} Harus diisi',
+              'min_length' => '{field} Minimal 4 Karakter',
+              'max_length' => '{field} Maksimal 100 Karakter',
+            ],
+          ],
+          'email' => [
+            'label' => 'Email',
+            'rules' => 'required|min_length[4]|max_length[100]|valid_email',
+            'errors' => [
+              'required' => '{field} Harus diisi',
+              'min_length' => '{field} Minimal 4 Karakter',
+              'max_length' => '{field} Maksimal 100 Karakter',
+              'valid_email' => '{field} tidak valid'
+            ],
+          ],
+          'no_telp' => [
+            'label' => 'No Telp',
+            'rules' => 'required|min_length[4]|max_length[15]|numeric',
+            'errors' => [
+              'required' => '{field} Harus diisi',
+              'min_length' => '{field} Minimal 4 Karakter',
+              'max_length' => '{field} Maksimal 15 Karakter',
+              'numeric' => '{field} Harus angka'
+            ],
+          ],
+          'foto' => [
+            'label' => 'Foto',
+            'rules' => $ruleFoto,
+            'errors' => [
+              'uploaded' => '{field} Harus ada yang diupload',
+              'mime_in' => '{field} Harus [jpg, jpeg, png]',
+              'max_size' => '{field} Maksimal 4mb'
+            ],
+          ],
+        ];
+        if (!$this->validate($ruleProfil)) {
+          $type = 'danger';
+          $msg = 'Gagal update profil!.';
+        } else {
+          $data = [
+            'id_admin' => session()->get('admin')['id_admin'],
+            'username' => $post['username'],
+            'nama' => $post['nama'],
+            'email' => $post['email'],
+            'no_telp' => $post['no_telp']
+          ];
+          if ($foto->isValid()) {
+            $newFoto = $foto->getRandomName();
+            $data['foto'] = $newFoto;
+            $foto->move('img/avatars/', $newFoto);
+
+            if ($dataLama['foto'] != 'default.jpg') {
+              unlink(base_url() . '/img/avatars/' . $dataLama['foto']);
+            }
+          }
+
+          $this->adminM->save($data);
+          $type = 'success';
+          $msg = 'Berhasil update profil!.';
+          $newSession['admin'] = [
+            'id_admin' => session()->get('admin')['id_admin'],
+            'nama' => $data['nama'],
+            'foto' => $data['foto'] ?? $dataLama['foto'],
+            'role' => $dataLama['role'],
+            'isLoggedIn' => TRUE
+          ];
+          session()->set($newSession);
+        }
+        break;
+      case 'password':
+        $rulePassword = [
+          'new_password' => [
+            'label' => 'Password',
+            'rules' => 'required|min_length[4]|max_length[100]',
+            'errors' => [
+              'required' => '{field} Harus diisi',
+              'min_length' => '{field} Minimal 4 Karakter',
+              'max_length' => '{field} Maksimal 100 Karakter',
+            ],
+          ],
+          'password_verify' => [
+            'label' => 'Password Verify',
+            'rules' => 'required|min_length[4]|max_length[100]|matches[new_password]',
+            'errors' => [
+              'required' => '{field} Harus diisi',
+              'min_length' => '{field} Minimal 4 Karakter',
+              'max_length' => '{field} Maksimal 100 Karakter',
+              'matches' => '{field} tidak cocok'
+            ],
+          ],
+        ];
+
+        if (!$this->validate($rulePassword)) {
+          $type = 'danger';
+          $msg = 'Gagal update password!.';
+        } else {
+          if (!password_verify($post['old_password'], $dataLama['password'])) {
+            session()->setFlashdata('_ci_validation_errors', [
+              'old_password' => 'Password Tidak cocok'
+            ]);
+            $type = 'danger';
+            $msg = 'Gagal update password!.';
+          } else {
+            $data = [
+              'id_admin' => session()->get('admin')['id_admin'],
+              'password' => password_hash($post['new_password'], PASSWORD_DEFAULT),
+            ];
+            $this->adminM->save($data);
+            $type = 'success';
+            $msg = 'Berhasil update password!.';
+          }
+        }
+        break;
+      default:
+        $type = 'danger';
+        $msg = 'Gagal update!.';
+    }
+    return redirect()->back()->withInput()->with('msg', myAlert($type, $msg));
   }
 }

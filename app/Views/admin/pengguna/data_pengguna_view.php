@@ -45,6 +45,9 @@
                     if (!in_array($r['role'], ['admin'])) {
                       continue;
                     }
+                    if ($r['id_admin'] == session()->get('admin')['id_admin']) {
+                      continue;
+                    }
                     ?>
                     <tr>
                       <td>

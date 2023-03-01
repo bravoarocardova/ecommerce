@@ -94,7 +94,11 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'is
 
         $routes->get('/', 'Pengguna::index');
         $routes->get('(:num)', 'Pengguna::profile/$1');
-        $routes->get('profile', 'Pengguna::profile');
+
+        $routes->group('profile', function ($routes) {
+            $routes->get('/', 'Pengguna::profile');
+            $routes->put('/', 'Pengguna::edit_profile');
+        });
 
         $routes->delete('(:num)', 'Pengguna::delete_pengguna_admin/$1');
 

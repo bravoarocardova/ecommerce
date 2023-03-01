@@ -26,8 +26,8 @@ class Auth extends BaseController
         ]
       )->first();
       if ($adminCheck) {
-        // $passVerif = password_verify($post['password'],$adminCheck['password']);
-        $passVerif = $post['password'] == $adminCheck['password'];
+        $passVerif = password_verify($post['password'], $adminCheck['password']);
+        // $passVerif = $post['password'] == $adminCheck['password'];
         if ($passVerif) {
           $userAdminSess['admin'] = [
             'id_admin' => $adminCheck['id_admin'],
