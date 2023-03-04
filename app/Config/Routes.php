@@ -94,6 +94,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'is
 
         $routes->get('/', 'Pengguna::index');
         $routes->get('(:num)', 'Pengguna::profile/$1');
+        $routes->put('(:num)', 'Pengguna::edit_profile');
 
         $routes->group('profile', function ($routes) {
             $routes->get('/', 'Pengguna::profile');
@@ -105,6 +106,11 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'is
         // $routes->group('profile', function ($routes) {
         //     $routes->get('(:num)', 'Pengguna::profile/$1');
         // });
+    });
+
+    $routes->group('laporan', function ($routes) {
+        $routes->add('penjualan', 'Laporan::penjualan');
+        $routes->add('servis', 'Laporan::servis');
     });
 
 

@@ -42,6 +42,9 @@
               <form action="" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="_method" value="PUT">
                 <input type="hidden" name="edit" value="profil">
+                <?php if (isAdmininstrator() && session()->get('admin')['id_admin'] != $profile_admin['id_admin']) : ?>
+                  <input type="hidden" name="id_admin" value="<?= $profile_admin['id_admin'] ?>">
+                <?php endif ?>
                 <div class="row">
                   <div class="col-md-8">
                     <div class="mb-3">
@@ -76,13 +79,34 @@
                       <div class="col-md-6">
                         <div class="mb-3">
                           <label class="form-label" for="inputRole">Role</label>
-                          <input type="text" class="form-control" id="inputRole" readonly disabled value="<?= ($profile_admin['role'] == 'admin') ? 'Administrator' : ucwords($profile_admin['role']) ?>">
+                          <?php if (isAdmininstrator() && session()->get('admin')['id_admin'] != $profile_admin['id_admin']) : ?>
+                            <select name="role" id="inputRole" class="form-control <?= validation_show_error('role') ? 'is-invalid' : '' ?>">
+                              <option value="admin" <?php if ($profile_admin['role'] == 'admin') echo 'selected' ?>>Administrator</option>
+                              <option value="kasir" <?php if ($profile_admin['role'] == 'kasir') echo 'selected' ?>>Kasir</option>
+                              <option value="teknisi" <?php if ($profile_admin['role'] == 'teknisi') echo 'selected' ?>>Teknisi</option>
+                            </select>
+                            <div class="invalid-feedback">
+                              <?= validation_show_error('role') ?>
+                            </div>
+                          <?php else : ?>
+                            <input type="text" class="form-control" id="inputRole" readonly disabled value="<?= ($profile_admin['role'] == 'admin') ? 'Administrator' : ucwords($profile_admin['role']) ?>">
+                          <?php endif ?>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="mb-3">
                           <label class="form-label" for="inputStatus">Status</label>
-                          <input type="text" class="form-control" id="inputStatus" readonly disabled value="<?= ($profile_admin['is_active'] == '0') ? 'Tidak Aktif' : 'Aktif' ?>">
+                          <?php if (isAdmininstrator() && session()->get('admin')['id_admin'] != $profile_admin['id_admin']) : ?>
+                            <select name="status" id="inputStatus" class="form-control <?= validation_show_error('status') ? 'is-invalid' : '' ?>">
+                              <option value="1" <?php if ($profile_admin['is_active'] == '1') echo 'selected' ?>>Aktif</option>
+                              <option value="0" <?php if ($profile_admin['is_active'] == '0') echo 'selected' ?>>Tidak Aktif</option>
+                            </select>
+                            <div class="invalid-feedback">
+                              <?= validation_show_error('status') ?>
+                            </div>
+                          <?php else : ?>
+                            <input type="text" class="form-control" id="inputStatus" readonly disabled value="<?= ($profile_admin['is_active'] == '0') ? 'Tidak Aktif' : 'Aktif' ?>">
+                          <?php endif ?>
 
                         </div>
                       </div>
@@ -129,6 +153,9 @@
               <form action="" method="POST">
                 <input type="hidden" name="_method" value="PUT">
                 <input type="hidden" name="edit" value="password">
+                <?php if (isAdmininstrator() && session()->get('admin')['id_admin'] != $profile_admin['id_admin']) : ?>
+                  <input type="hidden" name="id_admin" value="<?= $profile_admin['id_admin'] ?>">
+                <?php endif ?>
                 <div class="mb-3">
                   <label class="form-label" for="inputPasswordCurrent">Current password</label>
                   <input type="password" class="form-control <?= validation_show_error('old_password') ? 'is-invalid' : '' ?>" id="inputPasswordCurrent" name="old_password">

@@ -199,7 +199,13 @@ class Pengguna extends BaseController
   public function edit_profile()
   {
     $post = $this->request->getVar();
-    $dataLama = $this->adminM->find(session()->get('admin')['id_admin']);
+
+    if (empty($post['id_admin'])) {
+      $id_admin = session()->get('admin')['id_admin'];
+    } else {
+      $id_admin = $post['id_admin'];
+    }
+    $dataLama = $this->adminM->find($id_admin);
 
     switch ($post['edit']) {
       case 'profil':
@@ -270,12 +276,15 @@ class Pengguna extends BaseController
           $msg = 'Gagal update profil!.';
         } else {
           $data = [
-            'id_admin' => session()->get('admin')['id_admin'],
+            'id_admin' => $id_admin,
             'username' => $post['username'],
             'nama' => $post['nama'],
             'email' => $post['email'],
-            'no_telp' => $post['no_telp']
+            'no_telp' => $post['no_telp'],
+            'role' => $post['role'] ?? $dataLama['role'],
+            'is_active' => $post['status'] ?? $dataLama['is_active']
           ];
+
           if ($foto->isValid()) {
             $newFoto = $foto->getRandomName();
             $data['foto'] = $newFoto;
@@ -289,14 +298,16 @@ class Pengguna extends BaseController
           $this->adminM->save($data);
           $type = 'success';
           $msg = 'Berhasil update profil!.';
-          $newSession['admin'] = [
-            'id_admin' => session()->get('admin')['id_admin'],
-            'nama' => $data['nama'],
-            'foto' => $data['foto'] ?? $dataLama['foto'],
-            'role' => $dataLama['role'],
-            'isLoggedIn' => TRUE
-          ];
-          session()->set($newSession);
+          if (session()->get('admin')['id_admin'] == $id_admin) {
+            $newSession['admin'] = [
+              'id_admin' => session()->get('admin')['id_admin'],
+              'nama' => $data['nama'],
+              'foto' => $data['foto'] ?? $dataLama['foto'],
+              'role' => $dataLama['role'],
+              'isLoggedIn' => TRUE
+            ];
+            session()->set($newSession);
+          }
         }
         break;
       case 'password':
@@ -334,7 +345,7 @@ class Pengguna extends BaseController
             $msg = 'Gagal update password!.';
           } else {
             $data = [
-              'id_admin' => session()->get('admin')['id_admin'],
+              'id_admin' => $id_admin,
               'password' => password_hash($post['new_password'], PASSWORD_DEFAULT),
             ];
             $this->adminM->save($data);

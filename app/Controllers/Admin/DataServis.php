@@ -110,7 +110,7 @@ class DataServis extends BaseController
         $type = 'danger';
         $msg = 'Gagal tambah data.';
       }
-      return redirect()->back()->with('msg', myAlert($type, $msg));
+      return redirect()->to(base_url() . '/admin/servis/' . $data['no_transaksi'] . '/barang')->with('msg', myAlert($type, $msg));
     }
   }
 

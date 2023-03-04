@@ -24,9 +24,9 @@
         </a>
       </li>
 
-      <li class="sidebar-item">
-        <a class="sidebar-link" href="pages-sign-in.html">
-          <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Data Produk</span>
+      <li class="sidebar-item <?php if (!empty($uri->getSegments()) && $uri->getSegment(2) == 'produk') echo 'active' ?>">
+        <a class="sidebar-link" href="<?= base_url('admin/produk') ?>">
+          <i class="align-middle" data-feather="book"></i> <span class="align-middle">Data Produk</span>
         </a>
       </li>
 
@@ -80,14 +80,14 @@
         Laporan
       </li>
 
-      <li class="sidebar-item">
-        <a class="sidebar-link" href="charts-chartjs.html">
+      <li class="sidebar-item <?php if (!empty($uri->getSegments()) && $uri->getSegment(3) == 'penjualan') echo 'active' ?>">
+        <a class="sidebar-link" href="<?= base_url('admin/laporan/penjualan') ?>">
           <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Penjualan</span>
         </a>
       </li>
 
-      <li class="sidebar-item">
-        <a class="sidebar-link" href="maps-google.html">
+      <li class="sidebar-item <?php if (!empty($uri->getSegments()) && $uri->getSegment(3) == 'servis') echo 'active' ?>">
+        <a class="sidebar-link" href="<?= base_url('admin/laporan/servis') ?>">
           <i class="align-middle" data-feather="map"></i> <span class="align-middle">Servis</span>
         </a>
       </li>

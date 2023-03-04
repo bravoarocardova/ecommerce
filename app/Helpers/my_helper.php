@@ -33,3 +33,8 @@ function createNoTransaksi($kode, Model $model, $field, $offset = 3, $length = 8
   $lastKode++;
   return $kode . sprintf("%0" . $length . "s", $lastKode);
 }
+
+function isAdmininstrator()
+{
+  return session()->get('admin')['role'] == 'admin';
+}
