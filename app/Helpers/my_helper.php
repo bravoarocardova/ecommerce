@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\DataServisM;
 use CodeIgniter\Model;
 
 /**
@@ -34,7 +33,19 @@ function createNoTransaksi($kode, Model $model, $field, $offset = 3, $length = 8
   return $kode . sprintf("%0" . $length . "s", $lastKode);
 }
 
+// User Role
 function isAdmininstrator()
 {
   return session()->get('admin')['role'] == 'admin';
 }
+
+function isKasir()
+{
+  return session()->get('admin')['role'] == 'kasir';
+}
+
+function isTeknisi()
+{
+  return session()->get('admin')['role'] == 'teknisi';
+}
+// End User Role

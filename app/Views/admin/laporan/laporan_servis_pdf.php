@@ -62,12 +62,12 @@
           <td><?= $r['no_transaksi'] ?></td>
           <td><?= $r['nama_pelanggan'] ?></td>
           <td><?= $r['created_at'] ?></td>
-          <td><?= $r['total_biaya'] ?></td>
+          <td>Rp. <?= number_format($r['total_biaya']) ?></td>
         </tr>
       <?php endforeach ?>
       <tr>
         <td colspan="4">Total</td>
-        <td><?= $total ?></td>
+        <td>Rp. <?= number_format($total) ?></td>
       </tr>
     </tbody>
   </table>

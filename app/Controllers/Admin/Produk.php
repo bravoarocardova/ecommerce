@@ -1,0 +1,129 @@
+<?php
+
+namespace App\Controllers\Admin;
+
+use App\Controllers\BaseController;
+use App\Models\ProdukM;
+
+class Produk extends BaseController
+{
+
+  private $produkM;
+
+  public function __construct()
+  {
+    $this->produkM = new ProdukM();
+  }
+
+  public function index()
+  {
+    return view(
+      'admin/produk/data_produk_view',
+      [
+        'data_produk' => $this->produkM->findAll()
+      ]
+    );
+  }
+
+  public function form_tambah()
+  {
+    if ($this->request->is('post')) {
+      if (!$this->validate([
+        'nama_produk' => [
+          'label' => 'Nama Produk',
+          'rules' => 'required|min_length[4]|max_length[100]',
+          'errors' => [
+            'required' => '{field} Harus diisi',
+            'min_length' => '{field} Minimal 4 Karakter',
+            'max_length' => '{field} Maksimal 100 Karakter',
+          ],
+        ],
+        'harga_produk' => [
+          'label' => 'Harga Produk',
+          'rules' => 'required|min_length[3]|max_length[100]|numeric',
+          'errors' => [
+            'required' => '{field} Harus diisi',
+            'min_length' => '{field} Minimal 3 Karakter',
+            'max_length' => '{field} Maksimal 100 Karakter',
+            'numeric' => '{field} Harus angka',
+          ],
+        ],
+        'kondisi' => [
+          'label' => 'Kondisi',
+          'rules' => 'required|min_length[4]|max_length[100]',
+          'errors' => [
+            'required' => '{field} Harus diisi',
+            'min_length' => '{field} Minimal 4 Karakter',
+            'max_length' => '{field} Maksimal 100 Karakter',
+          ],
+        ],
+        'stok' => [
+          'label' => 'Stok',
+          'rules' => 'required|min_length[1]|max_length[15]|numeric',
+          'errors' => [
+            'required' => '{field} Harus diisi',
+            'min_length' => '{field} Minimal 1 Karakter',
+            'max_length' => '{field} Maksimal 15 Karakter',
+            'numeric' => '{field} Harus angka',
+          ],
+        ],
+        'berat' => [
+          'label' => 'Berat',
+          'rules' => 'required|min_length[1]|max_length[100]|numeric',
+          'errors' => [
+            'required' => '{field} Harus diisi',
+            'min_length' => '{field} Minimal 1 Karakter',
+            'max_length' => '{field} Maksimal 100 Karakter',
+            'numeric' => '{field} Harus angka',
+          ],
+        ],
+        'deskripsi' => [
+          'label' => 'Deskripsi',
+          'rules' => 'required|min_length[4]|max_length[1000]',
+          'errors' => [
+            'required' => '{field} Harus diisi',
+            'min_length' => '{field} Minimal 4 Karakter',
+            'max_length' => '{field} Maksimal 100 Karakter',
+          ],
+        ],
+        'foto_produk' => [
+          'label' => 'Foto Produk',
+          'rules' => 'uploaded[foto_produk]|mime_in[foto_produk,image/jpg,image/jpeg,image/png]|max_size[foto_produk,4096]',
+          'errors' => [
+            'uploaded' => '{field} Harus ada yang diupload',
+            'mime_in' => '{field} Harus [jpg, jpeg, png]',
+            'max_size' => '{field} Maksimal 4mb'
+          ],
+        ],
+      ])) {
+        return redirect()->back()->withInput();
+      } else {
+        $post = $this->request->getVar();
+
+        $foto = $this->request->getFile('foto_produk');
+        $newFoto = $foto->getRandomName();
+
+        $data = [
+          'nama_produk' => $post['nama_produk'],
+          'harga_produk' => $post['harga_produk'],
+          'kondisi_produk' => $post['kondisi'],
+          'stok_produk' => $post['stok'],
+          'foto_produk' => $newFoto,
+          'berat' => $post['berat'],
+          'deskripsi_produk' => $post['deskripsi']
+        ];
+
+        if ($this->produkM->save($data)) {
+          $foto->move('img/produk/', $newFoto);
+          return redirect()->to(base_url() . '/admin/produk')->with('msg', myAlert('success', 'Berhasil ditambah'));
+        }
+      }
+    }
+    return view(
+      'admin/produk/form_tambah_produk',
+      [
+        'data_produk' => $this->produkM->findAll()
+      ]
+    );
+  }
+}

@@ -25,7 +25,7 @@
             </div>
             <div class="text-center">
               <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                <i class="align-middle" data-feather="printer"></i> Tambah Servis
+                <i class="align-middle" data-feather="printer"></i> Cetak Laporan
               </button>
             </div>
           </form>

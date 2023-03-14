@@ -41,6 +41,11 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'is
 
     $routes->get('dashboard', 'Admin::dashboard');
 
+    $routes->group('produk', function ($routes) {
+        $routes->get('/', 'Produk');
+        $routes->add('tambah', 'Produk::form_tambah');
+    });
+
     // Servis
     $routes->group('servis', function ($routes) {
         $routes->get('/', 'DataServis::data_servis');
@@ -88,13 +93,13 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'is
     });
 
     $routes->group('pengguna', function ($routes) {
-        $routes->get('status/(:num)', 'Pengguna::set_status/$1');
+        $routes->get('status/(:num)', 'Pengguna::set_status/$1', ['filter' => 'isNotAdmin']);
 
-        $routes->add('tambah', 'Pengguna::tambah_pengguna');
+        $routes->add('tambah', 'Pengguna::tambah_pengguna', ['filter' => 'isNotAdmin']);
 
-        $routes->get('/', 'Pengguna::index');
-        $routes->get('(:num)', 'Pengguna::profile/$1');
-        $routes->put('(:num)', 'Pengguna::edit_profile');
+        $routes->get('/', 'Pengguna::index', ['filter' => 'isNotAdmin']);
+        $routes->get('(:num)', 'Pengguna::profile/$1', ['filter' => 'isNotAdmin']);
+        $routes->put('(:num)', 'Pengguna::edit_profile', ['filter' => 'isNotAdmin']);
 
         $routes->group('profile', function ($routes) {
             $routes->get('/', 'Pengguna::profile');

@@ -22,7 +22,9 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'isLoggedInAdmin' => \App\Filters\IsLoggedInAdminFilter::class,
-        'redirectIfLoggedInAdmin' => \App\Filters\RedirectIfLoggedInAdmin::class
+        'redirectIfLoggedInAdmin' => \App\Filters\RedirectIfLoggedInAdmin::class,
+        'isNotAdmin' => \App\Filters\IsNotAdmin::class
+
     ];
 
     /**

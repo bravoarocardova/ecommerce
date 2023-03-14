@@ -155,7 +155,7 @@
                 <tbody>
                   <?php foreach ($pengguna_admin as $r) : ?>
                     <?php
-                    if (!in_array($r['role'], ['kasir'])) {
+                    if (!in_array($r['role'], ['teknisi'])) {
                       continue;
                     }
                     ?>

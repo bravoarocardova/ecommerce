@@ -118,7 +118,7 @@
                       <img alt="" src="<?= base_url() . '/img/avatars/' . $profile_admin['foto'] ?>" class="rounded img-responsive mt-2" width="128" height="128" id="img-profile-upload">
                       <div class="mt-2">
                         <label for="foto">
-                          <span class="btn btn-primary"><i class="fas fa-upload"></i> Upload</span>
+                          <span class="btn btn-primary"><i class="fas fa-upload"></i> Pilih Foto</span>
                         </label>
                         <input type="file" name="foto" id="foto" class="d-none <?= validation_show_error('foto') ? 'is-invalid' : '' ?>" onchange="document.getElementById('img-profile-upload').src = window.URL.createObjectURL(this.files[0])">
                         <div class=" invalid-feedback">
