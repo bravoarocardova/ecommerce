@@ -43,6 +43,10 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'is
 
     $routes->group('produk', function ($routes) {
         $routes->get('/', 'Produk');
+        $routes->match(['get', 'put'], '(:num)', 'Produk::form_edit/$1');
+
+        $routes->delete('(:num)', 'Produk::delete_produk/$1');
+
         $routes->add('tambah', 'Produk::form_tambah');
     });
 

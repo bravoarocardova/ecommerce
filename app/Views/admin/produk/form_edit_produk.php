@@ -17,7 +17,7 @@
 
         <div class="list-group list-group-flush" role="tablist">
           <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#account" role="tab" aria-selected="true">
-            Tambah
+            Edit
           </a>
 
         </div>
@@ -36,11 +36,12 @@
             <div class="card-body">
               <form action="" method="POST" enctype="multipart/form-data">
                 <?= csrf_field() ?>
+                <input type="hidden" name="_method" value="put">
                 <div class="row">
                   <div class="col-md-8">
                     <div class="mb-3">
                       <label class="form-label" for="inputNamaProduk">Nama Produk</label>
-                      <input type="text" class="form-control <?= validation_show_error('nama_produk') ? 'is-invalid' : '' ?>" id="inputNamaProduk" name="nama_produk" placeholder="Nama Produk" value="<?= old('nama_produk') ?>">
+                      <input type="text" class="form-control <?= validation_show_error('nama_produk') ? 'is-invalid' : '' ?>" id="inputNamaProduk" name="nama_produk" placeholder="Nama Produk" value="<?= old('nama_produk', $data_produk['nama_produk']) ?>">
                       <div class="invalid-feedback">
                         <?= validation_show_error('nama_produk') ?>
                       </div>
@@ -49,7 +50,7 @@
                       <div class="col-md-6">
                         <div class="mb-3">
                           <label class="form-label" for="inputHargaProduk">Harga</label>
-                          <input type="number" class="form-control <?= validation_show_error('harga_produk') ? 'is-invalid' : '' ?>" id="inputHargaProduk" min="0" name="harga_produk" placeholder="Harga Produk" value="<?= old('harga_produk') ?>">
+                          <input type="number" class="form-control <?= validation_show_error('harga_produk') ? 'is-invalid' : '' ?>" id="inputHargaProduk" min="0" name="harga_produk" placeholder="Harga Produk" value="<?= old('harga_produk', $data_produk['harga_produk']) ?>">
                           <div class="invalid-feedback">
                             <?= validation_show_error('harga_produk') ?>
                           </div>
@@ -59,8 +60,8 @@
                         <div class="mb-3">
                           <label class="form-label" for="inputKondisi">Kondisi</label>
                           <select name="kondisi" id="inputKondisi" class="form-control <?= validation_show_error('kondisi') ? 'is-invalid' : '' ?>">
-                            <option value="Baru" <?php if (old('kondisi') == 'Baru') echo 'selected' ?>>Baru</option>
-                            <option value="Second" <?php if (old('kondisi') == 'Second') echo 'selected' ?>>Second</option>
+                            <option value="Baru" <?php if (old('kondisi', $data_produk['kondisi_produk']) == 'Baru') echo 'selected' ?>>Baru</option>
+                            <option value="Second" <?php if (old('kondisi', $data_produk['kondisi_produk']) == 'Second') echo 'selected' ?>>Second</option>
                           </select>
                           <div class="invalid-feedback">
                             <?= validation_show_error('kondisi') ?>
@@ -72,7 +73,7 @@
                       <div class="col-md-6">
                         <div class="mb-3">
                           <label class="form-label" for="inputStok">Stok</label>
-                          <input type="number" class="form-control <?= validation_show_error('stok') ? 'is-invalid' : '' ?>" id="inputStok" min="0" name="stok" placeholder="Stok" value="<?= old('stok') ?>">
+                          <input type="number" class="form-control <?= validation_show_error('stok') ? 'is-invalid' : '' ?>" id="inputStok" min="0" name="stok" placeholder="Stok" value="<?= old('stok', $data_produk['stok_produk']) ?>">
                           <div class="invalid-feedback">
                             <?= validation_show_error('stok') ?>
                           </div>
@@ -81,7 +82,7 @@
                       <div class="col-md-6">
                         <div class="mb-3">
                           <label class="form-label" for="inputBerat">Berat (g)</label>
-                          <input type="number" class="form-control <?= validation_show_error('berat') ? 'is-invalid' : '' ?>" id="inputBerat" min="0" name="berat" placeholder="Berat" value="<?= old('berat') ?>">
+                          <input type="number" class="form-control <?= validation_show_error('berat') ? 'is-invalid' : '' ?>" id="inputBerat" min="0" name="berat" placeholder="Berat" value="<?= old('berat', $data_produk['berat_produk']) ?>">
                           <div class="invalid-feedback">
                             <?= validation_show_error('berat') ?>
                           </div>
@@ -90,7 +91,7 @@
                     </div>
                     <div class="mb-3">
                       <label class="form-label" for="inputDeskripsi">Deskripsi</label>
-                      <textarea class="form-control <?= validation_show_error('deskripsi') ? 'is-invalid' : '' ?>" name="deskripsi" id="inputDeskripsi" cols="30" rows="5"><?= old('deskripsi') ?></textarea>
+                      <textarea class="form-control <?= validation_show_error('deskripsi') ? 'is-invalid' : '' ?>" name="deskripsi" id="inputDeskripsi" cols="30" rows="5"><?= old('deskripsi', $data_produk['deskripsi_produk']) ?></textarea>
                       <div class="invalid-feedback">
                         <?= validation_show_error('deskripsi') ?>
                       </div>

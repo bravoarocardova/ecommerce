@@ -40,6 +40,7 @@
             </div>
             <div class="card-body">
               <form action="" method="POST" enctype="multipart/form-data">
+                <?= csrf_field() ?>
                 <input type="hidden" name="_method" value="PUT">
                 <input type="hidden" name="edit" value="profil">
                 <?php if (isAdmininstrator() && session()->get('admin')['id_admin'] != $profile_admin['id_admin']) : ?>
@@ -151,6 +152,7 @@
               <h5 class="card-title">Password</h5>
 
               <form action="" method="POST">
+                <?= csrf_field() ?>
                 <input type="hidden" name="_method" value="PUT">
                 <input type="hidden" name="edit" value="password">
                 <?php if (isAdmininstrator() && session()->get('admin')['id_admin'] != $profile_admin['id_admin']) : ?>

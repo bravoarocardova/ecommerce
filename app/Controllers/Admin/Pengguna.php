@@ -183,7 +183,7 @@ class Pengguna extends BaseController
     }
     $dataAdmin = $this->adminM->find($id);
     if ($dataAdmin['foto'] != 'default.jpg') {
-      unlink(base_url() . '/img/avatars/' . $dataAdmin['foto']);
+      unlink(FCPATH . '/img/avatars/' . $dataAdmin['foto']);
     }
     $hapus = $this->adminM->delete($id);
     if ($hapus) {
@@ -291,7 +291,7 @@ class Pengguna extends BaseController
             $foto->move('img/avatars/', $newFoto);
 
             if ($dataLama['foto'] != 'default.jpg') {
-              unlink(base_url() . '/img/avatars/' . $dataLama['foto']);
+              unlink(FCPATH . '/img/avatars/' . $dataLama['foto']);
             }
           }
 

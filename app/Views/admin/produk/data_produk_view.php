@@ -33,6 +33,7 @@
                 <th>Harga Produk</th>
                 <th>Kondisi</th>
                 <th>Stok</th>
+                <th>Berat (g)</th>
                 <th>Deskripsi</th>
                 <th></th>
               </tr>
@@ -49,14 +50,15 @@
                   <td>Rp. <?= number_format($r['harga_produk']) ?></td>
                   <td><?= $r['kondisi_produk'] ?></td>
                   <td><?= $r['stok_produk'] ?></td>
+                  <td><?= $r['berat_produk'] ?></td>
                   <td class="w-25"><?= substr($r['deskripsi_produk'], 0, 50) ?>....</td>
                   <td class="d-print-none">
-                    <a href="" class="btn btn-warning" title="Edit">
+                    <a href="<?= base_url() . '/admin/produk/' . $r['id_produk'] ?>" class="btn btn-warning" title="Edit">
                       <i class="align-middle" data-feather="edit-3"></i>
                       <!-- Edit -->
                     </a>
                     |
-                    <form action="<?= base_url() . '/admin/servis/' ?>" method="POST" class="d-inline">
+                    <form action="<?= base_url() . '/admin/produk/' . $r['id_produk'] ?>" method="POST" class="d-inline">
                       <?= csrf_field() ?>
                       <input type="hidden" name="_method" value="DELETE">
                       <button type="submit" class="btn btn-danger" title="Delete" onclick="return confirm('Apakah anda yakin?')">
