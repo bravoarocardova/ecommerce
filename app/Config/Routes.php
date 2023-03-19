@@ -50,6 +50,11 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'is
         $routes->add('tambah', 'Produk::form_tambah');
     });
 
+    $routes->group('penjualan', function ($routes) {
+        $routes->get('/', 'Penjualan');
+        // $routes->get('', '');
+    });
+
     // Servis
     $routes->group('servis', function ($routes) {
         $routes->get('/', 'DataServis::data_servis');
