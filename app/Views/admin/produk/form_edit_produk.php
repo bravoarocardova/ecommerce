@@ -99,7 +99,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="text-center mb-3">
-                      <img alt="" src="" class="rounded img-responsive mt-2" width="128" height="128" id="img-profile-upload">
+                      <img alt="" src="<?= base_url() . '/img/produk/' . $data_produk['foto_produk'] ?>" class="rounded img-responsive mt-2" width="128" height="128" id="img-profile-upload">
                       <div class="mt-2">
                         <label for="foto">
                           <span class="btn btn-primary"><i class="fas fa-upload"></i> Pilih Foto</span>

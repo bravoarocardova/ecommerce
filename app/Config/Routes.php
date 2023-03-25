@@ -11,7 +11,7 @@ $routes = Services::routes();
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Home');
+$routes->setDefaultController('Pelanggan\Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -29,7 +29,22 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+
+// routes group pelanggan
+$routes->group('/', ['namespace' => 'App\Controllers\Pelanggan'], function ($routes) {
+    $routes->get('', 'Home');
+
+    $routes->group('produk', function ($routes) {
+        $routes->get('/', 'Produk');
+        $routes->get('(:segment)', 'Produk::detail_produk/$1');
+    });
+
+    $routes->group('auth', function ($routes) {
+        $routes->get('login', 'Auth::login');
+        $routes->get('register', 'Auth::register');
+    });
+});
+
 
 // route group admin
 
