@@ -37,13 +37,13 @@
             <div class="collapse navbar-collapse" id="navigation">
               <ul class="navbar-nav mx-auto ms-xl-auto">
                 <li class="nav-item">
-                  <a class="nav-link me-2" href="<?= base_url() ?>">
+                  <a class="nav-link me-2 text-danger" href="<?= base_url() ?>">
                     <i class="fas fa-arrow-left opacity-6 text-dark me-1"></i>
                     Kembali
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link me-2" href="<?= base_url('auth/register') ?>">
+                  <a class="nav-link me-2 text-info" href="<?= base_url('auth/register') ?>">
                     <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
                     Register
                   </a>
@@ -76,7 +76,7 @@
                   <?= session()->get('msg') ?>
                 </div>
                 <div class="card-body">
-                  <form role="form" method="POST" action="<?= base_url('auth/register_proses') ?>">
+                  <form role="form" method="POST" action="<?= base_url('auth/prosesregister') ?>">
                     <div class="row">
                       <div class="col-md-6 col-12">
                         <label>Nama Lengkap</label>

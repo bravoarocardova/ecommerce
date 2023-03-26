@@ -37,4 +37,8 @@
     height: 30vh;
     object-fit: cover;
   }
+
+  .avatar {
+    width: 70px;
+  }
 </style>

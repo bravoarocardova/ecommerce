@@ -37,13 +37,13 @@
             <div class="collapse navbar-collapse" id="navigation">
               <ul class="navbar-nav mx-auto ms-xl-auto">
                 <li class="nav-item">
-                  <a class="nav-link me-2" href="<?= base_url() ?>">
+                  <a class="nav-link me-2 text-danger" href="<?= base_url() ?>">
                     <i class="fas fa-arrow-left opacity-6 text-dark me-1"></i>
                     Kembali
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link me-2" href="<?= base_url('auth/register') ?>">
+                  <a class="nav-link me-2 text-info" href="<?= base_url('auth/register') ?>">
                     <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
                     Register
                   </a>
@@ -76,7 +76,7 @@
                   <?php echo session()->get('msg') ?>
                 </div>
                 <div class="card-body">
-                  <form role="form" method="POST" action="<?= base_url('auth/proses') ?>">
+                  <form role="form" method="POST" action="<?= base_url('auth/proseslogin') ?>">
                     <label>Username</label>
                     <div class="mb-3">
                       <input type="text" name="username_pelanggan" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="email-addon">

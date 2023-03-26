@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 15 Mar 2023 pada 21.59
+-- Waktu pembuatan: 26 Mar 2023 pada 22.42
 -- Versi server: 8.0.32-0ubuntu0.22.04.2
 -- Versi PHP: 8.1.2-1ubuntu2.11
 
@@ -132,6 +132,33 @@ INSERT INTO `jasa_servis` (`id_jasa_servis`, `nama_jasa`, `biaya_jasa`, `kategor
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `pelanggan`
+--
+
+CREATE TABLE `pelanggan` (
+  `id_pelanggan` int NOT NULL,
+  `username_pelanggan` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `email_pelanggan` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `nama_pelanggan` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `telepon_pelanggan` varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `foto_pelanggan` varchar(100) NOT NULL,
+  `is_active` enum('0','1') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `pelanggan`
+--
+
+INSERT INTO `pelanggan` (`id_pelanggan`, `username_pelanggan`, `email_pelanggan`, `password`, `nama_pelanggan`, `telepon_pelanggan`, `foto_pelanggan`, `is_active`, `created_at`, `updated_at`) VALUES
+(5, 'fros', 'fros@gmail.com', '$2y$10$7/F1.JfpZ/BEfxxL6ma3GuX7QuFxYFl4RHxTvIiQer/dow1O/Fn3G', 'fros Gaming', '08909093', '', '1', '2022-11-14 14:09:20', '0000-00-00 00:00:00'),
+(9, 'arnio', 'arnio@gmail.com', '$2y$10$7/F1.JfpZ/BEfxxL6ma3GuX7QuFxYFl4RHxTvIiQer/dow1O/Fn3G', 'arnio', '082349844', '', '1', '2022-12-02 12:37:23', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `produk`
 --
 
@@ -153,9 +180,10 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id_produk`, `nama_produk`, `harga_produk`, `foto_produk`, `kondisi_produk`, `deskripsi_produk`, `stok_produk`, `berat_produk`, `created_at`, `updated_at`) VALUES
-(102, 'minolta ', 175000, 'produk-2212021669981651.jpg', 'Baru', 'Kamera Analog Minolta x700\r\n\r\nkamera analog x700 + lensa mc rokkor 28mm f2.8 ', 1, 1, '0000-00-00 00:00:00', '2023-03-15 14:55:53'),
+(102, 'Minolta Kamera Analog Minolta x700\n\nkamera analog x700 + lensa mc rokkor 28mm f2.8 ', 175000, '1679572503_e76b832c761b2fa01bb4.png', 'Baru', 'Kamera Analog Minolta x700\n\nkamera analog x700 + lensa mc rokkor 28mm f2.8 ', 1, 1, '2023-03-15 08:07:23', '2023-03-23 11:55:03'),
 (107, 'f aja', 2134, '1678805681_1800e8f96d2dab4ea2b9.png', 'Second', '23123', 1, 0, '2023-03-14 14:54:41', '2023-03-15 14:41:40'),
-(108, 'fdsa', 2321, '1678889981_05b7d128fd1de1c75a7b.png', 'Baru', '1234', 12, 0, '2023-03-15 14:19:41', '2023-03-15 14:19:41');
+(108, 'fdsa', 2321, '1678889981_05b7d128fd1de1c75a7b.png', 'Baru', '1234', 12, 2, '2023-03-15 14:19:41', '2023-03-23 11:53:15'),
+(109, 'fdsa', 1111, '1679572388_0f20e5230578a7fea798.png', 'Baru', '1111', 11, 2, '2023-03-23 11:53:08', '2023-03-23 11:53:08');
 
 -- --------------------------------------------------------
 
@@ -212,6 +240,12 @@ ALTER TABLE `jasa_servis`
   ADD PRIMARY KEY (`id_jasa_servis`);
 
 --
+-- Indeks untuk tabel `pelanggan`
+--
+ALTER TABLE `pelanggan`
+  ADD PRIMARY KEY (`id_pelanggan`);
+
+--
 -- Indeks untuk tabel `produk`
 --
 ALTER TABLE `produk`
@@ -241,10 +275,16 @@ ALTER TABLE `jasa_servis`
   MODIFY `id_jasa_servis` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT untuk tabel `pelanggan`
+--
+ALTER TABLE `pelanggan`
+  MODIFY `id_pelanggan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `id_produk` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

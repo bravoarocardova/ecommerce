@@ -40,8 +40,15 @@ $routes->group('/', ['namespace' => 'App\Controllers\Pelanggan'], function ($rou
     });
 
     $routes->group('auth', function ($routes) {
+        $routes->addRedirect('', 'auth/login');
+
         $routes->get('login', 'Auth::login');
+        $routes->post('proseslogin', 'Auth::proses_login');
+
         $routes->get('register', 'Auth::register');
+        $routes->post('prosesregister', 'Auth::proses_register');
+
+        $routes->get('logout', 'Auth::logout');
     });
 });
 
