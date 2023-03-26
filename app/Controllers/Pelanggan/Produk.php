@@ -27,7 +27,7 @@ class Produk extends BaseController
     }
 
     return view(
-      'pelanggan/produk',
+      'pelanggan/produk/data_produk',
       [
         'produk' => $produk,
         'pencarian' => $this->request->getGet('cari') ?? 'Produk'
@@ -42,7 +42,7 @@ class Produk extends BaseController
       throw new \CodeIgniter\Exceptions\PageNotFoundException($id . ' Tidak Ditemukan');
     }
     return view(
-      'pelanggan/detail_produk',
+      'pelanggan/produk/detail_produk',
       [
         'produk' => $produk,
         'produk_lain' => $this->produkM->orderBy('nama_produk', 'RANDOM')->findAll(8)

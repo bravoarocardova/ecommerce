@@ -73,18 +73,20 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-12">
-            <a href="" class="btn btn-warning">
-              <i class="fa fa-cart-plus opacity-10"></i>
-              Tambahkan Ke keranjang
-            </a>
-            <a href="" class="btn btn-primary">
-              <i class="fa fa-money-bill opacity-10"></i>
-              Beli Sekarang
-            </a>
+        <?php if (session()->get('pelanggan') != null) : ?>
+          <div class="row">
+            <div class="col-12">
+              <a href="" class="btn btn-warning">
+                <i class="fa fa-cart-plus opacity-10"></i>
+                Tambahkan Ke keranjang
+              </a>
+              <a href="" class="btn btn-primary">
+                <i class="fa fa-money-bill opacity-10"></i>
+                Beli Sekarang
+              </a>
+            </div>
           </div>
-        </div>
+        <?php endif ?>
       </div>
     </div>
 

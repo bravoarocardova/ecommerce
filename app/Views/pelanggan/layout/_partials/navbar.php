@@ -24,6 +24,14 @@
               </a>
             </li>
 
+          <?php elseif (session()->get('admin') != null) : ?>
+            <li class="nav-item d-flex align-items-center">
+              <a href="<?= base_url('admin/dashboard') ?>" class="nav-link text-body font-weight-bold px-0">
+                <!-- <i class="fa fa-user me-sm-1 text-white"></i> -->
+                <span class="text-white">Dashboard</span>
+              </a>
+            </li>
+
           <?php else : ?>
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body font-weight-bold px-0" id="dropdownMenuButton" data-bs-toggle="dropdown">
@@ -35,34 +43,34 @@
                   <a class="dropdown-item border-radius-md" href="<?= ("this->session->userdata('id_admin')" != null) ? base_url('admin/dashboard') : base_url('pengguna/profil/') ?>">
                     <div class="d-flex py-1">
                       <div class="my-auto">
-                        <img src="<?= (!in_array(session()->get('pelanggan')['foto'] ?? session()->get('admin')['foto'], ['', null])) ?
-                                    base_url('img/avatars/') . session()->get('foto') : base_url('img/avatars/avatar.png') ?>" class="avatar avatar-sm  me-3">
+                        <img src="<?= (!in_array(session()->get('pelanggan')['foto'], ['', null])) ?
+                                    base_url('img/avatars/') . session()->get('pelanggan')['foto'] : base_url('img/avatars/avatar.png') ?>" class="avatar avatar-sm  me-3">
                       </div>
                       <div class="d-flex flex-column justify-content-center">
                         <h6 class="text-sm font-weight-normal mb-1">
-                          <span class="font-weight-bold"><?= session()->get('pelanggan')['nama'] ?? session()->get('admin')['nama'] ?></span>
+                          <span class="font-weight-bold"><?= session()->get('pelanggan')['nama'] ?></span>
                         </h6>
                         <p class="text-xs text-secondary mb-0">
                           <i class="fa fa-briefcase me-1"></i>
-                          <?= session()->get('pelanggan')['role'] ?? session()->get('admin')['role'] ?>
+                          <?= session()->get('pelanggan')['role'] ?>
                         </p>
                       </div>
                     </div>
                   </a>
                 </li>
                 <li class="mb-2">
-                  <a class="dropdown-item border-radius-md " href="<?= ("this->session->userdata('id_admin')" != null) ? base_url('admin/dashboard') : base_url('pengguna/profil/') ?>">
+                  <a class="dropdown-item border-radius-md " href="<?= base_url('dashboard/') ?>">
                     Dashboard
                   </a>
                 </li>
                 <li class="mb-2">
-                  <a class="dropdown-item border-radius-md " href="<?= ("this->session->userdata('id_admin')" != null) ? base_url('admin/dashboard') : base_url('pengguna/profil/') ?>">
+                  <a class="dropdown-item border-radius-md " href="<?= base_url('pesanan/') ?>">
                     Pesanan Saya
                     <span class=" badge rounded-pill bg-danger">2</span>
                   </a>
                 </li>
                 <li class="mb-2">
-                  <a class="dropdown-item border-radius-md " href="<?= ("this->session->userdata('id_admin')" != null) ? base_url('admin/dashboard') : base_url('pengguna/profil/') ?>">
+                  <a class="dropdown-item border-radius-md " href="<?= base_url('profile/') ?>">
                     Profile
                   </a>
                 </li>

@@ -23,7 +23,8 @@ class Filters extends BaseConfig
         'secureheaders' => SecureHeaders::class,
         'isLoggedInAdmin' => \App\Filters\IsLoggedInAdminFilter::class,
         'redirectIfLoggedInAdmin' => \App\Filters\RedirectIfLoggedInAdmin::class,
-        'isNotAdmin' => \App\Filters\IsNotAdmin::class
+        'isNotAdmin' => \App\Filters\IsNotAdmin::class,
+        'redirectIfLoggedInPelanggan' => \App\Filters\RedirectIfLoggedInPelanggan::class,
 
     ];
 
@@ -65,6 +66,7 @@ class Filters extends BaseConfig
      * 'isLoggedIn' => ['before' => ['account/*', 'profiles/*']]
      */
     public array $filters = [
-        'redirectIfLoggedInAdmin' => ['before' => ['admin/auth/login']]
+        'redirectIfLoggedInAdmin' => ['before' => ['admin/auth/login']],
+        'redirectIfLoggedInPelanggan' => ['before' => ['auth/login', 'auth/register', 'auth/proseslogin', 'auth/prosesregister']],
     ];
 }
