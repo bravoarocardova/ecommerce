@@ -59,6 +59,80 @@ class auth extends BaseController
 
   public function proses_register()
   {
+    if (!$this->validate([
+      'username_pelanggan' => [
+        'label' => 'Username Pelanggan',
+        'rules' => 'required|min_length[4]|max_length[100]|is_unique[pelanggan.username_pelanggan]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+          'is_unique' => '{field} Sudah Dipakai',
+        ],
+      ],
+      'nama_pelanggan' => [
+        'label' => 'Nama Pelanggan',
+        'rules' => 'required|min_length[4]|max_length[100]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+        ],
+      ],
+      'email_pelanggan' => [
+        'label' => 'Email Pelanggan',
+        'rules' => 'required|min_length[4]|max_length[100]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+        ],
+      ],
+      'telepon_pelanggan' => [
+        'label' => 'Telepon Pelanggan',
+        'rules' => 'required|min_length[4]|max_length[100]|numeric',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+          'numeric' => '{field} Harus angka',
+        ],
+      ],
+      'password' => [
+        'label' => 'Password',
+        'rules' => 'required|min_length[4]|max_length[100]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+        ],
+      ],
+      'password_verify' => [
+        'label' => 'Password Verify',
+        'rules' => 'required|min_length[4]|max_length[100]|matches[password]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+          'matches' => '{field} tidak cocok'
+        ],
+      ],
+    ])) {
+      return redirect()->back()->withInput();
+    } else {
+
+      $post = $this->request->getPost();
+      $data = [
+        'username_pelanggan' => $post['username_pelanggan'],
+        'email_pelanggan' => $post['email_pelanggan'],
+        'password' => password_hash($post['password'], PASSWORD_DEFAULT),
+        'nama_pelanggan' => $post['nama_pelanggan'],
+        'telepon_pelanggan' => $post['telepon_pelanggan'],
+        'is_active' => 1,
+      ];
+      $this->pelangganM->save($data);
+      return redirect()->to(base_url() . '/auth/login')->with('msg', myAlert('success', 'Registrasi Berhasil, Silahkan login.'));
+    }
   }
 
   public function logout()

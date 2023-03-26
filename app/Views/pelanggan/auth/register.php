@@ -81,13 +81,19 @@
                       <div class="col-md-6 col-12">
                         <label>Nama Lengkap</label>
                         <div class="mb-3">
-                          <input required type="text" name="nama_pelanggan" class="form-control" placeholder="Nama Lengkap" aria-label="Nama Lengkap">
+                          <input required type="text" name="nama_pelanggan" class="form-control <?= validation_show_error('nama_pelanggan') ? 'is-invalid' : '' ?>" placeholder="Nama Lengkap" aria-label="Nama Lengkap" value="<?= old('nama_pelanggan') ?>">
+                          <div class="invalid-feedback">
+                            <?= validation_show_error('nama_pelanggan') ?>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-6 col-12">
                         <label>Username</label>
                         <div class="mb-3">
-                          <input required type="text" name="username_pelanggan" class="form-control" placeholder="Username" aria-label="Username">
+                          <input required type="text" name="username_pelanggan" class="form-control <?= validation_show_error('username_pelanggan') ? 'is-invalid' : '' ?>" placeholder="Username" aria-label="Username" value="<?= old('username_pelanggan') ?>">
+                          <div class="invalid-feedback">
+                            <?= validation_show_error('username_pelanggan') ?>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -95,13 +101,19 @@
                       <div class="col-md-6 col-12">
                         <label>Email</label>
                         <div class="mb-3">
-                          <input required type="email" name="email_pelanggan" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
+                          <input required type="email" name="email_pelanggan" class="form-control <?= validation_show_error('email_pelanggan') ? 'is-invalid' : '' ?>" placeholder="Email" aria-label="Email" aria-describedby="email-addon" value="<?= old('email_pelanggan') ?>">
+                          <div class="invalid-feedback">
+                            <?= validation_show_error('email_pelanggan') ?>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-6 col-12">
                         <label>No Telepon</label>
                         <div class="mb-3">
-                          <input required type="text" name="telepon_pelanggan" class="form-control" placeholder="No Telepon" aria-label="NoTelepon">
+                          <input required type="text" name="telepon_pelanggan" class="form-control <?= validation_show_error('telepon_pelanggan') ? 'is-invalid' : '' ?>" placeholder="No Telepon" aria-label="NoTelepon" value="<?= old('telepon_pelanggan') ?>">
+                          <div class="invalid-feedback">
+                            <?= validation_show_error('telepon_pelanggan') ?>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -110,13 +122,19 @@
                       <div class="col-md-6 col-12">
                         <label>Password</label>
                         <div class="mb-3">
-                          <input required type="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
+                          <input required type="password" name="password" class="form-control  <?= validation_show_error('password') ? 'is-invalid' : '' ?>" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
+                          <div class="invalid-feedback">
+                            <?= validation_show_error('password') ?>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-6 col-12">
                         <label>Password Konfirmasi</label>
                         <div class="mb-3">
-                          <input required type="password" name="password_konfirmasi" class="form-control" placeholder="Password Konfirmasi" aria-label="Password" aria-describedby="password-addon">
+                          <input required type="password" name="password_verify" class="form-control  <?= validation_show_error('password_verify') ? 'is-invalid' : '' ?>" placeholder="Password Konfirmasi" aria-label="Password" aria-describedby="password-addon">
+                          <div class="invalid-feedback">
+                            <?= validation_show_error('password_verify') ?>
+                          </div>
                         </div>
                       </div>
                     </div>
