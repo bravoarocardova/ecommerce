@@ -78,10 +78,13 @@
                 </li>
               </ul>
             </li>
+            <?php
+            $cart = \Config\Services::cart();
+            ?>
             <li class="nav-item d-flex align-items-center ms-4">
-              <a href="javascript:;" class="nav-link text-body font-weight-bold px-0 position-relative" id="dropdownMenuButton" data-bs-toggle="dropdown">
+              <a href="<?= base_url() . '/keranjang' ?>" class="nav-link text-body font-weight-bold px-0 position-relative" id="keranjang">
                 <i class="fa fa-shopping-cart me-sm-1 text-white"></i>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">2</span>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"><?= $cart->totalItems() ?></span>
               </a>
             </li>
           <?php endif ?>

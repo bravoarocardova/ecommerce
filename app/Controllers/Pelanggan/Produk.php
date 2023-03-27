@@ -49,4 +49,43 @@ class Produk extends BaseController
       ]
     );
   }
+
+  public function keranjang()
+  {
+    return view(
+      'pelanggan/keranjang',
+      [
+        'cart' => \Config\Services::cart(),
+        'produk_lain' => $this->produkM->orderBy('nama_produk', 'RANDOM')->findAll(8)
+      ]
+    );
+  }
+
+  public function tambah_keranjang()
+  {
+    $cart = \Config\Services::cart();
+
+    $post = $this->request->getPost();
+
+    // Insert an array of values
+    $cart->insert(array(
+      // 'id' => 1,
+      'id'      => $post['id'],
+      'qty'     => $post['qty'],
+      'price'   => $post['price'],
+      'name'    => $post['name'],
+      'options' => array('foto' => $post['foto'], 'berat' => $post['berat'], 'kondisi' => $post['kondisi']),
+    ));
+
+    return redirect()->back()->with('msg', myAlert('success', 'Berhasil ditambahkan ke keranjang.'));
+  }
+
+  public function hapus_keranjang($rowid)
+  {
+    $cart = \Config\Services::cart();
+
+    $cart->remove($rowid);
+
+    return redirect()->back()->with('msg', myAlert('success', 'Berhasil dihapus dari keranjang.'));
+  }
 }

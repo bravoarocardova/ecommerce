@@ -24,6 +24,10 @@
 
     <a href="javascript:history.back()" class="btn btn-danger"><i class="fa fa-arrow-left opacity-10"></i> Kembali</a>
 
+    <?php if (session()->has('msg')) : ?>
+      <?= session()->getFlashdata('msg') ?>
+    <?php endif ?>
+
     <div class="row my-3">
       <div class="col-md-4">
         <img src="<?= base_url() . '/img/produk/' . $produk['foto_produk'] ?>" class="img-fluid rounded-start" alt="Cover">
@@ -74,28 +78,36 @@
         </div>
 
         <?php if (session()->get('pelanggan') != null) : ?>
-          <div class="border p-4">
-            <div class="row mb-3">
-              <div class="col-6">
-                <div class="input-group">
-                  <label for="qty" class="input-group-text">Jumlah</label>
-                  <input type="number" class="form-control" min='0' max="<?= $produk['stok_produk'] ?>" name="qty" id="qty">
+          <form action="<?= base_url() . '/keranjang' ?>" method="post">
+            <input type="hidden" name="id" value="<?= $produk['id_produk'] ?>">
+            <input type="hidden" name="price" value="<?= $produk['harga_produk'] ?>">
+            <input type="hidden" name="name" value="<?= $produk['nama_produk'] ?>">
+            <input type="hidden" name="foto" value="<?= $produk['foto_produk'] ?>">
+            <input type="hidden" name="berat" value="<?= $produk['berat_produk'] ?>">
+            <input type="hidden" name="kondisi" value="<?= $produk['kondisi_produk'] ?>">
+            <div class="border p-4">
+              <div class="row mb-3">
+                <div class="col-6">
+                  <div class="input-group">
+                    <label for="qty" class="input-group-text">Jumlah</label>
+                    <input required type="number" class="form-control" min='0' max="<?= $produk['stok_produk'] ?>" name="qty" id="qty" value="1">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <button type="submit" class="btn btn-warning">
+                    <i class="fa fa-cart-plus opacity-10"></i>
+                    Tambahkan Ke keranjang
+                  </button>
+                  <a href="" class="btn btn-primary">
+                    <i class="fa fa-money-bill opacity-10"></i>
+                    Beli Sekarang
+                  </a>
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-12">
-                <a href="" class="btn btn-warning">
-                  <i class="fa fa-cart-plus opacity-10"></i>
-                  Tambahkan Ke keranjang
-                </a>
-                <a href="" class="btn btn-primary">
-                  <i class="fa fa-money-bill opacity-10"></i>
-                  Beli Sekarang
-                </a>
-              </div>
-            </div>
-          </div>
+          </form>
         <?php endif ?>
       </div>
     </div>

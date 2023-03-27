@@ -40,6 +40,12 @@ $routes->group('/', ['namespace' => 'App\Controllers\Pelanggan'], function ($rou
         $routes->get('(:segment)', 'Produk::detail_produk/$1');
     });
 
+    $routes->group('keranjang', function ($routes) {
+        $routes->get('/', 'Produk::keranjang');
+        $routes->post('', 'Produk::tambah_keranjang');
+        $routes->delete('(:any)', 'Produk::hapus_keranjang/$1');
+    });
+
     $routes->group('profile', function ($routes) {
         $routes->get('/', 'Home::profile');
         $routes->put('/', 'Home::edit_profile');
