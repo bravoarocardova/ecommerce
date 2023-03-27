@@ -40,11 +40,10 @@
               </a>
               <ul class="dropdown-menu  dropdown-menu-end  px-3 py-3 me-sm-n0" aria-labelledby="dropdownMenuButton">
                 <li class="mb-2">
-                  <a class="dropdown-item border-radius-md" href="<?= ("this->session->userdata('id_admin')" != null) ? base_url('admin/dashboard') : base_url('pengguna/profil/') ?>">
+                  <a class="dropdown-item border-radius-md" href="<?= base_url('profile/') ?>">
                     <div class="d-flex py-1">
                       <div class="my-auto">
-                        <img src="<?= (!in_array(session()->get('pelanggan')['foto'], ['', null])) ?
-                                    base_url('img/avatars/') . session()->get('pelanggan')['foto'] : base_url('img/avatars/avatar.png') ?>" class="avatar avatar-sm  me-3">
+                        <img src="<?= base_url() . '/img/avatars/' . session()->get('pelanggan')['foto'] ?>" class="avatar avatar-sm  me-3">
                       </div>
                       <div class="d-flex flex-column justify-content-center">
                         <h6 class="text-sm font-weight-normal mb-1">

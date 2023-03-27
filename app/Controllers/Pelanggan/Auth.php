@@ -128,6 +128,7 @@ class auth extends BaseController
         'password' => password_hash($post['password'], PASSWORD_DEFAULT),
         'nama_pelanggan' => $post['nama_pelanggan'],
         'telepon_pelanggan' => $post['telepon_pelanggan'],
+        'foto' => 'default.jpg',
         'is_active' => 1,
       ];
       $this->pelangganM->save($data);
