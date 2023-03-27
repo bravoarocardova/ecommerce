@@ -74,16 +74,26 @@
         </div>
 
         <?php if (session()->get('pelanggan') != null) : ?>
-          <div class="row">
-            <div class="col-12">
-              <a href="" class="btn btn-warning">
-                <i class="fa fa-cart-plus opacity-10"></i>
-                Tambahkan Ke keranjang
-              </a>
-              <a href="" class="btn btn-primary">
-                <i class="fa fa-money-bill opacity-10"></i>
-                Beli Sekarang
-              </a>
+          <div class="border p-4">
+            <div class="row mb-3">
+              <div class="col-6">
+                <div class="input-group">
+                  <label for="qty" class="input-group-text">Jumlah</label>
+                  <input type="number" class="form-control" min='0' max="<?= $produk['stok_produk'] ?>" name="qty" id="qty">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <a href="" class="btn btn-warning">
+                  <i class="fa fa-cart-plus opacity-10"></i>
+                  Tambahkan Ke keranjang
+                </a>
+                <a href="" class="btn btn-primary">
+                  <i class="fa fa-money-bill opacity-10"></i>
+                  Beli Sekarang
+                </a>
+              </div>
             </div>
           </div>
         <?php endif ?>

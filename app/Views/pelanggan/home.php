@@ -44,7 +44,7 @@
             </div>
           </div>
           <div class="row">
-            <p class="text-secondary fw-bold">Sewa Murah</p>
+            <p class="text-secondary fw-bold">Harga Murah</p>
           </div>
         </div>
         <div class="col-6 col-md-4">
@@ -54,7 +54,7 @@
             </div>
           </div>
           <div class="row text-center">
-            <p class="text-secondary fw-bold">Kamera Terbaik</p>
+            <p class="text-secondary fw-bold">Produk Terbaik</p>
           </div>
         </div>
         <div class="col-6 col-md-4">

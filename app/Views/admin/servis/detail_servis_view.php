@@ -98,7 +98,7 @@
             </div>
             <div class="col">
               <div class="mb-3">
-                <h5>Nama Pelanggan</h5>
+                <h5>No Telp Pelanggan</h5>
                 <p><?= $detail_servis['no_telp_pelanggan'] ?></p>
               </div>
             </div>
