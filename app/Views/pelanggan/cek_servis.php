@@ -3,7 +3,7 @@
 
 <div class="bg-light mb-4">
   <div class="container">
-    <form action="<?= base_url() . '/cekservis' ?>" method="post">
+    <form action="<?= base_url() . '/cekservis' ?>" method="get">
       <div class="row d-flex justify-content-center mb-n4">
         <div class="col-6 p-4">
           <div class="input-group ">

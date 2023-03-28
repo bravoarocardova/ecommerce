@@ -41,11 +41,10 @@ class Home extends BaseController
 
   public function cekservis()
   {
-    $noTransaksi = null;
+    $noTransaksi = $this->request->getGet('no_transaksi');
     $detail_servis = [];
     $barang = [];
-    if ($this->request->is('post')) {
-      $noTransaksi = $this->request->getPost('no_transaksi');
+    if ($noTransaksi != null) {
       $detail_servis = $this->dataServisM->select('data_servis.*, admin.nama')->join('admin', 'data_servis.teknisi = admin.id_admin', 'LEFT')->find($noTransaksi);
 
       if ($detail_servis == null) {
