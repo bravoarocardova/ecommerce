@@ -33,7 +33,7 @@ $routes->set404Override();
 // routes group pelanggan
 $routes->group('/', ['namespace' => 'App\Controllers\Pelanggan'], function ($routes) {
     $routes->get('', 'Home');
-    $routes->add('cekservis', 'Home::cekservis');
+    $routes->get('cekservis', 'Home::cekservis');
 
     $routes->group('produk', function ($routes) {
         $routes->get('/', 'Produk');
