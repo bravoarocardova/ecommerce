@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 26 Mar 2023 pada 22.42
+-- Waktu pembuatan: 15 Apr 2023 pada 23.42
 -- Versi server: 8.0.32-0ubuntu0.22.04.2
 -- Versi PHP: 8.1.2-1ubuntu2.11
 
@@ -74,7 +74,8 @@ INSERT INTO `barang_servis` (`kd_barang_servis`, `no_transaksi`, `nama_barang_se
 ('KBS00000003', 'TSV00000002', 'Barang 12', '1234', '1234', '2023-02-23 15:20:58', '2023-02-23 15:20:58'),
 ('KBS00000004', 'TSV00000003', 'Barang 1', 'casan, tas, laptop', 'tidak bisa hidup', '2023-02-24 15:14:09', '2023-02-24 15:14:09'),
 ('KBS00000005', 'TSV00000006', 'Barang 1', 'casan, laptop', 'tidak bisa hidup', '2023-03-10 09:49:54', '2023-03-10 09:49:54'),
-('KBS00000006', 'TSV00000005', 'Barang 1', 'casan, laptop', 'tidak bisa hidup', '2023-03-10 09:58:26', '2023-03-10 09:58:26');
+('KBS00000006', 'TSV00000005', 'Barang 1', 'casan, laptop', 'tidak bisa hidup', '2023-03-10 09:58:26', '2023-03-10 09:58:26'),
+('KBS00000007', 'TSV00000007', 'dgfsd', 'gvsd', 'dgvs', '2023-04-07 08:42:39', '2023-04-07 08:42:39');
 
 -- --------------------------------------------------------
 
@@ -102,7 +103,8 @@ INSERT INTO `data_servis` (`no_transaksi`, `nama_pelanggan`, `alamat_pelanggan`,
 ('TSV00000002', 'fros Gaming', 'ferw', '6282376434754', 'selesai', 1, 12000, '2023-02-23 15:19:41', '2023-02-26 13:19:24'),
 ('TSV00000003', 'fros Gaming', 'iooijo', '6282376434754', 'dibatalkan', 1, 0, '2023-02-24 15:13:23', '2023-02-26 13:19:52'),
 ('TSV00000005', 'fros Gaming', 'sdaf', '622342', NULL, NULL, 0, '2023-03-02 14:38:41', '2023-03-02 14:38:41'),
-('TSV00000006', 'fsda', 'asdfasdfads', '6282376434754', 'selesai', 1, 2147483647, '2023-03-10 09:49:34', '2023-03-10 09:54:22');
+('TSV00000006', 'fsda', 'asdfasdfads', '6282376434754', 'selesai', 1, 2147483647, '2023-03-10 09:49:34', '2023-03-10 09:54:22'),
+('TSV00000007', 'fros Gaming', 'jl.ljj\r\n', '6282376434754', 'selesai', 1, 10000, '2023-04-07 08:42:05', '2023-04-07 08:45:55');
 
 -- --------------------------------------------------------
 
@@ -153,8 +155,8 @@ CREATE TABLE `pelanggan` (
 --
 
 INSERT INTO `pelanggan` (`id_pelanggan`, `username_pelanggan`, `email_pelanggan`, `password`, `nama_pelanggan`, `telepon_pelanggan`, `foto_pelanggan`, `is_active`, `created_at`, `updated_at`) VALUES
-(5, 'fros', 'fros@gmail.com', '$2y$10$7/F1.JfpZ/BEfxxL6ma3GuX7QuFxYFl4RHxTvIiQer/dow1O/Fn3G', 'fros Gaming', '08909093', '', '1', '2022-11-14 14:09:20', '0000-00-00 00:00:00'),
-(9, 'arnio', 'arnio@gmail.com', '$2y$10$7/F1.JfpZ/BEfxxL6ma3GuX7QuFxYFl4RHxTvIiQer/dow1O/Fn3G', 'arnio', '082349844', '', '1', '2022-12-02 12:37:23', '0000-00-00 00:00:00');
+(5, 'fros', 'fros@gmail.com', '$2y$10$21l.ie1oGl4QXh9ov1Am1OWQCFNXjG4ZmItFUiWPw4s/nyzt0w2Ka', 'fros Gaming', '08909093', '1679929742_a07244d3c68a666b327b.png', '1', '2022-11-14 14:09:20', '2023-03-27 15:09:02'),
+(9, 'arnio', 'arnio@gmail.com', '$2y$10$7/F1.JfpZ/BEfxxL6ma3GuX7QuFxYFl4RHxTvIiQer/dow1O/Fn3G', 'arnio', '082349844', 'default.jpg', '1', '2022-12-02 12:37:23', '2023-03-27 14:46:46');
 
 -- --------------------------------------------------------
 
@@ -180,7 +182,7 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id_produk`, `nama_produk`, `harga_produk`, `foto_produk`, `kondisi_produk`, `deskripsi_produk`, `stok_produk`, `berat_produk`, `created_at`, `updated_at`) VALUES
-(102, 'Minolta Kamera Analog Minolta x700\n\nkamera analog x700 + lensa mc rokkor 28mm f2.8 ', 175000, '1679572503_e76b832c761b2fa01bb4.png', 'Baru', 'Kamera Analog Minolta x700\n\nkamera analog x700 + lensa mc rokkor 28mm f2.8 ', 1, 1, '2023-03-15 08:07:23', '2023-03-23 11:55:03'),
+(102, 'Minolta Kamera Analog Minolta x700 kamera analog x700 + lensa mc rokkor 28mm f2,8 ', 175000, '1679572503_e76b832c761b2fa01bb4.png', 'Baru', 'Kamera Analog Minolta x700\n\nkamera analog x700 + lensa mc rokkor 28mm f2.8 ', 1, 1, '2023-03-15 08:07:23', '2023-03-23 11:55:03'),
 (107, 'f aja', 2134, '1678805681_1800e8f96d2dab4ea2b9.png', 'Second', '23123', 1, 0, '2023-03-14 14:54:41', '2023-03-15 14:41:40'),
 (108, 'fdsa', 2321, '1678889981_05b7d128fd1de1c75a7b.png', 'Baru', '1234', 12, 2, '2023-03-15 14:19:41', '2023-03-23 11:53:15'),
 (109, 'fdsa', 1111, '1679572388_0f20e5230578a7fea798.png', 'Baru', '1111', 11, 2, '2023-03-23 11:53:08', '2023-03-23 11:53:08');
@@ -207,7 +209,10 @@ INSERT INTO `servis` (`kd_barang_servis`, `id_jasa_servis`, `biaya_servis`, `cre
 ('KBS00000003', 2, 12000, '2023-02-23 15:21:10', '2023-02-23 15:21:10'),
 ('KBS00000004', 2, 12000, '2023-02-25 07:40:09', '2023-02-25 07:40:09'),
 ('KBS00000005', 8, 2147483647, '2023-03-10 09:51:04', '2023-03-10 09:51:04'),
-('KBS00000005', 1, 10000, '2023-03-10 09:51:11', '2023-03-10 09:51:11');
+('KBS00000005', 1, 10000, '2023-03-10 09:51:11', '2023-03-10 09:51:11'),
+('KBS00000007', 1, 10000, '2023-04-07 08:43:58', '2023-04-07 08:43:58'),
+('KBS00000006', 8, 2147483647, '2023-04-07 08:47:36', '2023-04-07 08:47:36'),
+('KBS00000006', 2, 12000, '2023-04-07 08:47:43', '2023-04-07 08:47:43');
 
 --
 -- Indexes for dumped tables
@@ -278,7 +283,7 @@ ALTER TABLE `jasa_servis`
 -- AUTO_INCREMENT untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `id_pelanggan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_pelanggan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `produk`
