@@ -52,10 +52,21 @@ class Produk extends BaseController
 
   public function keranjang()
   {
+    $cart = \Config\Services::cart();
+    $p = [];
+    foreach ($cart->contents() as $produk) {
+      $find = $this->produkM->find($produk['id']);
+      $p[] = [
+        'id' => $find['id_produk'],
+        'max' => $find['stok_produk']
+      ];
+    }
+    $max_produk = $p;
     return view(
       'pelanggan/keranjang',
       [
-        'cart' => \Config\Services::cart(),
+        'cart' => $cart,
+        'max_produk' => $max_produk,
         'produk_lain' => $this->produkM->orderBy('nama_produk', 'RANDOM')->findAll(8)
       ]
     );
@@ -69,7 +80,6 @@ class Produk extends BaseController
 
     // Insert an array of values
     $cart->insert(array(
-      // 'id' => 1,
       'id'      => $post['id'],
       'qty'     => $post['qty'],
       'price'   => $post['price'],
@@ -80,6 +90,21 @@ class Produk extends BaseController
     return redirect()->back()->with('msg', myAlert('success', 'Berhasil ditambahkan ke keranjang.'));
   }
 
+  public function update_keranjang()
+  {
+    $cart = \Config\Services::cart();
+
+    $post = $this->request->getPost();
+    foreach ($post['qty'] as $index => $value) {
+      $cart->update(array(
+        'rowid'      => $index,
+        'qty'     => $value,
+      ));
+    }
+
+    return redirect()->back()->with('msg', myAlert('success', 'Berhasil update data keranjang.'));
+  }
+
   public function hapus_keranjang($rowid)
   {
     $cart = \Config\Services::cart();
@@ -87,5 +112,28 @@ class Produk extends BaseController
     $cart->remove($rowid);
 
     return redirect()->back()->with('msg', myAlert('success', 'Berhasil dihapus dari keranjang.'));
+  }
+
+  // Checkout
+  public function checkout_info()
+  {
+    // $cart = \Config\Services::cart();
+    // $p = [];
+    // foreach ($cart->contents() as $produk) {
+    //   $find = $this->produkM->find($produk['id']);
+    //   $p[] = [
+    //     'id' => $find['id_produk'],
+    //     'max' => $find['stok_produk']
+    //   ];
+    // }
+    // $max_produk = $p;
+    // return view(
+    //   'pelanggan/keranjang',
+    //   [
+    //     'cart' => $cart,
+    //     'max_produk' => $max_produk,
+    //     'produk_lain' => $this->produkM->orderBy('nama_produk', 'RANDOM')->findAll(8)
+    //   ]
+    // );
   }
 }

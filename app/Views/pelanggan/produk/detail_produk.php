@@ -100,10 +100,10 @@
                     <i class="fa fa-cart-plus opacity-10"></i>
                     Tambahkan Ke keranjang
                   </button>
-                  <a href="" class="btn btn-primary">
+                  <!-- <a href="" class="btn btn-primary">
                     <i class="fa fa-money-bill opacity-10"></i>
                     Beli Sekarang
-                  </a>
+                  </a> -->
                 </div>
               </div>
             </div>

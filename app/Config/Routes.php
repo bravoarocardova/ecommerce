@@ -43,7 +43,15 @@ $routes->group('/', ['namespace' => 'App\Controllers\Pelanggan'], function ($rou
     $routes->group('keranjang', function ($routes) {
         $routes->get('/', 'Produk::keranjang');
         $routes->post('', 'Produk::tambah_keranjang');
-        $routes->delete('(:any)', 'Produk::hapus_keranjang/$1');
+        $routes->put('', 'Produk::update_keranjang');
+        $routes->get('hapus/(:any)', 'Produk::hapus_keranjang/$1');
+    });
+
+    $routes->group('checkout', function ($routes) {
+        $routes->get('/', 'Produk::checkout_info');
+        // $routes->post('', 'Produk::tambah_keranjang');
+        // $routes->put('', 'Produk::update_keranjang');
+        // $routes->get('hapus/(:any)', 'Produk::hapus_keranjang/$1');
     });
 
     $routes->group('profile', function ($routes) {
