@@ -22,6 +22,7 @@
   </div>
 
   <?= $this->include('pelanggan/layout/_partials/js') ?>
+  <?= $this->renderSection('script') ?>
 
 </body>
 

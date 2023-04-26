@@ -30,6 +30,12 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
+// routes raja ongkir
+$routes->group('rajaongkir', function ($routes) {
+    $routes->get('getCity', 'RajaOngkirC::getCity');
+    $routes->get('getCost', 'RajaOngkirC::getCost');
+});
+
 // routes group pelanggan
 $routes->group('/', ['namespace' => 'App\Controllers\Pelanggan'], function ($routes) {
     $routes->get('', 'Home');
@@ -49,7 +55,7 @@ $routes->group('/', ['namespace' => 'App\Controllers\Pelanggan'], function ($rou
 
     $routes->group('checkout', function ($routes) {
         $routes->get('/', 'Produk::checkout_info');
-        // $routes->post('', 'Produk::tambah_keranjang');
+        $routes->post('/', 'Produk::checkout_proses');
         // $routes->put('', 'Produk::update_keranjang');
         // $routes->get('hapus/(:any)', 'Produk::hapus_keranjang/$1');
     });

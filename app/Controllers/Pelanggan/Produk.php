@@ -3,6 +3,7 @@
 namespace App\Controllers\Pelanggan;
 
 use App\Controllers\BaseController;
+use App\Libraries\RajaOngkir;
 use App\Models\HomepageModel;
 use App\Models\ProdukM;
 
@@ -117,23 +118,33 @@ class Produk extends BaseController
   // Checkout
   public function checkout_info()
   {
-    // $cart = \Config\Services::cart();
-    // $p = [];
-    // foreach ($cart->contents() as $produk) {
-    //   $find = $this->produkM->find($produk['id']);
-    //   $p[] = [
-    //     'id' => $find['id_produk'],
-    //     'max' => $find['stok_produk']
-    //   ];
-    // }
-    // $max_produk = $p;
-    // return view(
-    //   'pelanggan/keranjang',
-    //   [
-    //     'cart' => $cart,
-    //     'max_produk' => $max_produk,
-    //     'produk_lain' => $this->produkM->orderBy('nama_produk', 'RANDOM')->findAll(8)
-    //   ]
-    // );
+    $rajaOngkir = new RajaOngkir();
+    $provinsi = $rajaOngkir->rajaongkir('province');
+
+    $cart = \Config\Services::cart();
+    $p = [];
+    foreach ($cart->contents() as $produk) {
+      $find = $this->produkM->find($produk['id']);
+      $p[] = [
+        'id' => $find['id_produk'],
+        'max' => $find['stok_produk']
+      ];
+    }
+    $max_produk = $p;
+    return view(
+      'pelanggan/checkout_v',
+      [
+        'cart' => $cart,
+        'max_produk' => $max_produk,
+        'produk_lain' => $this->produkM->orderBy('nama_produk', 'RANDOM')->findAll(8),
+        'provinsi' => json_decode($provinsi)->rajaongkir->results,
+      ]
+    );
+  }
+
+  public function checkout_proses()
+  {
+    $post = $this->request->getPost();
+    dd($post);
   }
 }
