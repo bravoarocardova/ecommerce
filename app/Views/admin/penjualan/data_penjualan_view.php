@@ -28,7 +28,7 @@
           </nav>
           <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-data_masuk" role="tabpanel" aria-labelledby="nav-data_masuk-tab">
-              <table class="table table-hover my-0" id="dataServis">
+              <table class="table table-hover my-0" id="dataPenjualan">
                 <thead>
                   <tr>
                     <th>No Transaksi</th>
@@ -40,44 +40,33 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php //foreach ($data_servis as $d) : 
+                  <?php foreach ($dikemas as $d) :
                   ?>
-                  <?php
-                  // if (in_array($d['status'], ['diproses', 'selesai', 'dibatalkan'])) {
-                  //   continue;
-                  // }
-                  ?>
-                  <tr>
-                    <td></td>
-                    <td><? //= $d['no_transaksi'] 
-                        ?></td>
-                    <td><? //= ucwords($d['status']) 
-                        ?></td>
-                    <td><? //= $d['nama_pelanggan'] 
-                        ?></td>
-                    <td><? //= $d['created_at'] 
-                        ?></td>
-                    <td>
-                      <div class="row">
-                        <div class="col">
-                          <a class="btn btn-info" href="<? //= base_url() . '/admin/servis/' . $d['no_transaksi'] . '/detail' 
-                                                        ?>">
-                            <i class="align-middle" data-feather="eye"></i> Lihat
-                          </a>
+                    <tr>
+                      <td><?= $d['id_pembelian'] ?></td>
+                      <td><?= ucwords($d['nama_pelanggan']) ?></td>
+                      <td><?= $d['created_at'] ?></td>
+                      <td style="width:20%"><?= $d['tujuan'] ?></td>
+                      <td>Rp. <?= number_format($d['ongkir'] + $d['total_pembelian']) ?></td>
+                      <td>
+                        <div class="row">
+                          <div class="col">
+                            <a class="btn btn-info" href="<?= base_url() . '/admin/penjualan/' . $d['id_pembelian'] ?>">
+                              <i class="align-middle" data-feather="eye"></i> Lihat
+                            </a>
+                          </div>
+                          <div class="col">
+                            <form action="<? //= base_url() . '/admin/servis/' . $d['no_transaksi'] 
+                                          ?>" method="POST" class="d-inline">
+                              <?= csrf_field() ?>
+                              <input type="hidden" name="_method" value="DELETE">
+                              <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="align-middle" data-feather="trash-2"></i> Delete</button>
+                            </form>
+                          </div>
                         </div>
-                        <div class="col">
-                          <form action="<? //= base_url() . '/admin/servis/' . $d['no_transaksi'] 
-                                        ?>" method="POST" class="d-inline">
-                            <?= csrf_field() ?>
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="align-middle" data-feather="trash-2"></i> Delete</button>
-                          </form>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <?php //endforeach 
-                  ?>
+                      </td>
+                    </tr>
+                  <?php endforeach ?>
                 </tbody>
               </table>
             </div>
@@ -152,13 +141,15 @@
   </div>
 </div>
 
+<?= $this->endSection() ?>
+
+<?= $this->section('script') ?>
 <script>
   $(document).ready(function() {
-    $('#dataServis').DataTable();
-    $('#dataServis2').DataTable();
-    $('#dataServis3').DataTable();
-    $('#dataServis4').DataTable();
+    $('#dataPenjualan').DataTable();
+    $('#dataPenjualan2').DataTable();
+    $('#dataPenjualan3').DataTable();
+    $('#dataPenjualan4').DataTable();
   });
 </script>
-
 <?= $this->endSection() ?>

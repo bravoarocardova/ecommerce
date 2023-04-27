@@ -23,6 +23,7 @@
   </div>
 
   <?= $this->include('admin/layout/_partials/js') ?>
+  <?= $this->renderSection('script') ?>
 
 </body>
 

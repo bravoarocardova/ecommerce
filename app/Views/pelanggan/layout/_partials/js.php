@@ -20,6 +20,16 @@
         document.body.style.paddingTop = '0';
       }
     });
+    $.ajax({
+      url: "<?= base_url() . '/api/getJumlahPesanan' ?>",
+      type: "GET",
+      dataType: 'json',
+      success: function(data) {
+        if (data != 0) {
+          $('.badge-pesanan-pelanggan').html(data);
+        }
+      }
+    })
   });
 </script>
 

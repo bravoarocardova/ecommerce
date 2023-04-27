@@ -61,6 +61,7 @@ class Produk extends BaseController
   {
     $cart = \Config\Services::cart();
     $p = [];
+
     foreach ($cart->contents() as $produk) {
       $find = $this->produkM->find($produk['id']);
       $p[] = [
@@ -185,26 +186,5 @@ class Produk extends BaseController
     }
 
     return redirect()->to(base_url() . '/pembelian/' . $id_pembelian);
-  }
-
-  public function detail_pembelian($id_pembelian)
-  {
-    $pembelian = $this->pembelianM->select('pembelian.*, pelanggan.id_pelanggan, pelanggan.nama_pelanggan, pelanggan.telepon_pelanggan, pelanggan.email_pelanggan')->join('pelanggan', 'pembelian.id_pelanggan = pelanggan.id_pelanggan')->find($id_pembelian);
-
-    if ($pembelian['id_pelanggan'] != session()->get('pelanggan')['id_pelanggan']) {
-      return redirect()->back();
-    }
-
-    $produk = $this->pembelianProdukM->join('produk', 'pembelian_produk.id_produk = produk.id_produk')->where('id_pembelian', $id_pembelian)->find();
-    // $pembayaran = $this->db->query("SELECT * FROM pembayaran WHERE id_pembelian = '" . $pembelian['id_pembelian'] . "'");
-    $pembayaran = [];
-    return view(
-      'pelanggan/detail_pembelian_v',
-      [
-        'pembelian' => $pembelian,
-        'produk' => $produk,
-        'pembayaran' => $pembayaran,
-      ]
-    );
   }
 }

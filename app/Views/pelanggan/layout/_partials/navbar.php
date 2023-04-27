@@ -36,7 +36,10 @@
             <li class="nav-item d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body font-weight-bold px-0" id="dropdownMenuButton" data-bs-toggle="dropdown">
                 <i class="fa fa-user me-sm-1 text-white"></i>
-                <span class="d-sm-inline text-white d-none"><?= session()->get('pelanggan')['nama'] ?? session()->get('admin')['nama'] ?></span>
+                <span class="d-sm-inline text-white d-none">
+                  <?= session()->get('pelanggan')['nama'] ?? session()->get('admin')['nama'] ?>
+                  <span class=" badge rounded-pill bg-danger badge-pesanan-pelanggan"></span>
+                </span>
               </a>
               <ul class="dropdown-menu  dropdown-menu-end  px-3 py-3 me-sm-n0" aria-labelledby="dropdownMenuButton">
                 <li class="mb-2">
@@ -65,7 +68,7 @@
                 <li class="mb-2">
                   <a class="dropdown-item border-radius-md " href="<?= base_url('pesanan/') ?>">
                     Pesanan Saya
-                    <span class=" badge rounded-pill bg-danger">2</span>
+                    <span class=" badge rounded-pill bg-danger badge-pesanan-pelanggan"></span>
                   </a>
                 </li>
                 <li class="mb-2">
@@ -80,11 +83,12 @@
             </li>
             <?php
             $cart = \Config\Services::cart();
+            $cartTotal = ($cart->totalItems() != 0) ? $cart->totalItems()  : '';
             ?>
             <li class="nav-item d-flex align-items-center ms-4">
               <a href="<?= base_url() . '/keranjang' ?>" class="nav-link text-body font-weight-bold px-0 position-relative" id="keranjang">
                 <i class="fa fa-shopping-cart me-sm-1 text-white"></i>
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"><?= $cart->totalItems() ?></span>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"><?= $cartTotal ?></span>
               </a>
             </li>
           <?php endif ?>

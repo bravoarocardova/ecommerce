@@ -36,11 +36,16 @@ $routes->group('rajaongkir', function ($routes) {
     $routes->get('getCost', 'RajaOngkirC::getCost');
 });
 
+$routes->group('api', ['namespace' => 'App\Controllers\Api'], function ($routes) {
+    $routes->get('getJumlahPesanan', 'ApiPelanggan::getCountPesanan');
+});
+
 // routes group pelanggan
 $routes->group('/', ['namespace' => 'App\Controllers\Pelanggan'], function ($routes) {
     $routes->get('', 'Home');
     $routes->get('cekservis', 'Home::cekservis');
-    $routes->get('pembelian/(:segment)', 'Produk::detail_pembelian/$1');
+    $routes->get('pembelian/(:segment)', 'Pembelian::detail_pembelian/$1');
+    $routes->get('pesanan', 'Pembelian::pembelian');
 
     $routes->group('produk', function ($routes) {
         $routes->get('/', 'Produk');
@@ -101,6 +106,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'is
 
     $routes->group('penjualan', function ($routes) {
         $routes->get('/', 'Penjualan');
+        $routes->get('(:segment)', 'Penjualan::detail_penjualan/$1');
         // $routes->get('', '');
     });
 

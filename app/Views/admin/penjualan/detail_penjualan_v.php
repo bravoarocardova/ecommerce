@@ -1,8 +1,9 @@
-<?= $this->extend('pelanggan/layout/layout') ?>
+<?= $this->extend('admin/layout/layout') ?>
 <?= $this->section('content') ?>
 <div class="bg-light p-4" id="produk">
   <div class="container">
-    <a href="<?= base_url('pesanan') ?>" class="btn btn-danger">Kembali ke Pesanan</a>
+    <a href="javascript:history.back()" class="btn btn-danger">Kembali</a>
+
     <div class="row justify-content-end">
       <div class="col-6">
         <?= session()->get('msg'); ?>
@@ -148,11 +149,30 @@
       <?php endif ?>
       <div class="col-md-6">
         <br>
-        <button" target="_blank" onclick="printDiv('printDiv','printDiv2')" class="btn bg-gradient ">
-          <i class="fa fa-print me-sm-1"></i>
+        <button" target="_blank" onclick="printDiv('printDiv','printDiv2')" class="btn btn-info">
+          <i class="align-middle" data-feather="printer"></i>
           Cetak
           </button>
       </div>
+      <?php if (isAdmininstrator()) : ?>
+        <?php if ($pembelian['status_pembelian'] == 'Menunggu Verifikasi') : ?>
+          <div class="col-md-6">
+            <br>
+            <a href="<?= base_url('admin/transaksi/diproses/' . $pembelian['id_pembelian']) ?>" class="btn btn-success bg-gradient ">Proses</a>
+          </div>
+        <?php elseif ($pembelian['status_pembelian'] == 'Diproses') : ?>
+          <div class="col-md-6">
+            <br>
+            <a href="<?= base_url('admin/transaksi/dipinjam/' . $pembelian['id_pembelian']) ?>" class="btn btn-success bg-gradient ">Dipinjam</a>
+          </div>
+        <?php elseif ($pembelian['status_pembelian'] == 'Dipinjam') : ?>
+          <div class="col-md-6">
+            <br>
+            <button class="btn btn-success bg-gradient " data-bs-toggle="modal" data-bs-target="#ModalDenda">Di Kembalikan</button>
+          </div>
+
+        <?php endif ?>
+      <?php endif ?>
 
 
     </div>

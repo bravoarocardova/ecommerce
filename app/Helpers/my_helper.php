@@ -36,7 +36,6 @@ function createNoTransaksi($kode, Model $model, $field, $offset = 3, $length = 8
 // User Role
 function isAdmininstrator()
 {
-  return;
   $sess = session()->get('admin') ?? session()->get('pelanggan');
   return $sess['role'] == 'admin';
 }

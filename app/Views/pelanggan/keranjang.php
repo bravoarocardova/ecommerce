@@ -100,10 +100,17 @@
                 </div>
               </div>
             </div>
-            <div class="d-flex justify-content-evenly">
-              <button type="submit" class="btn btn-warning p-3"><i class="fa fa-sync opacity-10 me-2"></i> Update Keranjang</button>
-              <a href="<?= base_url() . '/checkout' ?>" class="btn btn-primary p-3"><i class="fa fa-shopping-cart opacity-10 me-2"></i> Checkout</a>
-            </div>
+            <?php if ($cart->totalItems() != 0) : ?>
+              <div class="d-flex justify-content-evenly">
+                <button type="submit" class="btn btn-warning p-3"><i class="fa fa-sync opacity-10 me-2"></i> Update Keranjang</button>
+                <a href="<?= base_url() . '/checkout' ?>" class="btn btn-primary p-3"><i class="fa fa-shopping-cart opacity-10 me-2"></i> Checkout</a>
+              </div>
+            <?php else : ?>
+              <script>
+                alert('Keranjang kosong')
+                window.location.href = '<?= base_url() ?>'
+              </script>
+            <?php endif ?>
           </form>
         </div>
       </div>
