@@ -150,6 +150,7 @@
                 </div>
               </div>
               <input type="hidden" name="tujuan" id="tujuan">
+              <input type="hidden" name="ekspedisi" id="ekspedisi">
               <div class="row">
                 <div class="d-flex justify-content-evenly">
                   <button type="submit" disabled class="btn btn-primary p-3"><i class="fa fa-shopping-cart opacity-10 me-2"></i> Checkout</button>
@@ -240,6 +241,7 @@
       $('#estimasi').html(estimasi + " Hari");
       const total_pembayaran = <?= $cart->total() ?> + ongkir;
       $('#total_pembayaran').html(numberWithCommas(total_pembayaran));
+      $('#ekspedisi').val($('option:selected', this).text());
     });
 
     $('#alamat_lengkap').on('change', function() {

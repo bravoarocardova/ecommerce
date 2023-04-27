@@ -36,16 +36,20 @@ function createNoTransaksi($kode, Model $model, $field, $offset = 3, $length = 8
 // User Role
 function isAdmininstrator()
 {
-  return session()->get('admin')['role'] == 'admin';
+  return;
+  $sess = session()->get('admin') ?? session()->get('pelanggan');
+  return $sess['role'] == 'admin';
 }
 
 function isKasir()
 {
-  return session()->get('admin')['role'] == 'kasir';
+  $sess = session()->get('admin') ?? session()->get('pelanggan');
+  return $sess['role'] == 'kasir';
 }
 
 function isTeknisi()
 {
-  return session()->get('admin')['role'] == 'teknisi';
+  $sess = session()->get('admin') ?? session()->get('pelanggan');
+  return $sess['role'] == 'teknisi';
 }
 // End User Role

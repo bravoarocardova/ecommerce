@@ -40,6 +40,7 @@ $routes->group('rajaongkir', function ($routes) {
 $routes->group('/', ['namespace' => 'App\Controllers\Pelanggan'], function ($routes) {
     $routes->get('', 'Home');
     $routes->get('cekservis', 'Home::cekservis');
+    $routes->get('pembelian/(:segment)', 'Produk::detail_pembelian/$1');
 
     $routes->group('produk', function ($routes) {
         $routes->get('/', 'Produk');

@@ -67,7 +67,26 @@ class Filters extends BaseConfig
      */
     public array $filters = [
         'redirectIfLoggedInAdmin' => ['before' => ['admin/auth/login']],
-        'redirectIfLoggedInPelanggan' => ['before' => ['auth/login', 'auth/register', 'auth/proseslogin', 'auth/prosesregister']],
-        'isLoggedInPelanggan' => ['before' => ['keranjang', 'keranjang/*', 'checkout', 'checkout/*', 'profile', 'profile/*']],
+        'redirectIfLoggedInPelanggan' => [
+            'before' =>
+            [
+                'auth/login',
+                'auth/register',
+                'auth/proseslogin',
+                'auth/prosesregister'
+            ]
+        ],
+        'isLoggedInPelanggan' => [
+            'before' =>
+            [
+                'keranjang',
+                'keranjang/*',
+                'checkout',
+                'checkout/*',
+                'profile',
+                'profile/*',
+                'pembelian/*',
+            ]
+        ],
     ];
 }

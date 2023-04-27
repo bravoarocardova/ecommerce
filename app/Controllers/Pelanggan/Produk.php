@@ -5,6 +5,8 @@ namespace App\Controllers\Pelanggan;
 use App\Controllers\BaseController;
 use App\Libraries\RajaOngkir;
 use App\Models\HomepageModel;
+use App\Models\PembelianM;
+use App\Models\PembelianProdukM;
 use App\Models\ProdukM;
 
 class Produk extends BaseController
@@ -12,11 +14,15 @@ class Produk extends BaseController
 
   private $homepageModel;
   private $produkM;
+  private $pembelianM;
+  private $pembelianProdukM;
 
   public function __construct()
   {
     $this->homepageModel = new HomepageModel;
     $this->produkM = new ProdukM();
+    $this->pembelianM = new PembelianM();
+    $this->pembelianProdukM = new PembelianProdukM();
   }
 
   public function index()
@@ -145,6 +151,60 @@ class Produk extends BaseController
   public function checkout_proses()
   {
     $post = $this->request->getPost();
-    dd($post);
+    $cart = \Config\Services::cart();
+
+    $id_pembelian = createNoTransaksi('PBR', $this->pembelianM, 'id_pembelian');
+
+    $cartItem = [];
+    $total_berat = 0;
+    foreach ($cart->contents() as $c) {
+      $total_berat += $c['options']['berat'] * $c['qty'];
+      $cartItem[] = [
+        'id_pembelian' => $id_pembelian,
+        'id_produk' => $c['id'],
+        'jumlah' => $c['qty'],
+        'subtotal' => $c['subtotal'],
+      ];
+    }
+
+    $data = [
+      'id_pembelian' => $id_pembelian,
+      'id_pelanggan' => session()->get('pelanggan')['id_pelanggan'],
+      'ekspedisi' => $post['ekspedisi'],
+      'total_berat' => $total_berat,
+      'tujuan' => $post['tujuan'],
+      'ongkir' => $post['ongkir'],
+      'total_pembelian' => $cart->total(),
+      'status_pembelian' => 'Belum Bayar',
+    ];
+
+    if ($this->pembelianM->save($data)) {
+      if ($this->pembelianProdukM->insertBatch($cartItem)) {
+        $cart->destroy();
+      }
+    }
+
+    return redirect()->to(base_url() . '/pembelian/' . $id_pembelian);
+  }
+
+  public function detail_pembelian($id_pembelian)
+  {
+    $pembelian = $this->pembelianM->select('pembelian.*, pelanggan.id_pelanggan, pelanggan.nama_pelanggan, pelanggan.telepon_pelanggan, pelanggan.email_pelanggan')->join('pelanggan', 'pembelian.id_pelanggan = pelanggan.id_pelanggan')->find($id_pembelian);
+
+    if ($pembelian['id_pelanggan'] != session()->get('pelanggan')['id_pelanggan']) {
+      return redirect()->back();
+    }
+
+    $produk = $this->pembelianProdukM->join('produk', 'pembelian_produk.id_produk = produk.id_produk')->where('id_pembelian', $id_pembelian)->find();
+    // $pembayaran = $this->db->query("SELECT * FROM pembayaran WHERE id_pembelian = '" . $pembelian['id_pembelian'] . "'");
+    $pembayaran = [];
+    return view(
+      'pelanggan/detail_pembelian_v',
+      [
+        'pembelian' => $pembelian,
+        'produk' => $produk,
+        'pembayaran' => $pembayaran,
+      ]
+    );
   }
 }
