@@ -26,7 +26,7 @@
                     <?= session()->getFlashdata('msg') ?>
                   <?php endif ?>
                   <div class="text-center">
-                    <h1>Smartcomp Store</h1>
+                    <h1><a href="<?= base_url() ?>" class="text-decoration-none text-dark">Smartcomp Store</a></h1>
                   </div>
                   <form action="" method="POST">
                     <div class="mb-3">

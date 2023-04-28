@@ -54,6 +54,12 @@
                     Login
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link me-2" href="<?= base_url('admin/auth/login') ?>">
+                    <i class="fas fa-user-lock opacity-6 text-dark me-1"></i>
+                    Admin
+                  </a>
+                </li>
               </ul>
 
             </div>

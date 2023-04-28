@@ -86,6 +86,7 @@ class Filters extends BaseConfig
                 'profile',
                 'profile/*',
                 'pembelian/*',
+                'pesanan/*'
             ]
         ],
     ];
