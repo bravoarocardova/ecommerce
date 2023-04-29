@@ -122,25 +122,6 @@
         </table>
       </div>
 
-      <?php if ($pembelian['status_pembelian'] == 'Belum Bayar') : ?>
-        <div class="row">
-          <div class="col-md-6">
-            <br>
-            <div class="alert alert-info">
-              <p class="text-dark">Silakan melakukan pembayaran Rp. <?php echo number_format($total + $pembelian['ongkir']); ?> ke <br>
-                <strong>BANK BRI 0393-0100-3205-535 AN. SmartComp</strong>
-
-              </p>
-
-            </div>
-          </div>
-          <div class="col-md-6">
-            <br>
-            <a href="<?= base_url('produk/pembayaran/' . $pembelian['id_pembelian']) ?>" class="btn btn-success bg-gradient ">Konfirmasi Bayar</a>
-          </div>
-        </div>
-      <?php endif ?>
-
       <?php if ($pembayaran != null) : ?>
         <div class="col-md-6">
           <br>

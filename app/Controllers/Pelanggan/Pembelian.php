@@ -51,10 +51,15 @@ class Pembelian extends BaseController
       'status_pembelian' => 'Belum Bayar',
     ])->find();
 
+    $dibatalkan = $this->pembelianM->select($select)->join($join['table'], $join['cond'])->where([
+      'pelanggan.id_pelanggan' => $id_pelanggan,
+      'status_pembelian' => 'Dibatalkan',
+    ])->find();
     return view(
       'pelanggan/pembelian/pembelian_view',
       [
-        'belum_bayar' => $belum_bayar
+        'belum_bayar' => $belum_bayar,
+        'dibatalkan' => $dibatalkan,
       ]
     );
   }

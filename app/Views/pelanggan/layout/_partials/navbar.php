@@ -61,9 +61,9 @@
                   </a>
                 </li>
                 <li class="mb-2">
-                  <a class="dropdown-item border-radius-md " href="<?= base_url('dashboard/') ?>">
+                  <!-- <a class="dropdown-item border-radius-md " href="<?= base_url('dashboard/') ?>">
                     Dashboard
-                  </a>
+                  </a> -->
                 </li>
                 <li class="mb-2">
                   <a class="dropdown-item border-radius-md " href="<?= base_url('pesanan/') ?>">

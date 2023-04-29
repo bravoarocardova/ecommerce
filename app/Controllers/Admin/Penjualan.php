@@ -42,10 +42,6 @@ class Penjualan extends BaseController
   {
     $pembelian = $this->pembelianM->select('pembelian.*, pelanggan.id_pelanggan, pelanggan.nama_pelanggan, pelanggan.telepon_pelanggan, pelanggan.email_pelanggan')->join('pelanggan', 'pembelian.id_pelanggan = pelanggan.id_pelanggan')->find($id_pembelian);
 
-    if ($pembelian['id_pelanggan'] != session()->get('pelanggan')['id_pelanggan']) {
-      return redirect()->back();
-    }
-
     $produk = $this->pembelianProdukM->join('produk', 'pembelian_produk.id_produk = produk.id_produk')->where('id_pembelian', $id_pembelian)->find();
     // $pembayaran = $this->db->query("SELECT * FROM pembayaran WHERE id_pembelian = '" . $pembelian['id_pembelian'] . "'");
     $pembayaran = [];
