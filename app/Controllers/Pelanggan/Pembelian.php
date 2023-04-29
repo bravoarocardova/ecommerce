@@ -55,11 +55,30 @@ class Pembelian extends BaseController
       'pelanggan.id_pelanggan' => $id_pelanggan,
       'status_pembelian' => 'Dibatalkan',
     ])->find();
+
+    $dikemas = $this->pembelianM->select($select)->join($join['table'], $join['cond'])->where([
+      'pelanggan.id_pelanggan' => $id_pelanggan,
+      'status_pembelian' => 'dikemas',
+    ])->find();
+
+    $dikirim = $this->pembelianM->select($select)->join($join['table'], $join['cond'])->where([
+      'pelanggan.id_pelanggan' => $id_pelanggan,
+      'status_pembelian' => 'Dikirim',
+    ])->find();
+
+    $selesai = $this->pembelianM->select($select)->join($join['table'], $join['cond'])->where([
+      'pelanggan.id_pelanggan' => $id_pelanggan,
+      'status_pembelian' => 'Selesai',
+    ])->find();
+
     return view(
       'pelanggan/pembelian/pembelian_view',
       [
         'belum_bayar' => $belum_bayar,
         'dibatalkan' => $dibatalkan,
+        'dikemas' => $dikemas,
+        'dikirim' => $dikirim,
+        'selesai' => $selesai,
       ]
     );
   }

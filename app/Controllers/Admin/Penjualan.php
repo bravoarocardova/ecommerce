@@ -30,10 +30,19 @@ class Penjualan extends BaseController
       'status_pembelian' => 'Dikemas',
     ])->find();
 
+    $dikirim = $this->pembelianM->select($select)->join($join['table'], $join['cond'])->where([
+      'status_pembelian' => 'Dikirim',
+    ])->find();
+
+    $selesai = $this->pembelianM->select($select)->join($join['table'], $join['cond'])->where([
+      'status_pembelian' => 'Selesai',
+    ])->find();
     return view(
       'admin/penjualan/data_penjualan_view',
       [
         'dikemas' => $dikemas,
+        'dikirim' => $dikirim,
+        'selesai' => $selesai,
       ]
     );
   }

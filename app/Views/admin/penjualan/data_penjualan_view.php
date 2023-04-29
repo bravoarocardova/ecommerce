@@ -20,14 +20,14 @@
         <div class="card-body">
           <nav class="mb-3">
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-              <button class="nav-link active text-info" id="nav-data_masuk-tab" data-bs-toggle="tab" data-bs-target="#nav-data_masuk" type="button" role="tab" aria-controls="nav-data_masuk" aria-selected="true">Dikemas <span class="badge bg-danger">2</span></button>
-              <button class="nav-link text-warning" id="nav-data_proses-tab" data-bs-toggle="tab" data-bs-target="#nav-data_proses" type="button" role="tab" aria-controls="nav-data_proses" aria-selected="false">Dikirim <span class="badge bg-danger">5</span></button>
-              <button class="nav-link text-success" id="nav-data_selesai-tab" data-bs-toggle="tab" data-bs-target="#nav-data_selesai" type="button" role="tab" aria-controls="nav-data_selesai" aria-selected="false">Selesai</button>
+              <button class="nav-link active text-info" id="nav-data_masuk-tab" data-bs-toggle="tab" data-bs-target="#nav-dikemas" type="button" role="tab" aria-controls="nav-dikemas" aria-selected="true">Dikemas <span class="badge bg-danger">2</span></button>
+              <button class="nav-link text-warning" id="nav-data_proses-tab" data-bs-toggle="tab" data-bs-target="#nav-dikirim" type="button" role="tab" aria-controls="nav-dikirim" aria-selected="false">Dikirim <span class="badge bg-danger">5</span></button>
+              <button class="nav-link text-success" id="nav-data_selesai-tab" data-bs-toggle="tab" data-bs-target="#nav-selesai" type="button" role="tab" aria-controls="nav-selesai" aria-selected="false">Selesai</button>
               <button class="nav-link text-danger" id="nav-data_dibatalkan-tab" data-bs-toggle="tab" data-bs-target="#nav-data_dibatalkan" type="button" role="tab" aria-controls="nav-data_dibatalkan" aria-selected="false">Dibatalkan</button>
             </div>
           </nav>
           <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-data_masuk" role="tabpanel" aria-labelledby="nav-data_masuk-tab">
+            <div class="tab-pane fade show active" id="nav-dikemas" role="tabpanel" aria-labelledby="nav-dikemas-tab">
               <table class="table table-hover my-0" id="dataPenjualan">
                 <thead>
                   <tr>
@@ -70,10 +70,10 @@
                 </tbody>
               </table>
             </div>
-            <div class="tab-pane fade" id="nav-data_proses" role="tabpanel" aria-labelledby="nav-data_proses-tab">
+            <div class="tab-pane fade" id="nav-dikirim" role="tabpanel" aria-labelledby="nav-dikirim-tab">
 
             </div>
-            <div class="tab-pane fade" id="nav-data_selesai" role="tabpanel" aria-labelledby="nav-data_selesai-tab">
+            <div class="tab-pane fade" id="nav-selesai" role="tabpanel" aria-labelledby="nav-selesai-tab">
 
             </div>
             <div class="tab-pane fade" id="nav-data_dibatalkan" role="tabpanel" aria-labelledby="nav-data_dibatalkan-tab">
