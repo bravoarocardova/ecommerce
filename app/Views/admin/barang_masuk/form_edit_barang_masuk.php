@@ -1,0 +1,208 @@
+<?= $this->extend('admin/layout/layout') ?>
+<?= $this->section('content') ?>
+
+<div class="container-fluid p-0">
+
+  <?php if (session()->has('msg')) : ?>
+    <?= session()->getFlashdata('msg') ?>
+  <?php endif ?>
+
+  <div class="row">
+    <div class="col-md-3 col-xl-2">
+
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Form</h5>
+        </div>
+
+        <div class="list-group list-group-flush" role="tablist">
+          <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#account" role="tab" aria-selected="true">
+            Lihat
+          </a>
+          <a class="list-group-item list-group-item-action" data-bs-toggle="" href="javascript:history.back()" role="tab" aria-selected="true">
+            Kembali
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-9 col-xl-10">
+      <div class="tab-content">
+        <div class="tab-pane fade active show" id="account" role="tabpanel">
+
+          <!-- <form action="" method="POST" enctype="multipart/form-data"> -->
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">Pemasok Info</h5>
+            </div>
+            <div class="card-body">
+              <?= csrf_field() ?>
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="mb-3">
+                    <label class="form-label" for="inputNamaPemasok">Nama Pemasok</label>
+                    <input type="text" class="form-control <?= validation_show_error('nama_pemasok') ? 'is-invalid' : '' ?>" id="inputNamaPemasok" name="nama_pemasok" placeholder="Nama Pemasok" value="<?= old('nama_pemasok', $pemasok['nama_pemasok']) ?>" disabled>
+                    <div class="invalid-feedback">
+                      <?= validation_show_error('nama_pemasok') ?>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="inputHargaBeli">Harga Beli</label>
+                        <input type="number" class="form-control <?= validation_show_error('harga_beli') ? 'is-invalid' : '' ?>" id="inputHargaBeli" min="0" name="harga_beli" placeholder="Harga Beli" value="<?= old('harga_beli', $pemasok['harga_beli']) ?>" disabled>
+                        <div class="invalid-feedback">
+                          <?= validation_show_error('harga_beli') ?>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="inputJumlahBeli">Jumlah Beli</label>
+                        <input type="number" class="form-control <?= validation_show_error('jumlah_beli') ? 'is-invalid' : '' ?>" id="inputJumlahBeli" min="0" name="jumlah_beli" placeholder="Jumlah Beli" value="<?= old('jumlah_beli', $pemasok['jumlah_beli']) ?>" disabled>
+                        <div class="invalid-feedback">
+                          <?= validation_show_error('jumlah_beli') ?>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">Produk Info</h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="mb-3">
+                    <label class="form-label" for="inputNamaProduk">Nama Produk</label>
+                    <input type="text" class="form-control <?= validation_show_error('nama_produk') ? 'is-invalid' : '' ?>" id="inputNamaProduk" name="nama_produk" placeholder="Nama Produk" value="<?= old('nama_produk', $produk['nama_produk']) ?>" disabled>
+                    <div class="invalid-feedback">
+                      <?= validation_show_error('nama_produk') ?>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="inputHargaProduk">Harga Jual</label>
+                        <input type="number" class="form-control <?= validation_show_error('harga_produk') ? 'is-invalid' : '' ?>" id="inputHargaProduk" min="0" name="harga_produk" placeholder="Harga Produk" value="<?= old('harga_produk', $produk['harga_produk']) ?>" disabled>
+                        <div class="invalid-feedback">
+                          <?= validation_show_error('harga_produk') ?>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="inputKondisi">Kondisi</label>
+                        <select disabled name="kondisi" id="inputKondisi" class="form-control <?= validation_show_error('kondisi') ? 'is-invalid' : '' ?>">
+                          <option value="Baru" <?php if (old('kondisi', $produk['kondisi_produk']) == 'Baru') echo 'selected' ?>>Baru</option>
+                          <option value="Second" <?php if (old('kondisi', $produk['kondisi_produk']) == 'Second') echo 'selected' ?>>Second</option>
+                        </select>
+                        <div class="invalid-feedback">
+                          <?= validation_show_error('kondisi') ?>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <!-- <div class="col-md-6">
+                        <div class="mb-3">
+                          <label class="form-label" for="inputStok">Stok</label>
+                          <input type="number" class="form-control <?= validation_show_error('stok') ? 'is-invalid' : '' ?>" id="inputStok" min="0" name="stok" placeholder="Stok" value="<?= old('stok') ?>">
+                          <div class="invalid-feedback">
+                            <?= validation_show_error('stok') ?>
+                          </div>
+                        </div>
+                      </div> -->
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="inputBerat">Berat (g)</label>
+                        <input type="number" class="form-control <?= validation_show_error('berat') ? 'is-invalid' : '' ?>" id="inputBerat" min="0" name="berat" placeholder="Berat" value="<?= old('berat', $produk['berat_produk']) ?>" disabled>
+                        <div class="invalid-feedback">
+                          <?= validation_show_error('berat') ?>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="inputDeskripsi">Deskripsi</label>
+                    <textarea disabled class="form-control <?= validation_show_error('deskripsi') ? 'is-invalid' : '' ?>" name="deskripsi" id="inputDeskripsi" cols="30" rows="5"><?= old('deskripsi', $produk['deskripsi_produk']) ?></textarea>
+                    <div class="invalid-feedback">
+                      <?= validation_show_error('deskripsi') ?>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="text-center mb-3">
+                    <img alt="" src="<?= base_url() . '/img/produk/' . $produk['foto_produk'] ?>" class="rounded img-responsive mt-2" width="128" height="128" id="img-profile-upload">
+                    <!-- <div class="mt-2">
+                      <label for="foto">
+                        <span class="btn btn-primary"><i class="fas fa-upload"></i> Pilih Foto</span>
+                      </label>
+                      <input type="file" name="foto_produk" id="foto" class="d-none <?= validation_show_error('foto_produk') ? 'is-invalid' : '' ?>" onchange="document.getElementById('img-profile-upload').src = window.URL.createObjectURL(this.files[0])">
+                      <div class="invalid-feedback">
+                        <?= validation_show_error('foto_produk') ?>
+                      </div>
+                    </div>
+                    <small>Max 4MB .jpg|.png|.jpeg format</small> -->
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+          <!-- <button type="submit" class="btn btn-primary">Save changes</button>
+          </form> -->
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<?= $this->endSection() ?>
+
+<?= $this->section('script') ?>
+<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
+<script>
+  var editor = new FroalaEditor('#inputDeskripsi', {
+    toolbarButtons: {
+
+      // 'moreText': {
+
+      //   'buttons': ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', 'textColor', 'backgroundColor', 'inlineClass', 'inlineStyle', 'clearFormatting']
+
+      // },
+
+      // 'moreParagraph': {
+
+      //   'buttons': ['alignLeft', 'alignCenter', 'formatOLSimple', 'alignRight', 'alignJustify', 'formatOL', 'formatUL', 'paragraphFormat', 'paragraphStyle', 'lineHeight', 'outdent', 'indent', 'quote']
+
+      // },
+
+      // 'moreRich': {
+
+      //   'buttons': ['insertLink', 'insertTable', 'emoticons', 'fontAwesome', 'specialCharacters', 'embedly', 'insertHR']
+
+      // },
+
+      // 'moreMisc': {
+
+      //   'buttons': ['undo', 'redo', 'fullscreen', 'print', 'getPDF', 'spellChecker', 'selectAll', 'html', 'help'],
+
+      //   'align': 'right',
+
+      //   'buttonsVisible': 2
+
+      // }
+
+    }
+  });
+</script>
+<?= $this->endSection() ?>

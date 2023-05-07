@@ -108,6 +108,15 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'is
         $routes->add('tambah', 'Produk::form_tambah');
     });
 
+    $routes->group('barang_masuk', function ($routes) {
+        $routes->get('/', 'BarangMasuk');
+        $routes->match(['get', 'put'], '(:num)', 'BarangMasuk::form_edit/$1');
+
+        $routes->delete('(:num)', 'BarangMasuk::delete_barang_masuk/$1');
+
+        $routes->add('tambah', 'BarangMasuk::form_tambah');
+    });
+
     $routes->group('penjualan', function ($routes) {
         $routes->get('/', 'Penjualan');
         $routes->add('(:segment)', 'Penjualan::detail_penjualan/$1');
