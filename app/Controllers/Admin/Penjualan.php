@@ -52,6 +52,41 @@ class Penjualan extends BaseController
 
   public function detail_penjualan($id_pembelian)
   {
+    if ($this->request->is('put')) {
+      $post = $this->request->getPost();
+      if (!$this->validate([
+        'no_resi' => [
+          'label' => 'No Resi',
+          'rules' => 'required|min_length[4]|max_length[100]',
+          'errors' => [
+            'required' => '{field} Harus diisi',
+            'min_length' => '{field} Minimal 4 Karakter',
+            'max_length' => '{field} Maksimal 100 Karakter',
+          ],
+        ],
+      ])) {
+        return redirect()->back()->withInput();
+      } else {
+
+        $data = [
+          'id_pembelian' => $id_pembelian,
+          'no_resi' => $post['no_resi'],
+          'status_pembelian' => 'Dikirim',
+        ];
+        $this->pembelianM->save($data);
+        return redirect()->back()->with('msg', myAlert('success', 'Berhasil Update Resi.'));
+      }
+    }
+
+    if ($this->request->is('post')) {
+      $data = [
+        'id_pembelian' => $id_pembelian,
+        'status_pembelian' => 'Selesai',
+      ];
+      $this->pembelianM->save($data);
+      return redirect()->back()->with('msg', myAlert('success', 'Berhasil Update data.'));
+    }
+
     $pembelian = $this->pembelianM->select('pembelian.*, pelanggan.id_pelanggan, pelanggan.nama_pelanggan, pelanggan.telepon_pelanggan, pelanggan.email_pelanggan')->join('pelanggan', 'pembelian.id_pelanggan = pelanggan.id_pelanggan')->find($id_pembelian);
 
     $produk = $this->pembelianProdukM->join('produk', 'pembelian_produk.id_produk = produk.id_produk')->where('id_pembelian', $id_pembelian)->find();

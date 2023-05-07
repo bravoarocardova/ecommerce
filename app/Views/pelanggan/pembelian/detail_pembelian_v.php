@@ -2,7 +2,10 @@
 <?= $this->section('content') ?>
 <div class="bg-light p-4" id="produk">
   <div class="container">
-    <a href="<?= base_url('pesanan') ?>" class="btn btn-danger">Kembali ke Pesanan</a>
+    <a href="<?= base_url('pesanan') ?>" class="btn btn-danger">
+      <i class="fa fa-arrow-left opacity-10"></i>
+      Kembali ke Pesanan
+    </a>
     <div class="row justify-content-end">
       <div class="col-6">
         <?= session()->get('msg'); ?>
@@ -121,8 +124,8 @@
         </table>
       </div>
 
-      <?php if ($pembelian['status_pembelian'] == 'Belum Bayar') : ?>
-        <div class="row">
+      <div class="row">
+        <?php if ($pembelian['status_pembelian'] == 'Belum Bayar') : ?>
           <div class="col-md-6">
             <br>
             <div class="alert alert-info">
@@ -137,13 +140,24 @@
             <br>
             <a href="<?= base_url('pembayaran/' . $pembelian['id_pembelian']) ?>" class="btn btn-success bg-gradient ">Konfirmasi Bayar</a>
           </div>
-        </div>
-      <?php endif ?>
+        <?php elseif ($pembelian['status_pembelian'] == 'Dikirim') : ?>
+          <div class="col-md-6">
+            <br>
+            <form action="" method="POST" class="d-inline">
+              <?= csrf_field() ?>
+              <button type="submit" class="btn btn-success" onclick="return confirm('Selesaikan Status Pembelian?')"><i class="fa fa-check me-sm-1"></i> Selesaikan Status Pembelian</button>
+            </form>
+          </div>
+        <?php endif ?>
+      </div>
 
       <?php if ($pembayaran != null) : ?>
         <div class="col-md-6">
           <br>
-          <a href="<?= base_url('img/bukti/' . $pembayaran['bukti'])  ?>" target="_blank" class="btn btn-info bg-gradient ">Bukti Transfer</a>
+          <a href="<?= base_url('img/bukti/' . $pembayaran['bukti'])  ?>" target="_blank" class="btn btn-info bg-gradient ">
+            <i class="fa fa-receipt me-sm-1"></i>
+            Bukti Transfer
+          </a>
         </div>
       <?php endif ?>
       <div class="col-md-6">

@@ -4,6 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\DataServisM;
+use App\Models\PembelianM;
 use CodeIgniter\API\ResponseTrait;
 
 class InfoBadge extends BaseController
@@ -19,6 +20,16 @@ class InfoBadge extends BaseController
     ];
 
     // return $this->response->setJSON($count);
+    return $this->respond($count);
+  }
+
+  public function badgeDataPenjualan()
+  {
+    $dataPembelian = new PembelianM();
+    $count = [
+      'jumlah' => $dataPembelian->where("status_pembelian = 'Dikemas' OR status_pembelian = 'Dikirim'")->countAllResults()
+    ];
+
     return $this->respond($count);
   }
 }

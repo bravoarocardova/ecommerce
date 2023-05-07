@@ -11,8 +11,17 @@
     fetch("<?= base_url() . '/admin/info_badge/data_servis' ?>")
       .then((response) => response.json())
       .then((data) => {
+        if (data.jumlah > 0) {
+          document.getElementById('badgeDataServis').innerText = data.jumlah
+        }
+      })
 
-        document.getElementById('badgeDataServis').innerText = data.jumlah
+    fetch("<?= base_url() . '/admin/info_badge/data_penjualan' ?>")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.jumlah > 0) {
+          document.getElementById('badgeDataPenjualan').innerText = data.jumlah
+        }
       })
   });
 </script>

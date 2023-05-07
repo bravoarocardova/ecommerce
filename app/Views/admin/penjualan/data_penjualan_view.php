@@ -40,8 +40,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($dikemas as $d) :
-                  ?>
+                  <?php foreach ($dikemas as $d) : ?>
                     <tr>
                       <td><?= $d['id_pembelian'] ?></td>
                       <td><?= ucwords($d['nama_pelanggan']) ?></td>
@@ -71,10 +70,88 @@
               </table>
             </div>
             <div class="tab-pane fade" id="nav-dikirim" role="tabpanel" aria-labelledby="nav-dikirim-tab">
-
+              <table class="table table-hover my-0" id="dataPenjualan2">
+                <thead>
+                  <tr>
+                    <th>No Transaksi</th>
+                    <th>Nama Pembeli</th>
+                    <th>Tanggal dibuat</th>
+                    <th>Tujuan</th>
+                    <th>Total</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($dikirim as $d) : ?>
+                    <tr>
+                      <td><?= $d['id_pembelian'] ?></td>
+                      <td><?= ucwords($d['nama_pelanggan']) ?></td>
+                      <td><?= $d['created_at'] ?></td>
+                      <td style="width:20%"><?= $d['tujuan'] ?></td>
+                      <td>Rp. <?= number_format($d['ongkir'] + $d['total_pembelian']) ?></td>
+                      <td>
+                        <div class="row">
+                          <div class="col">
+                            <a class="btn btn-info" href="<?= base_url() . '/admin/penjualan/' . $d['id_pembelian'] ?>">
+                              <i class="align-middle" data-feather="eye"></i> Lihat
+                            </a>
+                          </div>
+                          <!-- <div class="col">
+                            <form action="<? //= base_url() . '/admin/servis/' . $d['no_transaksi'] 
+                                          ?>" method="POST" class="d-inline">
+                              <?= csrf_field() ?>
+                              <input type="hidden" name="_method" value="DELETE">
+                              <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="align-middle" data-feather="trash-2"></i> Delete</button>
+                            </form>
+                          </div> -->
+                        </div>
+                      </td>
+                    </tr>
+                  <?php endforeach ?>
+                </tbody>
+              </table>
             </div>
             <div class="tab-pane fade" id="nav-selesai" role="tabpanel" aria-labelledby="nav-selesai-tab">
-
+              <table class="table table-hover my-0" id="dataPenjualan3">
+                <thead>
+                  <tr>
+                    <th>No Transaksi</th>
+                    <th>Nama Pembeli</th>
+                    <th>Tanggal dibuat</th>
+                    <th>Tujuan</th>
+                    <th>Total</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($selesai as $d) : ?>
+                    <tr>
+                      <td><?= $d['id_pembelian'] ?></td>
+                      <td><?= ucwords($d['nama_pelanggan']) ?></td>
+                      <td><?= $d['created_at'] ?></td>
+                      <td style="width:20%"><?= $d['tujuan'] ?></td>
+                      <td>Rp. <?= number_format($d['ongkir'] + $d['total_pembelian']) ?></td>
+                      <td>
+                        <div class="row">
+                          <div class="col">
+                            <a class="btn btn-info" href="<?= base_url() . '/admin/penjualan/' . $d['id_pembelian'] ?>">
+                              <i class="align-middle" data-feather="eye"></i> Lihat
+                            </a>
+                          </div>
+                          <!-- <div class="col">
+                            <form action="<? //= base_url() . '/admin/servis/' . $d['no_transaksi'] 
+                                          ?>" method="POST" class="d-inline">
+                              <?= csrf_field() ?>
+                              <input type="hidden" name="_method" value="DELETE">
+                              <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="align-middle" data-feather="trash-2"></i> Delete</button>
+                            </form>
+                          </div> -->
+                        </div>
+                      </td>
+                    </tr>
+                  <?php endforeach ?>
+                </tbody>
+              </table>
             </div>
             <div class="tab-pane fade" id="nav-data_dibatalkan" role="tabpanel" aria-labelledby="nav-data_dibatalkan-tab">
 

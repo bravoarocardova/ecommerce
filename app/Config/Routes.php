@@ -44,7 +44,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function ($routes)
 $routes->group('/', ['namespace' => 'App\Controllers\Pelanggan'], function ($routes) {
     $routes->get('', 'Home');
     $routes->get('cekservis', 'Home::cekservis');
-    $routes->get('pembelian/(:segment)', 'Pembelian::detail_pembelian/$1');
+    $routes->add('pembelian/(:segment)', 'Pembelian::detail_pembelian/$1');
     $routes->get('pesanan', 'Pembelian::pembelian');
 
     $routes->group('produk', function ($routes) {
@@ -110,7 +110,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'is
 
     $routes->group('penjualan', function ($routes) {
         $routes->get('/', 'Penjualan');
-        $routes->get('(:segment)', 'Penjualan::detail_penjualan/$1');
+        $routes->add('(:segment)', 'Penjualan::detail_penjualan/$1');
         // $routes->get('', '');
     });
 
@@ -158,6 +158,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'is
 
     $routes->group('info_badge', function ($routes) {
         $routes->get('data_servis', 'InfoBadge::badgeDataServis');
+        $routes->get('data_penjualan', 'InfoBadge::badgeDataPenjualan');
     });
 
     $routes->group('pengguna', function ($routes) {

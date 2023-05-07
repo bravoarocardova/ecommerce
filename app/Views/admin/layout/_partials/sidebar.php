@@ -22,13 +22,19 @@
 
         <li class="sidebar-item <?php if (!empty($uri->getSegments()) && $uri->getSegment(2) == 'penjualan') echo 'active' ?>">
           <a class="sidebar-link" href="<?= base_url('admin/penjualan') ?>">
-            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Data Penjualan</span>
+            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Data Penjualan <span class="badge bg-danger" id="badgeDataPenjualan"></span></span>
           </a>
         </li>
 
         <li class="sidebar-item <?php if (!empty($uri->getSegments()) && $uri->getSegment(2) == 'produk') echo 'active' ?>">
           <a class="sidebar-link" href="<?= base_url('admin/produk') ?>">
             <i class="align-middle" data-feather="book"></i> <span class="align-middle">Data Produk</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item <?php if (!empty($uri->getSegments()) && $uri->getSegment(2) == 'barang_masuk') echo 'active' ?>">
+          <a class="sidebar-link" href="<?= base_url('admin/barang_masuk') ?>">
+            <i class="align-middle" data-feather="folder-plus"></i> <span class="align-middle">Barang Masuk</span>
           </a>
         </li>
 

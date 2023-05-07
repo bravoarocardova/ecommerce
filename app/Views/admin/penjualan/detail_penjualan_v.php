@@ -1,8 +1,11 @@
 <?= $this->extend('admin/layout/layout') ?>
 <?= $this->section('content') ?>
-<div class="bg-light p-4" id="produk">
+<div class="bg-light" id="produk">
   <div class="container">
-    <a href="javascript:history.back()" class="btn btn-danger">Kembali</a>
+    <a href="javascript:history.back()" class="btn btn-danger">
+      <i class="align-middle" data-feather="arrow-left"></i>
+      Kembali
+    </a>
 
     <div class="row justify-content-end">
       <div class="col-6">
@@ -125,7 +128,10 @@
       <?php if ($pembayaran != null) : ?>
         <div class="col-md-6">
           <br>
-          <a href="<?= base_url('img/bukti/' . $pembayaran['bukti'])  ?>" target="_blank" class="btn btn-info bg-gradient ">Bukti Transfer</a>
+          <a href="<?= base_url('img/bukti/' . $pembayaran['bukti'])  ?>" target="_blank" class="btn btn-info bg-gradient ">
+            <i class="align-middle" data-feather="book"></i>
+            Bukti Transfer
+          </a>
         </div>
       <?php endif ?>
 
@@ -138,26 +144,33 @@
       </div>
 
       <?php if (isAdmininstrator()) : ?>
-        <?php if ($pembelian['status_pembelian'] == 'Dikemas') : ?>
+        <?php if (in_array($pembelian['status_pembelian'], ['Dikemas', 'Dikirim'])) : ?>
           <div class="col-md-6">
             <br>
-            <form action="<? //= base_url() . '/admin/servis/' . $d['no_transaksi'] 
-                          ?>" method="POST" class="d-inline">
+            <form action="" method="POST" class="d-inline">
               <?= csrf_field() ?>
               <input type="hidden" name="_method" value="PUT">
-              <input type="text" class="form-control" name="no_resi" value="" placeholder="NO RESI">
-              <button type="submit" class="btn btn-success" onclick="return confirm('Apakah anda yakin?')"><i class="align-middle" data-feather="edit"></i> Update Resi</button>
+              <input type="text" class="form-control <?= validation_show_error('no_resi') ? 'is-invalid' : '' ?>" name="no_resi" value="<?= $pembelian['no_resi'] ?>" placeholder="NO RESI">
+              <div class="invalid-feedback">
+                <?= validation_show_error('no_resi') ?>
+              </div>
+              <button type="submit" class="btn btn-success" onclick="return confirm('Update Resi?')"><i class="align-middle" data-feather="edit"></i> Update Resi</button>
             </form>
           </div>
-        <?php elseif ($pembelian['status_pembelian'] == 'Diproses') : ?>
+          <?php if ($pembelian['status_pembelian'] == 'Dikirim') : ?>
+            <div class="col-md-6">
+              <br>
+              <form action="" method="POST" class="d-inline">
+                <?= csrf_field() ?>
+                <button type="submit" class="btn btn-success" onclick="return confirm('Selesai?')"><i class="align-middle" data-feather="check"></i> Selesai</button>
+              </form>
+            </div>
+          <?php endif ?>
+
+        <?php elseif ($pembelian['status_pembelian'] == 'Selesai') : ?>
           <div class="col-md-6">
             <br>
-            <a href="<?= base_url('admin/transaksi/dipinjam/' . $pembelian['id_pembelian']) ?>" class="btn btn-success bg-gradient ">Dipinjam</a>
-          </div>
-        <?php elseif ($pembelian['status_pembelian'] == 'Dipinjam') : ?>
-          <div class="col-md-6">
-            <br>
-            <button class="btn btn-success bg-gradient " data-bs-toggle="modal" data-bs-target="#ModalDenda">Di Kembalikan</button>
+            <!-- <button class="btn btn-success bg-gradient " data-bs-toggle="modal" data-bs-target="#ModalDenda">Di Kembalikan</button> -->
           </div>
 
         <?php endif ?>

@@ -88,6 +88,15 @@ class Pembelian extends BaseController
 
   public function detail_pembelian($id_pembelian)
   {
+    if ($this->request->is('post')) {
+      $data = [
+        'id_pembelian' => $id_pembelian,
+        'status_pembelian' => 'Selesai',
+      ];
+      $this->pembelianM->save($data);
+      return redirect()->back()->with('msg', myAlert('success', 'Pesanan telah diselesaikan.'));
+    }
+
     $pembelian = $this->pembelianM->select('pembelian.*, pelanggan.id_pelanggan, pelanggan.nama_pelanggan, pelanggan.telepon_pelanggan, pelanggan.email_pelanggan')->join('pelanggan', 'pembelian.id_pelanggan = pelanggan.id_pelanggan')->find($id_pembelian);
 
     if ($pembelian['id_pelanggan'] != session()->get('pelanggan')['id_pelanggan']) {
