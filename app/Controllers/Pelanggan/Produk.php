@@ -139,7 +139,7 @@ class Produk extends BaseController
     }
     $max_produk = $p;
     return view(
-      'pelanggan/checkout_v',
+      'pelanggan/pembelian/checkout_v',
       [
         'cart' => $cart,
         'max_produk' => $max_produk,

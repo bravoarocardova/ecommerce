@@ -72,14 +72,14 @@
                               <i class="align-middle" data-feather="eye"></i> Lihat
                             </a>
                           </div>
-                          <div class="col">
+                          <!-- <div class="col">
                             <form action="<? //= base_url() . '/admin/servis/' . $d['no_transaksi'] 
                                           ?>" method="POST" class="d-inline">
                               <?= csrf_field() ?>
                               <input type="hidden" name="_method" value="DELETE">
                               <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="align-middle" data-feather="trash-2"></i> Delete</button>
                             </form>
-                          </div>
+                          </div> -->
                         </div>
                       </td>
                     </tr>
@@ -125,14 +125,14 @@
                               <i class="align-middle" data-feather="eye"></i> Lihat
                             </a>
                           </div>
-                          <div class="col">
+                          <!-- <div class="col">
                             <form action="<? //= base_url() . '/admin/servis/' . $d['no_transaksi'] 
                                           ?>" method="POST" class="d-inline">
                               <?= csrf_field() ?>
                               <input type="hidden" name="_method" value="DELETE">
                               <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="align-middle" data-feather="trash-2"></i> Delete</button>
                             </form>
-                          </div>
+                          </div> -->
                         </div>
                       </td>
                     </tr>
@@ -179,14 +179,14 @@
                               <i class="align-middle" data-feather="eye"></i> Lihat
                             </a>
                           </div>
-                          <div class="col">
+                          <!-- <div class="col">
                             <form action="<? //= base_url() . '/admin/servis/' . $d['no_transaksi'] 
                                           ?>" method="POST" class="d-inline">
                               <?= csrf_field() ?>
                               <input type="hidden" name="_method" value="DELETE">
                               <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="align-middle" data-feather="trash-2"></i> Delete</button>
                             </form>
-                          </div>
+                          </div> -->
                         </div>
                       </td>
                     </tr>
@@ -231,14 +231,14 @@
                               <i class="align-middle" data-feather="eye"></i> Lihat
                             </a>
                           </div>
-                          <div class="col">
+                          <!-- <div class="col">
                             <form action="<? //= base_url() . '/admin/servis/' . $d['no_transaksi'] 
                                           ?>" method="POST" class="d-inline">
                               <?= csrf_field() ?>
                               <input type="hidden" name="_method" value="DELETE">
                               <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="align-middle" data-feather="trash-2"></i> Delete</button>
                             </form>
-                          </div>
+                          </div> -->
                         </div>
                       </td>
                     </tr>
@@ -283,14 +283,14 @@
                               <i class="align-middle" data-feather="eye"></i> Lihat
                             </a>
                           </div>
-                          <div class="col">
+                          <!-- <div class="col">
                             <form action="<? //= base_url() . '/admin/servis/' . $d['no_transaksi'] 
                                           ?>" method="POST" class="d-inline">
                               <?= csrf_field() ?>
                               <input type="hidden" name="_method" value="DELETE">
                               <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="align-middle" data-feather="trash-2"></i> Delete</button>
                             </form>
-                          </div>
+                          </div> -->
                         </div>
                       </td>
                     </tr>

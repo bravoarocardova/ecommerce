@@ -4,6 +4,7 @@ namespace App\Controllers\Pelanggan;
 
 use App\Controllers\BaseController;
 use App\Models\HomepageModel;
+use App\Models\PembayaranM;
 use App\Models\PembelianM;
 use App\Models\PembelianProdukM;
 use App\Models\ProdukM;
@@ -14,6 +15,7 @@ class Pembelian extends BaseController
   private $produkM;
   private $pembelianM;
   private $pembelianProdukM;
+  private $pembayaranM;
 
   public function __construct()
   {
@@ -21,6 +23,7 @@ class Pembelian extends BaseController
     $this->produkM = new ProdukM();
     $this->pembelianM = new PembelianM();
     $this->pembelianProdukM = new PembelianProdukM();
+    $this->pembayaranM = new PembayaranM();
   }
 
   // public function index()
@@ -93,14 +96,103 @@ class Pembelian extends BaseController
 
     $produk = $this->pembelianProdukM->join('produk', 'pembelian_produk.id_produk = produk.id_produk')->where('id_pembelian', $id_pembelian)->find();
     // $pembayaran = $this->db->query("SELECT * FROM pembayaran WHERE id_pembelian = '" . $pembelian['id_pembelian'] . "'");
-    $pembayaran = [];
+    $pembayaran = $this->pembayaranM->where('id_pembelian', $id_pembelian)->first();
     return view(
-      'pelanggan/detail_pembelian_v',
+      'pelanggan/pembelian/detail_pembelian_v',
       [
         'pembelian' => $pembelian,
         'produk' => $produk,
         'pembayaran' => $pembayaran,
       ]
     );
+  }
+
+  public function pembayaran_view($id_pembelian)
+  {
+    $pembelian = $this->pembelianM->find($id_pembelian);
+    if ($pembelian == null || $pembelian['id_pelanggan'] != session('pelanggan')['id_pelanggan']) {
+      throw new \CodeIgniter\Exceptions\PageNotFoundException("NOT FOUND");
+    }
+    return view(
+      'pelanggan/pembelian/pembayaran_view',
+      [
+        'pembelian' => $pembelian,
+      ]
+    );
+  }
+
+  public function pembayaran_proses($id_pembelian)
+  {
+    $pembelian = $this->pembelianM->find($id_pembelian);
+    if ($pembelian == null || $pembelian['id_pelanggan'] != session('pelanggan')['id_pelanggan']) {
+      throw new \CodeIgniter\Exceptions\PageNotFoundException("NOT FOUND");
+    }
+
+    if (!$this->validate([
+      'nama' => [
+        'label' => 'Nama',
+        'rules' => 'required|min_length[4]|max_length[100]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+        ],
+      ],
+      'bank' => [
+        'label' => 'Bank',
+        'rules' => 'required|min_length[2]|max_length[100]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+        ],
+      ],
+      'jumlah' => [
+        'label' => 'Jumlah',
+        'rules' => 'required|min_length[2]|max_length[100]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 2 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+        ],
+      ],
+
+      'bukti' => [
+        'label' => 'bukti',
+        'rules' => 'uploaded[bukti]|mime_in[bukti,image/jpg,image/jpeg,image/png]|max_size[bukti,4096]',
+        'errors' => [
+          'uploaded' => '{field} Harus ada yang diupload',
+          'mime_in' => '{field} Harus [jpg, jpeg, png]',
+          'max_size' => '{field} Maksimal 4mb'
+        ],
+      ],
+    ])) {
+      return redirect()->back()->withInput();
+    } else {
+      $post = $this->request->getVar();
+
+      $bukti = $this->request->getFile('bukti');
+      $newBukti = $bukti->getRandomName();
+
+      $data = [
+        'id_pembelian' => $post['id_pembelian'],
+
+        'nama' => $post['nama'],
+        'bank' => $post['bank'],
+        'jumlah' => $post['jumlah'],
+        'bukti' => $newBukti,
+      ];
+
+      if ($this->pembayaranM->save($data)) {
+        $bukti->move('img/bukti/', $newBukti);
+        $this->pembelianM->update(
+          $id_pembelian,
+          [
+            'status_pembelian' => 'Dikemas',
+          ]
+        );
+        return redirect()->to(base_url() . '/pembelian/' . $id_pembelian)->with('msg', myAlert('success', 'Pembayaran Berhasil'));
+      }
+    }
   }
 }

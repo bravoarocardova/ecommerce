@@ -1,6 +1,7 @@
-<?= $this->sectiono('content') ?>
+<?= $this->extend('pelanggan/layout/layout') ?>
+<?= $this->section('content') ?>
 
-<div class="bg-light p-4 mt-5" id="produk">
+<div class="bg-light p-4" id="produk">
   <div class="container">
     <div class="row text-center">
       <h4 class="fw-bold text-primary text-gradient">PEMBAYARAN</h4>
@@ -9,25 +10,37 @@
       <div class="container">
         <h2>Konfirmasi Pembayaran</h2>
         <p>kirim bukti pembayaran anda di sini</p>
-        <div class="alert alert-info">Total tagihan anda <strong>Rp. <?php echo number_format($peminjaman->total_peminjaman + $peminjaman->ongkir) ?></strong></div>
+        <div class="alert alert-info">Total tagihan anda <strong>Rp. <?php echo number_format($pembelian['total_pembelian'] + $pembelian['ongkir']) ?></strong></div>
 
-        <form method="post" action="<?= base_url('produk/pembayaran_proses') ?>" enctype="multipart/form-data">
-          <input type="hidden" name="id_peminjaman" value="<?= $peminjaman->id_peminjaman ?>">
+        <form method="post" action="" enctype="multipart/form-data">
+          <input type="hidden" name="id_pembelian" value="<?= $pembelian['id_pembelian'] ?>">
           <div class="form-group">
             <label>Nama Penyetor</label>
-            <input type="text" class="form-control" value="" name="nama" required>
+            <input type="text" class="form-control <?= validation_show_error('nama') ? 'is-invalid' : '' ?>" value="" name="nama">
+            <div class="invalid-feedback">
+              <?= validation_show_error('nama') ?>
+            </div>
           </div>
           <div class="form-group">
             <label>Bank</label>
-            <input type="text" class="form-control" value="" name="bank" required>
+            <input type="text" class="form-control <?= validation_show_error('bank') ? 'is-invalid' : '' ?>" value="" name="bank">
+            <div class="invalid-feedback">
+              <?= validation_show_error('bank') ?>
+            </div>
           </div>
           <div class="form-group">
             <label>Jumlah</label>
-            <input type="number" class="form-control" name="jumlah" min="<?= $peminjaman->total_peminjaman + $peminjaman->ongkir ?>" required>
+            <input type="number" class="form-control <?= validation_show_error('jumlah') ? 'is-invalid' : '' ?>" name="jumlah" min="<?= $pembelian['total_pembelian'] + $pembelian['ongkir'] ?>">
+            <div class="invalid-feedback">
+              <?= validation_show_error('jumlah') ?>
+            </div>
           </div>
           <div class="form-group">
             <label>Foto Bukti</label>
-            <input type="file" class="form-control" name="bukti" required>
+            <input type="file" class="form-control <?= validation_show_error('bukti') ? 'is-invalid' : '' ?>"" name=" bukti">
+            <div class="invalid-feedback">
+              <?= validation_show_error('bukti') ?>
+            </div>
             <p class="text-danger">foto harus JPG maksimal 2MB</p>
           </div>
           <button class="btn btn-success btn_1" name="bayar">Kirim</button>

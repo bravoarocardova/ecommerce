@@ -128,6 +128,7 @@
           <a href="<?= base_url('img/bukti/' . $pembayaran['bukti'])  ?>" target="_blank" class="btn btn-info bg-gradient ">Bukti Transfer</a>
         </div>
       <?php endif ?>
+
       <div class="col-md-6">
         <br>
         <button" target="_blank" onclick="printDiv('printDiv','printDiv2')" class="btn btn-info">
@@ -135,11 +136,18 @@
           Cetak
           </button>
       </div>
+
       <?php if (isAdmininstrator()) : ?>
-        <?php if ($pembelian['status_pembelian'] == 'Menunggu Verifikasi') : ?>
+        <?php if ($pembelian['status_pembelian'] == 'Dikemas') : ?>
           <div class="col-md-6">
             <br>
-            <a href="<?= base_url('admin/transaksi/diproses/' . $pembelian['id_pembelian']) ?>" class="btn btn-success bg-gradient ">Proses</a>
+            <form action="<? //= base_url() . '/admin/servis/' . $d['no_transaksi'] 
+                          ?>" method="POST" class="d-inline">
+              <?= csrf_field() ?>
+              <input type="hidden" name="_method" value="PUT">
+              <input type="text" class="form-control" name="no_resi" value="" placeholder="NO RESI">
+              <button type="submit" class="btn btn-success" onclick="return confirm('Apakah anda yakin?')"><i class="align-middle" data-feather="edit"></i> Update Resi</button>
+            </form>
           </div>
         <?php elseif ($pembelian['status_pembelian'] == 'Diproses') : ?>
           <div class="col-md-6">

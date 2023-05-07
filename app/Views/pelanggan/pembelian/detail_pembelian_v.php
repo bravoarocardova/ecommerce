@@ -135,7 +135,7 @@
           </div>
           <div class="col-md-6">
             <br>
-            <a href="<?= base_url('produk/pembayaran/' . $pembelian['id_pembelian']) ?>" class="btn btn-success bg-gradient ">Konfirmasi Bayar</a>
+            <a href="<?= base_url('pembayaran/' . $pembelian['id_pembelian']) ?>" class="btn btn-success bg-gradient ">Konfirmasi Bayar</a>
           </div>
         </div>
       <?php endif ?>

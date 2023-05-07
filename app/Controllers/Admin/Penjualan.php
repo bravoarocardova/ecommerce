@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Models\PembayaranM;
 use App\Models\PembelianM;
 use App\Models\PembelianProdukM;
 use App\Models\ProdukM;
@@ -13,12 +14,14 @@ class Penjualan extends BaseController
   private $produkM;
   private $pembelianM;
   private $pembelianProdukM;
+  private $pembayaranM;
 
   public function __construct()
   {
     $this->produkM = new ProdukM();
     $this->pembelianM = new PembelianM();
     $this->pembelianProdukM = new PembelianProdukM();
+    $this->pembayaranM = new PembayaranM();
   }
 
   public function index()
@@ -52,8 +55,8 @@ class Penjualan extends BaseController
     $pembelian = $this->pembelianM->select('pembelian.*, pelanggan.id_pelanggan, pelanggan.nama_pelanggan, pelanggan.telepon_pelanggan, pelanggan.email_pelanggan')->join('pelanggan', 'pembelian.id_pelanggan = pelanggan.id_pelanggan')->find($id_pembelian);
 
     $produk = $this->pembelianProdukM->join('produk', 'pembelian_produk.id_produk = produk.id_produk')->where('id_pembelian', $id_pembelian)->find();
-    // $pembayaran = $this->db->query("SELECT * FROM pembayaran WHERE id_pembelian = '" . $pembelian['id_pembelian'] . "'");
-    $pembayaran = [];
+
+    $pembayaran = $this->pembayaranM->where('id_pembelian', $id_pembelian)->first();
     return view(
       'admin/penjualan/detail_penjualan_v',
       [
