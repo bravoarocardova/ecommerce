@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 05 Bulan Mei 2023 pada 15.24
+-- Waktu pembuatan: 12 Bulan Mei 2023 pada 15.29
 -- Versi server: 8.0.32-0ubuntu0.22.04.2
 -- Versi PHP: 8.1.2-1ubuntu2.11
 
@@ -161,6 +161,23 @@ INSERT INTO `pelanggan` (`id_pelanggan`, `username_pelanggan`, `email_pelanggan`
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `pemasok`
+--
+
+CREATE TABLE `pemasok` (
+  `id_pemasok` int NOT NULL,
+  `nama_pemasok` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `harga_beli` int NOT NULL,
+  `jumlah_beli` int NOT NULL,
+  `id_produk` int NOT NULL,
+  `total` int NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `pembayaran`
 --
 
@@ -209,7 +226,7 @@ CREATE TABLE `pembelian` (
 INSERT INTO `pembelian` (`id_pembelian`, `id_pelanggan`, `tujuan`, `ekspedisi`, `total_berat`, `ongkir`, `total_pembelian`, `status_pembelian`, `no_resi`, `created_at`, `updated_at`) VALUES
 ('PBR00000001', 5, 'kljoiajiof asf as, Jambi, Jambi', 'JNE City Courier (CTC)', 2, 10000, 4642, 'Dibatalkan', '', '2023-04-26 14:15:31', '2023-04-29 02:20:29'),
 ('PBR00000002', 5, 'alamat lengkap, Jambi, Jambi', 'JNE City Courier (CTC)', 2, 10000, 6864, 'Dibatalkan', '', '2023-04-26 14:51:57', '2023-04-29 02:20:29'),
-('PBR00000003', 5, 'alamat lengkap ku, Jambi, Jambi', 'JNE City Courier (CTC)', 2, 10000, 1111, 'Dikemas', '', '2023-04-26 15:19:19', '2023-05-02 14:36:09'),
+('PBR00000003', 5, 'alamat lengkap ku, Jambi, Jambi', 'JNE City Courier (CTC)', 2, 10000, 1111, 'Selesai', 'sdaf', '2023-04-26 15:19:19', '2023-05-07 13:34:27'),
 ('PBR00000004', 5, 'alamat lengkap saya sendiri, Jambi, Jambi', 'JNE City Courier (CTC)', 2, 10000, 1500000, 'Dibatalkan', '', '2023-05-02 13:46:37', '2023-05-02 14:46:40');
 
 -- --------------------------------------------------------
@@ -280,7 +297,7 @@ INSERT INTO `produk` (`id_produk`, `nama_produk`, `harga_produk`, `foto_produk`,
 (102, 'Laptop Asus', 175000, '1682693730_857b82b7d1cd887d2296.jpeg', 'Baru', 'Technical Specifications of Asus X441M Intel N4000 DDR4 4GB 1TB 14 Inch Windows 10\nProcessor Type\n1.10 GHz - 2.70 GHz, 4 MB\nProcessor Onboard\nIntel Pentium N4000\nStandard Memory\n4GB DDR4\nDisplay Size\n14 Inch\nAudio Type\nIntegrated\nSpeakers Type\nIntegrated\nHard Drive Type\nHDD 1TB\nKeyboard Type\nStandard Keyboard\nCard Reader Provided\nYes\nInterface Provided\n1 x COMBO audio jack\n1 x VGA port\n1 x Type C USB3.0 (USB3.1 GEN1)\n1 x Type A USB3.0 (USB3.1 GEN1)\n1 x USB 2.0 port(s)\n1 x RJ45 LAN Jack for LAN insert\n1 x HDMI\n1 x AC adapter plug\n1 x SD Card Slot\n3 bulan part, 1 tahun servis', 5, 1, '2023-03-15 08:07:23', '2023-04-28 15:36:18'),
 (107, 'Laptop Acer', 1500000, '1682693762_0747e89aa1d66d36195a.jpeg', 'Second', '<p id=\"isPasted\" style=\"line-height: 1;\">Technical Specifications of Asus X441M&nbsp;</p><p style=\"line-height: 1;\">Intel N4000&nbsp;</p><p style=\"line-height: 1;\">DDR4 4GB 1TB&nbsp;</p><p style=\"line-height: 1;\">14 Inch&nbsp;</p><p style=\"line-height: 1;\">Windows 10</p><p style=\"line-height: 1;\">Processor Type1.10 GHz - 2.70 GHz, 4 MB</p><p style=\"line-height: 1;\">Processor OnboardIntel Pentium N4000</p><p style=\"line-height: 1;\">Standard Memory4GB DDR4</p><p style=\"line-height: 1;\">Display Size14 Inch</p><p style=\"line-height: 1;\">Audio TypeIntegrated</p><p style=\"line-height: 1;\">Speakers TypeIntegrated</p><p style=\"line-height: 1;\">Hard Drive TypeHDD 1TB</p><p style=\"line-height: 1;\">Keyboard TypeStandard Keyboard</p><p style=\"line-height: 1;\">Card Reader ProvidedYesInterface Provided</p><p style=\"line-height: 1;\">1 x COMBO audio jack</p><p style=\"line-height: 1;\">1 x VGA port</p><p style=\"line-height: 1;\">1 x Type C USB3.0 (USB3.1 GEN1)</p><p style=\"line-height: 1;\">1 x Type A USB3.0 (USB3.1 GEN1)</p><p style=\"line-height: 1;\">1 x USB 2.0 port(s)</p><p style=\"line-height: 1;\">1 x RJ45 LAN Jack for LAN insert</p><p style=\"line-height: 1;\">1 x HDMI</p><p style=\"line-height: 1;\">1 x AC adapter plug</p><p style=\"line-height: 1;\">1 x SD Card Slot</p><p style=\"line-height: 1;\">3 bulan part, 1 tahun servis</p>', 4, 4, '2023-03-14 14:54:41', '2023-04-28 15:36:26'),
 (108, 'Laptop Lenovo', 1500000, '1682693781_5e8d14265d0a08e94501.jpeg', 'Baru', '<p id=\"isPasted\" style=\"line-height: 1;\">Technical Specifications of Asus X441M&nbsp;</p><p style=\"line-height: 1;\">Intel N4000&nbsp;</p><p style=\"line-height: 1;\">DDR4 4GB 1TB&nbsp;</p><p style=\"line-height: 1;\">14 Inch&nbsp;</p><p style=\"line-height: 1;\">Windows 10</p><p style=\"line-height: 1;\">Processor Type1.10 GHz - 2.70 GHz, 4 MB</p><p style=\"line-height: 1;\">Processor OnboardIntel Pentium N4000</p><p style=\"line-height: 1;\">Standard Memory4GB DDR4</p><p style=\"line-height: 1;\">Display Size14 Inch</p><p style=\"line-height: 1;\">Audio TypeIntegrated</p><p style=\"line-height: 1;\">Speakers TypeIntegrated</p><p style=\"line-height: 1;\">Hard Drive TypeHDD 1TB</p><p style=\"line-height: 1;\">Keyboard TypeStandard Keyboard</p><p style=\"line-height: 1;\">Card Reader ProvidedYesInterface Provided</p><p style=\"line-height: 1;\">1 x COMBO audio jack</p><p style=\"line-height: 1;\">1 x VGA port</p><p style=\"line-height: 1;\">1 x Type C USB3.0 (USB3.1 GEN1)</p><p style=\"line-height: 1;\">1 x Type A USB3.0 (USB3.1 GEN1)</p><p style=\"line-height: 1;\">1 x USB 2.0 port(s)</p><p style=\"line-height: 1;\">1 x RJ45 LAN Jack for LAN insert</p><p style=\"line-height: 1;\">1 x HDMI</p><p style=\"line-height: 1;\">1 x AC adapter plug</p><p style=\"line-height: 1;\">1 x SD Card Slot</p><p style=\"line-height: 1;\">3 bulan part, 1 tahun servis</p>', 35, 2, '2023-03-15 14:19:41', '2023-05-02 14:46:40'),
-(109, 'Laptop Hp', 15000000, '1682693800_318cc361982ab3cc9de6.jpeg', 'Baru', '<p id=\"isPasted\" style=\"line-height: 1.15;\">Technical Specifications of Asus X441M&nbsp;</p><p style=\"line-height: 1.15;\">Intel N4000&nbsp;</p><p style=\"line-height: 1.15;\">DDR4 4GB 1TB&nbsp;</p><p style=\"line-height: 1.15;\">14 Inch&nbsp;</p><p style=\"line-height: 1.15;\">Windows 10</p><p style=\"line-height: 1.15;\">Processor Type1.10 GHz - 2.70 GHz, 4 MB</p><p style=\"line-height: 1.15;\">Processor OnboardIntel Pentium N4000</p><p style=\"line-height: 1.15;\">Standard Memory4GB DDR4</p><p style=\"line-height: 1.15;\">Display Size14 Inch</p><p style=\"line-height: 1.15;\">Audio TypeIntegrated</p><p style=\"line-height: 1.15;\">Speakers TypeIntegrated</p><p style=\"line-height: 1.15;\">Hard Drive TypeHDD 1TB</p><p style=\"line-height: 1.15;\">Keyboard TypeStandard Keyboard</p><p style=\"line-height: 1.15;\">Card Reader ProvidedYesInterface Provided</p><p style=\"line-height: 1.15;\">1 x COMBO audio jack</p><p style=\"line-height: 1.15;\">1 x VGA port</p><p style=\"line-height: 1.15;\">1 x Type C USB3.0 (USB3.1 GEN1)</p><p style=\"line-height: 1.15;\">1 x Type A USB3.0 (USB3.1 GEN1)</p><p style=\"line-height: 1.15;\">1 x USB 2.0 port(s)</p><p style=\"line-height: 1.15;\">1 x RJ45 LAN Jack for LAN insert</p><p style=\"line-height: 1.15;\">1 x HDMI</p><p style=\"line-height: 1.15;\">1 x AC adapter plug</p><p style=\"line-height: 1.15;\">1 x SD Card Slot</p><p style=\"line-height: 1.15;\">3 bulan part, 1 tahun servis</p>', 73, 2, '2023-03-23 11:53:08', '2023-04-29 02:47:42');
+(109, 'Laptop Hp', 15000000, '1682693800_318cc361982ab3cc9de6.jpeg', 'Baru', '<p id=\"isPasted\" style=\"line-height: 1.15;\">Technical Specifications of Asus X441M&nbsp;</p><p style=\"line-height: 1.15;\">Intel N4000&nbsp;</p><p style=\"line-height: 1.15;\">DDR4 4GB 1TB&nbsp;</p><p style=\"line-height: 1.15;\">14 Inch&nbsp;</p><p style=\"line-height: 1.15;\">Windows 10</p><p style=\"line-height: 1.15;\">Processor Type1.10 GHz - 2.70 GHz, 4 MB</p><p style=\"line-height: 1.15;\">Processor OnboardIntel Pentium N4000</p><p style=\"line-height: 1.15;\">Standard Memory4GB DDR4</p><p style=\"line-height: 1.15;\">Display Size14 Inch</p><p style=\"line-height: 1.15;\">Audio TypeIntegrated</p><p style=\"line-height: 1.15;\">Speakers TypeIntegrated</p><p style=\"line-height: 1.15;\">Hard Drive TypeHDD 1TB</p><p style=\"line-height: 1.15;\">Keyboard TypeStandard Keyboard</p><p style=\"line-height: 1.15;\">Card Reader ProvidedYesInterface Provided</p><p style=\"line-height: 1.15;\">1 x COMBO audio jack</p><p style=\"line-height: 1.15;\">1 x VGA port</p><p style=\"line-height: 1.15;\">1 x Type C USB3.0 (USB3.1 GEN1)</p><p style=\"line-height: 1.15;\">1 x Type A USB3.0 (USB3.1 GEN1)</p><p style=\"line-height: 1.15;\">1 x USB 2.0 port(s)</p><p style=\"line-height: 1.15;\">1 x RJ45 LAN Jack for LAN insert</p><p style=\"line-height: 1.15;\">1 x HDMI</p><p style=\"line-height: 1.15;\">1 x AC adapter plug</p><p style=\"line-height: 1.15;\">1 x SD Card Slot</p><p style=\"line-height: 1.15;\">3 bulan part, 1 tahun servis</p>', 77, 2, '2023-03-23 11:53:08', '2023-05-07 13:00:18');
 
 -- --------------------------------------------------------
 
@@ -346,6 +363,12 @@ ALTER TABLE `pelanggan`
   ADD PRIMARY KEY (`id_pelanggan`);
 
 --
+-- Indeks untuk tabel `pemasok`
+--
+ALTER TABLE `pemasok`
+  ADD PRIMARY KEY (`id_pemasok`);
+
+--
 -- Indeks untuk tabel `pembayaran`
 --
 ALTER TABLE `pembayaran`
@@ -399,6 +422,12 @@ ALTER TABLE `pelanggan`
   MODIFY `id_pelanggan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
+-- AUTO_INCREMENT untuk tabel `pemasok`
+--
+ALTER TABLE `pemasok`
+  MODIFY `id_pemasok` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT untuk tabel `pembayaran`
 --
 ALTER TABLE `pembayaran`
@@ -414,7 +443,7 @@ ALTER TABLE `pembelian_produk`
 -- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `id_produk` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
