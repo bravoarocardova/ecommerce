@@ -28,7 +28,7 @@ class Laporan extends BaseController
         'tgl' => $tanggal,
         'penjualan' => $dataPembelian->select('pembelian.*, pelanggan.nama_pelanggan')
           ->join('pelanggan', 'pembelian.id_pelanggan = pelanggan.id_pelanggan')
-          ->where('status_pembelian = "Dibatalkan" AND DATE(pembelian.created_at) BETWEEN "' . $tglMulai . '" AND "' . $tglAkhir . '"')->findAll(),
+          ->where('status_pembelian = "Selesai" AND DATE(pembelian.created_at) BETWEEN "' . $tglMulai . '" AND "' . $tglAkhir . '"')->findAll(),
       ];
 
       $html = view('admin/laporan/laporan_penjualan_pdf', $data);

@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use App\Models\DataServisM;
 use App\Models\BarangServisM;
 use App\Models\JasaServisM;
+use App\Models\PartProdukM;
+use App\Models\PartServisM;
 use App\Models\ServisM;
 
 class DataServis extends BaseController
@@ -14,11 +16,14 @@ class DataServis extends BaseController
   private $dataServisM;
   private $barangServisM;
   private $servisM;
+  private $partServisM;
+
   public function __construct()
   {
     $this->dataServisM  = new DataServisM();
     $this->barangServisM  = new BarangServisM();
     $this->servisM  = new ServisM();
+    $this->partServisM = new PartServisM();
   }
 
   // Data Servis
@@ -91,6 +96,15 @@ class DataServis extends BaseController
           'numeric' => '{field} Harus Angka'
         ],
       ],
+      'estimasi_servis' => [
+        'label' => 'Estimasi Servis',
+        'rules' => 'required|min_length[1]|max_length[100]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+        ],
+      ],
     ])) {
       return redirect()->back()->withInput()->with('msg', myAlert('danger', 'Gagal simpan, cek ulang data'));
     } else {
@@ -100,7 +114,9 @@ class DataServis extends BaseController
         'no_transaksi' => createNoTransaksi('TSV', $this->dataServisM, 'no_transaksi'),
         'nama_pelanggan' => $post['nama_pelanggan'],
         'alamat_pelanggan' => $post['alamat_pelanggan'],
-        'no_telp_pelanggan' => '62' . $post['no_telp_pelanggan']
+        'no_telp_pelanggan' => '62' . $post['no_telp_pelanggan'],
+        'alamat_pelanggan' => $post['alamat_pelanggan'],
+        'estimasi_servis' => $post['estimasi_servis'],
       ];
       $simpan = $this->dataServisM->save($data);
       if ($simpan) {
@@ -316,6 +332,114 @@ class DataServis extends BaseController
   }
   // End Servis
 
+  // Part Servis
+  public function data_part_servis($noTransaksi = null)
+  {
+
+    if ($noTransaksi != null) {
+      $detail_servis = $this->dataServisM->find($noTransaksi);
+
+      if ($detail_servis == null) {
+        throw new \CodeIgniter\Exceptions\PageNotFoundException("Tidak ditemukan");
+      }
+      $barang_servis = $this->barangServisM->where('no_transaksi', $noTransaksi)->findAll();
+      $barang = [];
+      foreach ($barang_servis as $row) {
+        $barang[] = [
+          'kd_barang_servis' => $row['kd_barang_servis'],
+          'no_transaksi' => $row['no_transaksi'],
+          'nama_barang_servis' => $row['nama_barang_servis'],
+          'kelengkapan' => $row['kelengkapan'],
+          'kerusakan' => $row['kerusakan'],
+          'servis' => $this->servisM->where('kd_barang_servis', $row['kd_barang_servis'])->join('jasa_servis', 'id_jasa_servis')->findAll(),
+          'part' => $this->partServisM->where('kd_barang_servis', $row['kd_barang_servis'])->join('part_produk', 'id_part_produk')->findAll()
+        ];
+      }
+      $partProdukM  = new PartProdukM();
+      return view('admin/servis/part_servis_view', [
+        'detail_servis' => $detail_servis,
+        'barang_servis' => $barang,
+        'part_produk' => $partProdukM->findAll(),
+      ]);
+    }
+
+    return view('admin/servis/part_servis_view', [
+      'data_servis' => $this->dataServisM->findAll()
+    ]);
+  }
+
+  public function tambah_part_servis()
+  {
+    if (!$this->validate([
+      'id_part_produk' => [
+        'label' => 'Part Produk',
+        'rules' => 'required|min_length[1]|max_length[100]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 1 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+        ],
+      ],
+      'biaya_part' => [
+        'label' => 'Biaya Part',
+        'rules' => 'required|min_length[4]|max_length[100]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+        ],
+
+      ],
+    ])) {
+      return redirect()->back()->withInput()->with('msg', myAlert('danger', 'Gagal simpan, cek ulang data'));
+    } else {
+
+      $post = $this->request->getPost();
+      $data = [
+        'kd_barang_servis' => $post['kd_barang_servis'],
+        'id_part_produk' => $post['id_part_produk'],
+        'biaya_part_servis' => $post['biaya_part']
+      ];
+
+      if (empty($this->partServisM->where($data)->find())) {
+        $simpan = $this->partServisM->save($data);
+        if ($simpan) {
+          $type = 'success';
+          $msg = 'Berhasil tambah data.';
+        } else {
+          $type = 'danger';
+          $msg = 'Gagal tambah data.';
+        }
+      } else {
+        $type = 'danger';
+        $msg = 'Sudah ditambahkan.';
+      }
+      return redirect()->back()->with('msg', myAlert($type, $msg));
+    }
+  }
+
+  public function delete_part_servis($kd_barang = null, $id_part = null)
+  {
+    if ($kd_barang == null && $id_part == null) {
+      // throw new \CodeIgniter\Exceptions\PageNotFoundException('Tidak Ditemukan');
+      return redirect()->back();
+    }
+    $hapus = $this->partServisM->where([
+      'kd_barang_servis' => $kd_barang,
+      'id_part_produk' => $id_part
+    ])->delete();
+
+    if ($hapus) {
+      $type = 'success';
+      $msg = 'Berhasil dihapus.';
+    } else {
+      $type = 'danger';
+      $msg = 'Gagal dihapus.';
+    }
+    return redirect()->back()->with('msg', myAlert($type, $msg));
+  }
+  // End Part Servis
+
   // Detail Servis
   public function detail_servis($noTransaksi = null)
   {
@@ -335,7 +459,8 @@ class DataServis extends BaseController
           'nama_barang_servis' => $row['nama_barang_servis'],
           'kelengkapan' => $row['kelengkapan'],
           'kerusakan' => $row['kerusakan'],
-          'servis' => $this->servisM->where('kd_barang_servis', $row['kd_barang_servis'])->join('jasa_servis', 'id_jasa_servis')->findAll()
+          'servis' => $this->servisM->where('kd_barang_servis', $row['kd_barang_servis'])->join('jasa_servis', 'id_jasa_servis')->findAll(),
+          'part' => $this->partServisM->where('kd_barang_servis', $row['kd_barang_servis'])->join('part_produk', 'id_part_produk')->findAll(),
         ];
       }
       $jasaServisM  = new JasaServisM();
@@ -367,9 +492,16 @@ class DataServis extends BaseController
     $totalBiaya = 0;
     foreach ($barangServis as $row) {
       $detail_servis = $this->servisM->where('kd_barang_servis', $row['kd_barang_servis'])->join('jasa_servis', 'id_jasa_servis')->findAll();
+      $detail_part_servis = $this->partServisM->where('kd_barang_servis', $row['kd_barang_servis'])->join('part_produk', 'id_part_produk')->findAll();
+
       if (!empty($detail_servis)) {
         foreach ($detail_servis as $s) {
           $totalBiaya += $s['biaya_servis'];
+        }
+      }
+      if (!empty($detail_part_servis)) {
+        foreach ($detail_part_servis as $s) {
+          $totalBiaya += $s['biaya_part_servis'];
         }
       }
     }
@@ -466,6 +598,7 @@ class DataServis extends BaseController
     $barang = [];
     foreach ($barangServis as $row) {
       $detail_servis = $this->servisM->where('kd_barang_servis', $row['kd_barang_servis'])->join('jasa_servis', 'id_jasa_servis')->findAll();
+      $detail_part_servis = $this->partServisM->where('kd_barang_servis', $row['kd_barang_servis'])->join('part_produk', 'id_part_produk')->findAll();
 
       $barang[] = [
         'kd_barang_servis' => $row['kd_barang_servis'],
@@ -473,7 +606,8 @@ class DataServis extends BaseController
         'nama_barang_servis' => $row['nama_barang_servis'],
         'kelengkapan' => $row['kelengkapan'],
         'kerusakan' => $row['kerusakan'],
-        'servis' => $detail_servis
+        'servis' => $detail_servis,
+        'part' => $detail_part_servis,
       ];
     }
 
@@ -491,6 +625,20 @@ class DataServis extends BaseController
           $totalBayar += $b['servis'][$i]['biaya_servis'];
           $newBarang .= $b['servis'][$i]['nama_jasa'] . " : Rp. " . number_format($b['servis'][$i]['biaya_servis']);
           if ($countServis != ++$j) {
+            $newBarang .= ', ';
+          }
+        }
+      }
+      if (empty($b['part'])) {
+        $newBarang .= 'Tidak Ada Tambahan Part';
+      } else {
+        $countPartServis = count($b['part']);
+        $j = 0;
+        for ($i = 0; $i < $countPartServis; $i++) {
+          $j = $i;
+          $totalBayar += $b['part'][$i]['biaya_part'];
+          $newBarang .= $b['part'][$i]['nama_part'] . " : Rp. " . number_format($b['part'][$i]['biaya_part_servis']);
+          if ($countPartServis != ++$j) {
             $newBarang .= ', ';
           }
         }

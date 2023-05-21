@@ -143,11 +143,18 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'is
             $routes->delete('(:segment)', 'DataServis::delete_barang_servis/$2');
         });
 
+        $routes->group('(:any)/part', function ($routes) {
+            $routes->get('/', 'DataServis::data_part_servis/$1');
+            $routes->post('/', 'DataServis::tambah_part_servis/$1');
+            $routes->put('/', 'DataServis::update_part_servis');
+        });
+
         $routes->group('(:segment)', function ($routes) {
             $routes->get('/', 'DataServis::data_servis/$1');
             $routes->post('/', 'DataServis::tambah_servis_barang/$1');
             // $routes->put('/', 'DataServis::update_barang_servis');
             $routes->delete('(:segment)/(:num)', 'DataServis::delete_servis_barang/$2/$3');
+            $routes->delete('(:segment)/(:num)/part', 'DataServis::delete_part_servis/$2/$3');
         });
 
         $routes->get('(:any)/send', 'DataServis::send/$1');
@@ -165,9 +172,30 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'is
         $routes->delete('(:num)', 'JasaServis::delete_jasa_servis/$1');
     });
 
+    $routes->group('part_produk', function ($routes) {
+
+        $routes->get('/', 'PartProduk');
+        $routes->post('/', 'PartProduk::tambah_part_produk');
+        $routes->put('/', 'PartProduk::update_part_produk');
+        $routes->delete('(:num)', 'PartProduk::delete_part_produk/$1');
+    });
+
     $routes->group('info_badge', function ($routes) {
         $routes->get('data_servis', 'InfoBadge::badgeDataServis');
         $routes->get('data_penjualan', 'InfoBadge::badgeDataPenjualan');
+    });
+
+    $routes->group('setting', function ($routes) {
+
+        $routes->add('/', 'Admin::setting_view');
+    });
+
+    $routes->group('promosi', function ($routes) {
+        $routes->get('/', 'Admin::data_promosi');
+
+        $routes->delete('(:num)', 'Admin::delete_promosi/$1');
+
+        $routes->add('tambah', 'Admin::proses_tambah_promosi');
     });
 
     $routes->group('pengguna', function ($routes) {

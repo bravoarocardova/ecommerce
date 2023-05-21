@@ -7,7 +7,9 @@ use App\Models\BarangServisM;
 use App\Models\DataServisM;
 use App\Models\HomepageModel;
 use App\Models\PelangganM;
+use App\Models\PromosiM;
 use App\Models\ServisM;
+use App\Models\SettingM;
 
 class Home extends BaseController
 {
@@ -17,6 +19,8 @@ class Home extends BaseController
   private $barangServisM;
   private $servisM;
   private $pelangganM;
+  private $settingM;
+  private $promosiM;
 
   public function __construct()
   {
@@ -25,15 +29,24 @@ class Home extends BaseController
     $this->dataServisM  = new DataServisM();
     $this->servisM  = new ServisM();
     $this->pelangganM = new PelangganM();
+    $this->settingM = new SettingM();
+    $this->promosiM = new PromosiM();
   }
 
   public function index()
   {
+    $promosi_text = $this->promosiM->where('tipe_promosi', 'text')->find();
+    $text = [];
+    foreach ($promosi_text as $pt) {
+      $text[] = $pt['text'];
+    }
+
     return view(
       'pelanggan/home',
       [
-        'banner' => $this->homepageModel->getBanner(),
-        'info' => $this->homepageModel->getInfo(),
+        'promosi_gambar' => $this->promosiM->where('tipe_promosi', 'gambar')->find(),
+        'promosi_text' => $text,
+        'info' => $this->settingM->find()[0],
         'hari' => $this->homepageModel->getHari(),
       ]
     );

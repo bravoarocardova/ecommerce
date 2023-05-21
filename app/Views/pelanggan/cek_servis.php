@@ -45,6 +45,8 @@
                           ?> </h6>
             <h6>Teknisi : <?= $detail_servis['nama']
                           ?></h6>
+            <h6>Estimasi : <?= $detail_servis['estimasi_servis']
+                            ?></h6>
           </div>
           <div class="card-body">
             <div class="row">

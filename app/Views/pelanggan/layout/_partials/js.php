@@ -20,6 +20,12 @@
         document.body.style.paddingTop = '0';
       }
     });
+
+  });
+</script>
+
+<?php if (session()->get('pelanggan')) : ?>
+  <script>
     $.ajax({
       url: "<?= base_url() . '/api/getJumlahPesanan' ?>",
       type: "GET",
@@ -30,8 +36,8 @@
         }
       }
     })
-  });
-</script>
+  </script>
+<?php endif ?>
 
 <script type="text/javascript">
   // $(function() {

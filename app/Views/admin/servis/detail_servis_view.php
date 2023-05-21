@@ -19,6 +19,9 @@
           <a class="btn btn-warning" href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] ?>">
             <i class="align-middle" data-feather="settings"></i> Servis
           </a>
+          <a class="btn btn-primary" href="<?= base_url() . '/admin/servis/' . $detail_servis['no_transaksi'] . '/part' ?>">
+            <i class="align-middle" data-feather="tool"></i> Part
+          </a>
         </div>
         <div class="col">
           <?php if (!empty($barang_servis)) : ?>
@@ -81,6 +84,7 @@
           <h5>Tanggal Transaksi : <?= $detail_servis['created_at'] ?></h5>
           <h6>Status : <?= ucwords($detail_servis['status']) . ' ( ' . $detail_servis['updated_at'] . ' ) ' ?> </h6>
           <h6>Teknisi : <?= $detail_servis['nama'] ?></h6>
+          <h6>Estimasi Servis : <?= $detail_servis['estimasi_servis'] ?></h6>
         </div>
         <div class="card-body">
           <div class="row">
@@ -124,9 +128,11 @@
         <div class="card-body">
           <ol>
             <?php foreach ($barang_servis as $b) : ?>
+
               <h4>
                 <li><?= $b['nama_barang_servis'] . ' - ' . $b['kerusakan'] ?></li>
               </h4>
+
               <?php if (!empty($b['servis'])) : ?>
                 <table class="table table-hover my-0 mb-3" id="dataServiss">
                   <thead>
@@ -148,6 +154,29 @@
               <?php else : ?>
                 <p class="text-danger">Tidak Ada Perbaikan</p>
               <?php endif ?>
+
+              <?php if (!empty($b['part'])) : ?>
+                <table class="table table-hover my-0 mb-3" id="dataServiss">
+                  <thead>
+                    <tr>
+                      <th class="col-8">Part Produk</th>
+                      <th class="col-4">Biaya Part</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($b['part'] as $bservis) : ?>
+                      <?php $total += $bservis['biaya_part_servis'] ?>
+                      <tr>
+                        <td><?= $bservis['nama_part'] . ' - ' . $bservis['kategori'] ?></td>
+                        <td>Rp. <?= number_format($bservis['biaya_part_servis']) ?></td>
+                      </tr>
+                    <?php endforeach ?>
+                  </tbody>
+                </table>
+              <?php else : ?>
+                <p class="text-danger">Tidak Ada Part Tambahan</p>
+              <?php endif ?>
+
             <?php endforeach ?>
           </ol>
         </div>

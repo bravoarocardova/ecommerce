@@ -45,6 +45,7 @@
                     <th>No Transaksi</th>
                     <th>Status</th>
                     <th>Nama Pelanggan</th>
+                    <th>Estimasi</th>
                     <th>Tanggal</th>
                     <th>Aksi</th>
                   </tr>
@@ -60,6 +61,7 @@
                       <td><?= $d['no_transaksi'] ?></td>
                       <td><?= ucwords($d['status']) ?></td>
                       <td><?= $d['nama_pelanggan'] ?></td>
+                      <td><?= $d['estimasi_servis'] ?></td>
                       <td><?= $d['created_at'] ?></td>
                       <td>
                         <div class="row">
@@ -89,6 +91,7 @@
                     <th>No Transaksi</th>
                     <th>Status</th>
                     <th>Nama Pelanggan</th>
+                    <th>Estimasi</th>
                     <th>Tanggal</th>
                     <th>Aksi</th>
                   </tr>
@@ -104,6 +107,7 @@
                       <td><?= $d['no_transaksi'] ?></td>
                       <td><?= ucwords($d['status']) ?></td>
                       <td><?= $d['nama_pelanggan'] ?></td>
+                      <td><?= $d['estimasi_servis'] ?></td>
                       <td><?= $d['created_at'] ?></td>
                       <td>
                         <div class="row">
@@ -245,6 +249,13 @@
               </div>
             </div>
           </div>
+          <div class="mb-3">
+            <label for="estimasi_servis" class="form-label">Estimasi Servis</label>
+            <input type="tel" maxlength="15" class="form-control <?= validation_show_error('estimasi_servis') ? 'is-invalid' : '' ?>" id="estimasi_servis" name="estimasi_servis" value="<?= old('estimasi_servis', '') ?>" placeholder="" required>
+            <div class="invalid-feedback">
+              <?= validation_show_error('estimasi_servis') ?>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -255,13 +266,22 @@
   </div>
 </div>
 
+<?= $this->endSection() ?>
+
+<?= $this->section('script') ?>
+
 <script>
   $(document).ready(function() {
     $('#dataServis').DataTable();
     $('#dataServis2').DataTable();
     $('#dataServis3').DataTable();
     $('#dataServis4').DataTable();
+
+    // $("#nama_pelanggan").autocomplete({
+    //   source: ["PHP", "Python", "Ruby", "JavaScript", "MySQL", "Oracle"]
+    // });
   });
 </script>
+
 
 <?= $this->endSection() ?>

@@ -6,14 +6,14 @@
   <div class="container ">
     <div id="carouselExampleIndicators" style="background:black" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
-        <?php foreach ($banner as $key => $b) : ?>
+        <?php foreach ($promosi_gambar as $key => $b) : ?>
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?= $key ?>" class="<?= ($key == 0) ? 'active' : '' ?>" aria-current="true"></button>
         <?php endforeach ?>
       </div>
       <div class="carousel-inner">
-        <?php foreach ($banner as $key => $b) : ?>
+        <?php foreach ($promosi_gambar as $key => $b) : ?>
           <div class="carousel-item  <?= ($key == 0) ? 'active' : '' ?>">
-            <img src="<?= base_url() . '/img/banner/' . $b->banner ?>" height="500px" class="img-carousel d-block w-100">
+            <img src="<?= base_url() . '/img/promosi/' . $b['gambar'] ?>" height="500px" class="img-carousel d-block w-100">
           </div>
         <?php endforeach ?>
       </div>
@@ -33,8 +33,10 @@
   <div class="container mt-4 ">
     <div class="text-center mb-4">
       <div class="row">
-        <h3 class="fw-bolder text-secondary"><?= $info->judul ?></h3>
-        <p class="text-secondary"><?= $info->slogan ?></p>
+        <h3 class="fw-bolder text-secondary"><?= $info['nama_aplikasi'] ?></h3>
+        <p class="text-secondary min-vh-25 h-25" id="text-promotion">
+          <?= $promosi_text[0] ?>
+        </p>
       </div>
       <div class="row m-4 d-flex justify-content-center">
         <div class="col-6 col-md-4">
@@ -85,12 +87,12 @@
       </div>
       <div class="row mt-4">
         <div class="col-lg-8 col-12">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1615.0479025418338!2d103.6419543300081!3d-1.623708126507803!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e2588b204a20577%3A0x9bf71b5d8026acad!2sJl.%20RB.%20Siagian%2C%20Kec.%20Jambi%20Sel.%2C%20Kota%20Jambi%2C%20Jambi!5e0!3m2!1sid!2sid!4v1671179941959!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe src="<?= $info['lokasi'] ?>" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
         <div class="col-lg-4 col-12">
           <div class="row">
             <h5 class="fw-bolder">Alamat</h5>
-            <p><?= $info->alamat ?></p>
+            <p><?= $info['alamat'] ?></p>
           </div>
           <div class="row">
             <h5 class="fw-bolder">Jam Buka</h5>
@@ -105,10 +107,11 @@
           </div>
           <div class="row">
             <h5 class="fw-bolder">Kontak</h5>
-            <p>+<?= $info->kontak ?></p>
+            <p>+<?= $info['telepon'] ?></p>
+            <p><?= $info['email'] ?></p>
             <div class="row">
               <div class="col">
-                <a href="https://api.whatsapp.com/send?phone=<?= $info->kontak ?>&text=Saya%20mau%20memesan%20...." target="_blank" class="text-light btn btn-success"><i class="fa fa-whatsapp"></i> WhatsApp</a> <a href="tel: <?= $info->kontak ?>" class="text-light btn btn-dark"><i class="fa fa-phone"></i>
+                <a href="https://api.whatsapp.com/send?phone=<?= $info['telepon'] ?>&text=Saya%20mau%20memesan%20...." target="_blank" class="text-light btn btn-success"><i class="fa fa-whatsapp"></i> WhatsApp</a> <a href="tel: <?= $info['telepon'] ?>" class="text-light btn btn-dark"><i class="fa fa-phone"></i>
                   Telepon</a>
               </div>
             </div>
@@ -120,5 +123,21 @@
   <!-- end Lokasi -->
   <div id="waButton" style="z-index:1000"></div>
 </section>
+
+<?= $this->endSection() ?>
+
+
+<?= $this->section('script') ?>
+<script>
+  (function() {
+    var words = <?= json_encode($promosi_text) ?>,
+      i = 0;
+    setInterval(function() {
+      $('#text-promotion').fadeOut(function() {
+        $(this).html(words[(i = (i + 1) % words.length)]).fadeIn();
+      });
+    }, 5000)
+  })();
+</script>
 
 <?= $this->endSection() ?>

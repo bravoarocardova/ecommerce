@@ -40,7 +40,10 @@
 <body>
   <!-- <img src="<?= base_url('/img/avatars/default.jpg') ?>"> -->
   <div style="text-align:center">
-    <h3>Laporan Data Servis <br>Smartcomp Store</h3>
+    <h2>Smartcomp Store</h2>
+    <h6>Jl. RB Siagian, Kec Pal Merah. Sari, Kec. Kota Jambi</h6>
+    <hr>
+    <h3>Laporan Data Servis</h3>
     <h5><?= $tgl ?></h5>
   </div>
   <table id="table">
@@ -71,6 +74,13 @@
       </tr>
     </tbody>
   </table>
+  <br>
+  <br>
+  <div style="text-align:right">
+    <p>Jambi, <?= date('d-m-Y') ?></p>
+    <br><br>
+    <p><?= session()->get('admin')['nama'] ?></p>
+  </div>
 </body>
 
 </html>

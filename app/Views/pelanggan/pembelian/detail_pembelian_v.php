@@ -58,6 +58,8 @@
               </th>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                 Nama</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                Kondisi</th>
               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                 Harga</th>
               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -80,6 +82,9 @@
                 <td>
                   <p class="text-xs font-weight-bold mb-0"><?= $r['nama_produk'] ?></p>
                 </td>
+                <td>
+                  <p class="text-xs font-weight-bold mb-0"><?= $r['kondisi_produk'] ?></p>
+                </td>
                 <td class="align-middle text-center text-sm">
                   <p class="text-xs font-weight-bold mb-0">Rp. <?= number_format($r['harga_produk']) ?></p>
                 </td>
@@ -97,11 +102,11 @@
 
               </th>
               <tr>
-                <th colspan="4" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                <th colspan="5" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                   Biaya Lainnya</th>
               </tr>
               <tr>
-                <td class="align-middle text-center" colspan="4">
+                <td class="align-middle text-center" colspan="5">
                   <span class="text-xs font-weight-bold">Ongkir</span>
                 </td>
                 <td class="align-middle text-center">
@@ -115,7 +120,7 @@
           </tbody>
           <tfoot>
             <tr>
-              <th colspan="4">Total</th>
+              <th colspan="5">Total</th>
               <th class="text-center">
                 <span class="text-primary text-xl font-weight-bold">Rp. <?= number_format($total + $pembelian['ongkir']) ?></span>
               </th>

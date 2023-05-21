@@ -13,7 +13,7 @@ class DataServisM extends Model
 
   protected $returnType     = 'array';
 
-  protected $allowedFields = ['nama_pelanggan', 'alamat_pelanggan', 'no_telp_pelanggan', 'status', 'teknisi', 'total_biaya'];
+  protected $allowedFields = ['nama_pelanggan', 'alamat_pelanggan', 'no_telp_pelanggan', 'status', 'teknisi', 'total_biaya', 'estimasi_servis'];
 
   // Dates
   protected $useTimestamps = true;

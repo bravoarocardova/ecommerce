@@ -37,6 +37,7 @@
           <h4>No Transaksi : <?= $detail_servis['no_transaksi'] ?></h4>
           <h5>Tanggal Transaksi : <?= $detail_servis['created_at'] ?></h5>
           <h6>Status : <?= ucwords($detail_servis['status']) . ' ( ' . $detail_servis['updated_at'] . ' ) ' ?> </h6>
+          <h6>Estimasi Servis : <?= $detail_servis['estimasi_servis'] ?></h6>
         </div>
         <div class="card-body">
           <div class="row">

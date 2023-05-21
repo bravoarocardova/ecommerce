@@ -69,6 +69,12 @@
             <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">Jasa Servis</span>
           </a>
         </li>
+
+        <li class="sidebar-item <?php if (!empty($uri->getSegments()) && $uri->getSegment(2) == 'part_produk') echo 'active' ?>">
+          <a class="sidebar-link" href="<?= base_url('admin/part_produk') ?>">
+            <i class="align-middle" data-feather="tool"></i> <span class="align-middle">Part Produk</span>
+          </a>
+        </li>
       <?php endif ?>
       <!-- <li class="sidebar-item">
         <a class="sidebar-link" href="ui-cards.html">
@@ -111,6 +117,18 @@
       <?php if (isAdmininstrator()) : ?>
         <li class="sidebar-header">
           Pengaturan
+        </li>
+
+        <li class="sidebar-item <?php if (!empty($uri->getSegments()) && $uri->getSegment(2) == 'promosi') echo 'active' ?>">
+          <a class="sidebar-link" href="<?= base_url('admin/promosi') ?>">
+            <i class="align-middle" data-feather="tv"></i> <span class="align-middle">Promosi</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item <?php if (!empty($uri->getSegments()) && $uri->getSegment(2) == 'setting') echo 'active' ?>">
+          <a class="sidebar-link" href="<?= base_url('admin/setting') ?>">
+            <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Setting</span>
+          </a>
         </li>
 
         <li class="sidebar-item <?php if (!empty($uri->getSegments()) && $uri->getSegment(2) == 'pengguna') echo 'active' ?>">
