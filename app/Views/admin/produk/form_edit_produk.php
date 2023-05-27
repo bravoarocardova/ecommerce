@@ -90,10 +90,24 @@
                       </div>
                     </div>
                     <div class="mb-3">
+                      <label class="form-label" for="garansi">Garansi</label>
+                      <input type="text" class="form-control <?= validation_show_error('garansi') ? 'is-invalid' : '' ?>" id="garansi" name="garansi" placeholder="Garansi" value="<?= old('garansi', $data_produk['garansi']) ?>">
+                      <div class="invalid-feedback">
+                        <?= validation_show_error('garansi') ?>
+                      </div>
+                    </div>
+                    <div class="mb-3">
                       <label class="form-label" for="inputDeskripsi">Deskripsi</label>
                       <textarea class="form-control <?= validation_show_error('deskripsi') ? 'is-invalid' : '' ?>" name="deskripsi" id="inputDeskripsi" cols="30" rows="5"><?= old('deskripsi', $data_produk['deskripsi_produk']) ?></textarea>
                       <div class="invalid-feedback">
                         <?= validation_show_error('deskripsi') ?>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label" for="diskon">Diskon (%)</label>
+                      <input type="number" min="0" max="100" step="1" class="form-control <?= validation_show_error('diskon') ? 'is-invalid' : '' ?>" id="diskon" name="diskon" placeholder="Diskon" value="<?= old('diskon', $data_produk['diskon']) ?>">
+                      <div class="invalid-feedback">
+                        <?= validation_show_error('diskon') ?>
                       </div>
                     </div>
                   </div>

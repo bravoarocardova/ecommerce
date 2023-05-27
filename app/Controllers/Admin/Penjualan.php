@@ -72,6 +72,7 @@ class Penjualan extends BaseController
           'id_pembelian' => $id_pembelian,
           'no_resi' => $post['no_resi'],
           'status_pembelian' => 'Dikirim',
+          'id_admin' => session()->get('admin')['id_admin'],
         ];
         $this->pembelianM->save($data);
         return redirect()->back()->with('msg', myAlert('success', 'Berhasil Update Resi.'));
@@ -87,7 +88,11 @@ class Penjualan extends BaseController
       return redirect()->back()->with('msg', myAlert('success', 'Berhasil Update data.'));
     }
 
-    $pembelian = $this->pembelianM->select('pembelian.*, pelanggan.id_pelanggan, pelanggan.nama_pelanggan, pelanggan.telepon_pelanggan, pelanggan.email_pelanggan')->join('pelanggan', 'pembelian.id_pelanggan = pelanggan.id_pelanggan')->find($id_pembelian);
+    $pembelian = $this->pembelianM
+      ->select('pembelian.*, pelanggan.id_pelanggan, pelanggan.nama_pelanggan, pelanggan.telepon_pelanggan, pelanggan.email_pelanggan, admin.nama as nama_admin')
+      ->join('pelanggan', 'pembelian.id_pelanggan = pelanggan.id_pelanggan')
+      ->join('admin', 'pembelian.id_admin = admin.id_admin', 'LEFT')
+      ->find($id_pembelian);
 
     $produk = $this->pembelianProdukM->join('produk', 'pembelian_produk.id_produk = produk.id_produk')->where('id_pembelian', $id_pembelian)->find();
 

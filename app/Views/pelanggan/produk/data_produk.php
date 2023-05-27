@@ -35,10 +35,21 @@
               </a>
             </h5>
             <div class="row">
-              <div class="col-6">
-                <p class="card-text text-danger">Rp. <?= number_format($row['harga_produk']) ?></p>
+              <div class="col-8">
+                <?php if ($row['diskon'] != 0) : ?>
+                  <strike>
+                    <p class="card-text text-danger position-relative">Rp. <?= number_format($row['harga_produk']) ?>
+                      <span class="badge bg-danger position-absolute"><?= $row['diskon'] ?>%</span>
+                    </p>
+                  </strike>
+                  <p>Rp. <?= number_format($row['harga_produk'] - ($row['harga_produk'] * ($row['diskon'] / 100))) ?>
+                  </p>
+
+                <?php else : ?>
+                  <p class="card-text text-danger">Rp. <?= number_format($row['harga_produk']) ?></p>
+                <?php endif ?>
               </div>
-              <div class="col-6">
+              <div class="col-4">
                 <p class="card-text text-secondary">Stok <?= number_format($row['stok_produk']) ?></p>
               </div>
             </div>

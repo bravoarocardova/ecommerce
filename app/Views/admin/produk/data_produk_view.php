@@ -34,6 +34,8 @@
                 <th>Kondisi</th>
                 <th>Stok</th>
                 <th>Berat (g)</th>
+                <th>Garansi</th>
+                <th>Diskon (%)</th>
                 <th>Deskripsi</th>
                 <th></th>
               </tr>
@@ -47,10 +49,20 @@
                     <img src="<?= base_url() . '/img/produk/' . $r['foto_produk'] ?>" class="avatar img-fluid rounded me-1" />
                   </td>
                   <td><?= $r['nama_produk'] ?></td>
-                  <td>Rp. <?= number_format($r['harga_produk']) ?></td>
+                  <td>
+                    <?php if ($r['diskon'] != 0) : ?>
+                      <strike class="text-danger">Rp. <?= number_format($r['harga_produk']) ?></strike>
+                      Rp. <?= number_format($r['harga_produk'] - ($r['harga_produk'] * ($r['diskon'] / 100))) ?>
+
+                    <?php else : ?>
+                      Rp. <?= number_format($r['harga_produk']) ?>
+                    <?php endif ?>
+                  </td>
                   <td><?= $r['kondisi_produk'] ?></td>
                   <td><?= $r['stok_produk'] ?></td>
                   <td><?= $r['berat_produk'] ?></td>
+                  <td><?= $r['garansi'] ?></td>
+                  <td><?= $r['diskon'] ?></td>
                   <td class="w-25"><?= substr($r['deskripsi_produk'], 0, 50) ?>....</td>
                   <td class="d-print-none">
                     <a href="<?= base_url() . '/admin/produk/' . $r['id_produk'] ?>" class="btn btn-warning" title="Edit">

@@ -97,7 +97,10 @@ class Pembelian extends BaseController
       return redirect()->back()->with('msg', myAlert('success', 'Pesanan telah diselesaikan.'));
     }
 
-    $pembelian = $this->pembelianM->select('pembelian.*, pelanggan.id_pelanggan, pelanggan.nama_pelanggan, pelanggan.telepon_pelanggan, pelanggan.email_pelanggan')->join('pelanggan', 'pembelian.id_pelanggan = pelanggan.id_pelanggan')->find($id_pembelian);
+    $pembelian = $this->pembelianM->select('pembelian.*, pelanggan.id_pelanggan, pelanggan.nama_pelanggan, pelanggan.telepon_pelanggan, pelanggan.email_pelanggan, admin.nama as nama_admin')
+      ->join('pelanggan', 'pembelian.id_pelanggan = pelanggan.id_pelanggan')
+      ->join('admin', 'pembelian.id_admin = admin.id_admin', 'LEFT')
+      ->find($id_pembelian);
 
     if ($pembelian['id_pelanggan'] != session()->get('pelanggan')['id_pelanggan']) {
       return redirect()->back();

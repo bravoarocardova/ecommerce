@@ -19,7 +19,7 @@ class ApiPelanggan extends BaseController
   {
     if ($this->request->isAjax()) {
       $id_pelanggan = session()->get('pelanggan')['id_pelanggan'];
-      $where = "id_pelanggan = '$id_pelanggan' AND (status_pembelian = 'Belum Bayar' OR status_pembelian = 'Menunggu Konfirmasi')";
+      $where = "id_pelanggan = '$id_pelanggan' AND (status_pembelian = 'Belum Bayar' OR status_pembelian = 'Menunggu Konfirmasi' OR status_pembelian = 'Dikirim')";
       $data = $this->pembelianM->where($where)->countAllResults();
       return $this->response->setJSON($data);
     }

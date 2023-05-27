@@ -13,7 +13,7 @@ class PembelianM extends Model
 
   protected $returnType     = 'array';
 
-  protected $allowedFields = ['id_pelanggan', 'tujuan', 'ekspedisi', 'total_berat', 'ongkir',  'total_pembelian', 'status_pembelian', 'no_resi'];
+  protected $allowedFields = ['id_pelanggan', 'tujuan', 'ekspedisi', 'total_berat', 'ongkir',  'total_pembelian', 'status_pembelian', 'no_resi', 'id_admin'];
 
   // Dates
   protected $useTimestamps = true;

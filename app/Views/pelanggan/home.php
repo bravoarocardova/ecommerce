@@ -34,9 +34,9 @@
     <div class="text-center mb-4">
       <div class="row">
         <h3 class="fw-bolder text-secondary"><?= $info['nama_aplikasi'] ?></h3>
-        <p class="text-secondary min-vh-25 h-25" id="text-promotion">
+        <h1 class="text-danger min-vh-25 h-25" id="text-promotion">
           <?= $promosi_text[0] ?>
-        </p>
+        </h1>
       </div>
       <div class="row m-4 d-flex justify-content-center">
         <div class="col-6 col-md-4">

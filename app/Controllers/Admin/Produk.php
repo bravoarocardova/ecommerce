@@ -77,6 +77,15 @@ class Produk extends BaseController
             'numeric' => '{field} Harus angka',
           ],
         ],
+        'garansi' => [
+          'label' => 'Garansi',
+          'rules' => 'required|min_length[1]|max_length[100]',
+          'errors' => [
+            'required' => '{field} Harus diisi',
+            'min_length' => '{field} Minimal 1 Karakter',
+            'max_length' => '{field} Maksimal 100 Karakter',
+          ],
+        ],
         'deskripsi' => [
           'label' => 'Deskripsi',
           'rules' => 'required|min_length[4]|max_length[5000]',
@@ -110,7 +119,9 @@ class Produk extends BaseController
           'stok_produk' => $post['stok'],
           'foto_produk' => $newFoto,
           'berat_produk' => $post['berat'],
-          'deskripsi_produk' => $post['deskripsi']
+          'garansi' => $post['garansi'],
+          'deskripsi_produk' => $post['deskripsi'],
+          'diskon' => $post['diskon'],
         ];
 
         if ($this->produkM->save($data)) {
@@ -186,6 +197,15 @@ class Produk extends BaseController
             'numeric' => '{field} Harus angka',
           ],
         ],
+        'garansi' => [
+          'label' => 'Garansi',
+          'rules' => 'required|min_length[1]|max_length[100]',
+          'errors' => [
+            'required' => '{field} Harus diisi',
+            'min_length' => '{field} Minimal 1 Karakter',
+            'max_length' => '{field} Maksimal 100 Karakter',
+          ],
+        ],
         'deskripsi' => [
           'label' => 'Deskripsi',
           'rules' => 'required|min_length[4]|max_length[5000]',
@@ -219,7 +239,9 @@ class Produk extends BaseController
           'kondisi_produk' => $post['kondisi'],
           'stok_produk' => $post['stok'],
           'berat_produk' => $post['berat'],
-          'deskripsi_produk' => $post['deskripsi']
+          'garansi' => $post['garansi'],
+          'deskripsi_produk' => $post['deskripsi'],
+          'diskon' => $post['diskon'],
         ];
 
         if ($foto->isValid()) {

@@ -60,21 +60,17 @@ class Produk extends BaseController
   public function keranjang()
   {
     $cart = \Config\Services::cart();
-    $p = [];
 
-    foreach ($cart->contents() as $produk) {
-      $find = $this->produkM->find($produk['id']);
-      $p[] = [
-        'id' => $find['id_produk'],
-        'max' => $find['stok_produk']
-      ];
+    $cart_pr = [];
+    foreach ($cart->contents() as $i => $produk) {
+      $produk['detail'] = $this->produkM->find($produk['id']);
+      $cart_pr[$i] = $produk;
     }
-    $max_produk = $p;
+
     return view(
       'pelanggan/keranjang',
       [
-        'cart' => $cart,
-        'max_produk' => $max_produk,
+        'cart' => $cart_pr,
         'produk_lain' => $this->produkM->orderBy('nama_produk', 'RANDOM')->findAll(8)
       ]
     );
@@ -90,9 +86,9 @@ class Produk extends BaseController
     $cart->insert(array(
       'id'      => $post['id'],
       'qty'     => $post['qty'],
-      'price'   => $post['price'],
-      'name'    => $post['name'],
-      'options' => array('foto' => $post['foto'], 'berat' => $post['berat'], 'kondisi' => $post['kondisi']),
+      'price'   => 0,
+      'name'    => "cartItem",
+      // 'options' => array('foto' => $post['foto'], 'berat' => $post['berat'], 'kondisi' => $post['kondisi']),
     ));
 
     return redirect()->back()->with('msg', myAlert('success', 'Berhasil ditambahkan ke keranjang.'));
@@ -129,20 +125,17 @@ class Produk extends BaseController
     $provinsi = $rajaOngkir->rajaongkir('province');
 
     $cart = \Config\Services::cart();
-    $p = [];
-    foreach ($cart->contents() as $produk) {
-      $find = $this->produkM->find($produk['id']);
-      $p[] = [
-        'id' => $find['id_produk'],
-        'max' => $find['stok_produk']
-      ];
+
+    $cart_pr = [];
+    foreach ($cart->contents() as $i => $produk) {
+      $produk['detail'] = $this->produkM->find($produk['id']);
+      $cart_pr[$i] = $produk;
     }
-    $max_produk = $p;
+
     return view(
       'pelanggan/pembelian/checkout_v',
       [
-        'cart' => $cart,
-        'max_produk' => $max_produk,
+        'cart' => $cart_pr,
         'produk_lain' => $this->produkM->orderBy('nama_produk', 'RANDOM')->findAll(8),
         'provinsi' => json_decode($provinsi)->rajaongkir->results,
       ]
@@ -156,15 +149,33 @@ class Produk extends BaseController
 
     $id_pembelian = createNoTransaksi('PBR', $this->pembelianM, 'id_pembelian');
 
+    $cart_pr = [];
+    foreach ($cart->contents() as $i => $produk) {
+      $produk['detail'] = $this->produkM->find($produk['id']);
+      $cart_pr[$i] = $produk;
+    }
+
     $cartItem = [];
     $total_berat = 0;
-    foreach ($cart->contents() as $c) {
-      $total_berat += $c['options']['berat'] * $c['qty'];
+    $total = 0;
+    foreach ($cart_pr as $cp) {
+      $total_berat += $cp['detail']['berat_produk'] * $cp['qty'];
+      $subtotal = 0;
+
+      if ($cp['detail']['diskon'] != 0) {
+        $harga = ($cp['detail']['harga_produk'] - ($cp['detail']['harga_produk'] * ($cp['detail']['diskon'] / 100)));
+      } else {
+        $harga = $cp['detail']['harga_produk'];
+      }
+
+      $subtotal = $harga * $cp['qty'];
+      $total += $subtotal;
+
       $cartItem[] = [
         'id_pembelian' => $id_pembelian,
-        'id_produk' => $c['id'],
-        'jumlah' => $c['qty'],
-        'subtotal' => $c['subtotal'],
+        'id_produk' => $cp['id'],
+        'jumlah' => $cp['qty'],
+        'subtotal' => $subtotal,
       ];
     }
 
@@ -175,7 +186,7 @@ class Produk extends BaseController
       'total_berat' => $total_berat,
       'tujuan' => $post['tujuan'],
       'ongkir' => $post['ongkir'],
-      'total_pembelian' => $cart->total(),
+      'total_pembelian' => $total,
       'status_pembelian' => 'Belum Bayar',
     ];
 

@@ -106,11 +106,31 @@
                       ?>
                     </tbody>
                   </table>
-                <?php else :
-                ?>
+                <?php else : ?>
                   <p class="text-danger">Tidak Ada Perbaikan</p>
-                <?php endif
-                ?>
+                <?php endif ?>
+
+                <?php if (!empty($b['part'])) : ?>
+                  <table class="table table-hover my-0 mb-3" id="dataServiss">
+                    <thead>
+                      <tr>
+                        <th class="col-8">Part Produk</th>
+                        <th class="col-4">Biaya Part</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($b['part'] as $bservis) : ?>
+                        <?php $total += $bservis['biaya_part_servis'] ?>
+                        <tr>
+                          <td><?= $bservis['nama_part'] . ' - ' . $bservis['kategori'] ?></td>
+                          <td>Rp. <?= number_format($bservis['biaya_part_servis']) ?></td>
+                        </tr>
+                      <?php endforeach ?>
+                    </tbody>
+                  </table>
+                <?php else : ?>
+                  <p class="text-danger">Tidak Ada Part Tambahan</p>
+                <?php endif ?>
               <?php endforeach
               ?>
             </ol>

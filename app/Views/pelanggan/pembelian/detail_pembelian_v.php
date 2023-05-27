@@ -60,6 +60,8 @@
                 Nama</th>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                 Kondisi</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                Garansi</th>
               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                 Harga</th>
               <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -85,8 +87,11 @@
                 <td>
                   <p class="text-xs font-weight-bold mb-0"><?= $r['kondisi_produk'] ?></p>
                 </td>
+                <td>
+                  <p class="text-xs font-weight-bold mb-0"><?= $r['garansi'] ?></p>
+                </td>
                 <td class="align-middle text-center text-sm">
-                  <p class="text-xs font-weight-bold mb-0">Rp. <?= number_format($r['harga_produk']) ?></p>
+                  <p class="text-xs font-weight-bold mb-0">Rp. <?= number_format($r['subtotal'] / $r['jumlah']) ?></p>
                 </td>
                 <td class="align-middle text-center text-sm">
                   <span class="text-secondary text-xs font-weight-bold"><?= number_format($r['jumlah']) ?></span>
@@ -102,11 +107,11 @@
 
               </th>
               <tr>
-                <th colspan="5" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                <th colspan="6" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                   Biaya Lainnya</th>
               </tr>
               <tr>
-                <td class="align-middle text-center" colspan="5">
+                <td class="align-middle text-center" colspan="6">
                   <span class="text-xs font-weight-bold">Ongkir</span>
                 </td>
                 <td class="align-middle text-center">
@@ -120,13 +125,22 @@
           </tbody>
           <tfoot>
             <tr>
-              <th colspan="5">Total</th>
+              <th colspan="6">Total</th>
               <th class="text-center">
                 <span class="text-primary text-xl font-weight-bold">Rp. <?= number_format($total + $pembelian['ongkir']) ?></span>
               </th>
             </tr>
           </tfoot>
         </table>
+        <div class="d-none d-print-block">
+          <div class=" d-flex justify-content-end">
+            <div class="mt-4">
+              <p>Jambi, <?= date('d-m-Y') ?></p>
+              <br><br>
+              <p><?= $pembelian['nama_admin'] ?? "" ?></p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="row">

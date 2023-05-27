@@ -126,6 +126,13 @@
                       </div>
                     </div>
                     <div class="mb-3">
+                      <label class="form-label" for="garansi">Garansi</label>
+                      <input type="text" class="form-control <?= validation_show_error('garansi') ? 'is-invalid' : '' ?>" id="garansi" name="garansi" placeholder="Garansi" value="<?= old('garansi') ?>">
+                      <div class="invalid-feedback">
+                        <?= validation_show_error('garansi') ?>
+                      </div>
+                    </div>
+                    <div class="mb-3">
                       <label class="form-label" for="inputDeskripsi">Deskripsi</label>
                       <textarea class="form-control <?= validation_show_error('deskripsi') ? 'is-invalid' : '' ?>" name="deskripsi" id="inputDeskripsi" cols="30" rows="5"><?= old('deskripsi') ?></textarea>
                       <div class="invalid-feedback">

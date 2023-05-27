@@ -13,7 +13,7 @@ class ProdukM extends Model
 
   protected $returnType     = 'array';
 
-  protected $allowedFields = ['nama_produk', 'harga_produk', 'foto_produk', 'kondisi_produk', 'deskripsi_produk', 'stok_produk', 'berat_produk'];
+  protected $allowedFields = ['nama_produk', 'harga_produk', 'foto_produk', 'kondisi_produk', 'deskripsi_produk', 'stok_produk', 'berat_produk', 'garansi', 'diskon'];
 
   // Dates
   protected $useTimestamps = true;

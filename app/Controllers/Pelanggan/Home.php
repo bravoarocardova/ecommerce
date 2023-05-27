@@ -10,6 +10,7 @@ use App\Models\PelangganM;
 use App\Models\PromosiM;
 use App\Models\ServisM;
 use App\Models\SettingM;
+use App\Models\PartServisM;
 
 class Home extends BaseController
 {
@@ -21,6 +22,7 @@ class Home extends BaseController
   private $pelangganM;
   private $settingM;
   private $promosiM;
+  private $partServisM;
 
   public function __construct()
   {
@@ -31,6 +33,7 @@ class Home extends BaseController
     $this->pelangganM = new PelangganM();
     $this->settingM = new SettingM();
     $this->promosiM = new PromosiM();
+    $this->partServisM = new PartServisM();
   }
 
   public function index()
@@ -72,7 +75,8 @@ class Home extends BaseController
           'nama_barang_servis' => $row['nama_barang_servis'],
           'kelengkapan' => $row['kelengkapan'],
           'kerusakan' => $row['kerusakan'],
-          'servis' => $this->servisM->where('kd_barang_servis', $row['kd_barang_servis'])->join('jasa_servis', 'id_jasa_servis')->findAll()
+          'servis' => $this->servisM->where('kd_barang_servis', $row['kd_barang_servis'])->join('jasa_servis', 'id_jasa_servis')->findAll(),
+          'part' => $this->partServisM->where('kd_barang_servis', $row['kd_barang_servis'])->join('part_produk', 'id_part_produk')->findAll(),
         ];
       }
     }

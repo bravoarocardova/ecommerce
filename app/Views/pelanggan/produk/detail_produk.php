@@ -35,7 +35,19 @@
       <div class="col-md-8 col-12">
         <div class="row">
           <h2><?= $produk['nama_produk'] ?></h2>
-          <h5 class="text-danger text-sm">Rp. <?= number_format($produk['harga_produk'] ?? 0) ?></h5>
+          <?php if ($produk['diskon'] != 0) : ?>
+            <strike>
+              <h6 class="card-text text-danger position-relative">Rp. <?= number_format($produk['harga_produk']) ?>
+                <span class="badge bg-danger position-absolute"><?= $produk['diskon'] ?>%</span>
+              </h6>
+            </strike>
+            <h4>
+              Rp. <?= number_format($produk['harga_produk'] - ($produk['harga_produk'] * ($produk['diskon'] / 100))) ?>
+            </h4>
+
+          <?php else : ?>
+            <h4 class="card-text text-danger">Rp. <?= number_format($produk['harga_produk']) ?></h4>
+          <?php endif ?>
         </div>
         <hr>
         <div class="row">
@@ -63,6 +75,14 @@
           </div>
         </div>
         <div class="row">
+          <div class="col-md-4 col-4 ">
+            <p>Garansi</p>
+          </div>
+          <div class="col-md-8 col-8">
+            <p class="font-weight-bolder"><?= $produk['garansi'] ?></p>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-md-4 col-4">
             <p>Deskripsi</p>
           </div>
@@ -81,10 +101,6 @@
           <form action="<?= base_url() . '/keranjang' ?>" method="post">
             <input type="hidden" name="id" value="<?= $produk['id_produk'] ?>">
             <input type="hidden" name="price" value="<?= $produk['harga_produk'] ?>">
-            <input type="hidden" name="name" value="<?= $produk['nama_produk'] ?>">
-            <input type="hidden" name="foto" value="<?= $produk['foto_produk'] ?>">
-            <input type="hidden" name="berat" value="<?= $produk['berat_produk'] ?>">
-            <input type="hidden" name="kondisi" value="<?= $produk['kondisi_produk'] ?>">
             <div class="border p-4">
               <div class="row mb-3">
                 <div class="col-6">

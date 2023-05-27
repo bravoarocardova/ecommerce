@@ -29,20 +29,19 @@
                   <th>Nama</th>
                   <th>Kondisi</th>
                   <th>Berat</th>
+                  <th>Garansi</th>
                   <th>Subtotal</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                <?php $total_berat = 0; ?>
-                <?php foreach ($cart->contents() as $produk) : ?>
+                <?php
+                $total_berat = 0;
+                $total = 0;
+                ?>
+                <?php foreach ($cart as $produk) : ?>
                   <?php
-                  $max = 0;
-                  foreach ($max_produk as $r) {
-                    if ($produk['id'] == $r['id']) {
-                      $max = $r['max'];
-                    }
-                  }
+                  $max = $produk['detail']['stok_produk'];
                   ?>
                   <tr>
                     <td width="15%">
@@ -58,23 +57,50 @@
                       <?php endif ?>
                       <span class="text-danger">Stok tersisa : <?= $max ?></span>
                     </td>
-                    <td><img src="<?= base_url() . '/img/produk/' . $produk['options']['foto'] ?>" class="img-fluid rounded-start avatar" alt="Cover"></td>
-                    <td width="25%"><?= $produk['name'] ?></td>
-                    <td><?= $produk['options']['kondisi'] ?></td>
-                    <td><?= $produk['options']['berat'] * $produk['qty'] ?> g</td>
-                    <td>Rp. <?= number_format($produk['subtotal'] ?? 0) ?></td>
+                    <td><img src="<?= base_url() . '/img/produk/' . $produk['detail']['foto_produk'] ?>" class="img-fluid rounded-start avatar" alt="Cover"></td>
+                    <td width="25%"><?= $produk['detail']['nama_produk'] ?></td>
+                    <td><?= $produk['detail']['kondisi_produk'] ?></td>
+                    <td><?= $produk['detail']['berat_produk'] * $produk['qty'] ?> g</td>
+                    <td><?= $produk['detail']['garansi'] ?></td>
+                    <td>
+                      <?php
+
+                      $harga = $produk['detail']['harga_produk'];
+                      $diskon = $produk['detail']['diskon'];
+                      $qty = $produk['qty'];
+                      $subtotal = $harga * $qty;
+                      ?>
+                      <?php
+                      if ($diskon != 0) :
+
+                        $harga_diskon = $harga - ($harga * ($diskon / 100));
+                        $subtotal_diskon = $harga_diskon * $qty;
+                        $total += $subtotal_diskon;
+                      ?>
+                        <strike>
+                          <h6 class="card-text text-danger position-relative">Rp. <?= number_format($subtotal) ?>
+                            <span class="badge bg-danger"><?= $diskon ?>%</span>
+                          </h6>
+                        </strike>
+                        <h6>
+                          Rp. <?= number_format($subtotal_diskon) ?>
+                        </h6>
+
+                      <?php else :
+                        $total += $subtotal;
+                      ?>
+                        <h6>
+                          Rp. <?= number_format($subtotal ?? 0) ?>
+                        </h6>
+                      <?php endif ?>
+                    </td>
                     <td>
                       <a href="<?= base_url() . '/keranjang/hapus/' . $produk['rowid'] ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')">
                         <i class="fa fa-trash"></i>
                       </a>
-                      <!-- <form action="<?= base_url() . '/keranjang/' . $produk['rowid'] ?>" method="POST" class="d-inline">
-                        <?= csrf_field() ?>
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash"></i></button>
-                      </form> -->
                     </td>
                   </tr>
-                  <?php $total_berat += $produk['options']['berat'] * $produk['qty']; ?>
+                  <?php $total_berat += $produk['detail']['berat_produk'] * $produk['qty']; ?>
                 <?php endforeach ?>
               </tbody>
               <tfoot>
@@ -95,12 +121,12 @@
                     Total
                   </h4>
                   <h4>
-                    Rp. <?= number_format($cart->total()) ?>
+                    Rp. <?= number_format($total ?? 0) ?>
                   </h4>
                 </div>
               </div>
             </div>
-            <?php if ($cart->totalItems() != 0) : ?>
+            <?php if (count($cart) != 0) : ?>
               <div class="d-flex justify-content-evenly">
                 <button type="submit" class="btn btn-warning p-3"><i class="fa fa-sync opacity-10 me-2"></i> Update Keranjang</button>
                 <a href="<?= base_url() . '/checkout' ?>" class="btn btn-primary p-3"><i class="fa fa-shopping-cart opacity-10 me-2"></i> Checkout</a>

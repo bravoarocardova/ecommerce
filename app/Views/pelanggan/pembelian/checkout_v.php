@@ -33,28 +33,57 @@
                 </tr>
               </thead>
               <tbody>
-                <?php $total_berat = 0; ?>
-                <?php foreach ($cart->contents() as $produk) : ?>
+                <?php
+                $total_berat = 0;
+                $total = 0;
+                ?>
+                <?php foreach ($cart as $produk) : ?>
                   <?php
-                  $max = 0;
-                  foreach ($max_produk as $r) {
-                    if ($produk['id'] == $r['id']) {
-                      $max = $r['max'];
-                    }
-                  }
+                  $max = $produk['detail']['stok_produk'];
                   ?>
                   <tr>
                     <td width="15%">
                       <span class=""> <?= $produk['qty'] ?></span>
                     </td>
-                    <td><img src="<?= base_url() . '/img/produk/' . $produk['options']['foto'] ?>" class="img-fluid rounded-start avatar" alt="Cover"></td>
-                    <td width="25%"><?= $produk['name'] ?></td>
-                    <td><?= $produk['options']['kondisi'] ?></td>
-                    <td><?= $produk['options']['berat'] * $produk['qty'] ?> g</td>
-                    <td>Rp. <?= number_format($produk['subtotal'] ?? 0) ?></td>
+                    <td><img src="<?= base_url() . '/img/produk/' . $produk['detail']['foto_produk'] ?>" class="img-fluid rounded-start avatar" alt="Cover"></td>
+                    <td width="25%"><?= $produk['detail']['nama_produk'] ?></td>
+                    <td><?= $produk['detail']['kondisi_produk'] ?></td>
+                    <td><?= $produk['detail']['berat_produk'] * $produk['qty'] ?> g</td>
+
+                    <td>
+                      <?php
+                      $harga = $produk['detail']['harga_produk'];
+                      $diskon = $produk['detail']['diskon'];
+                      $qty = $produk['qty'];
+                      $subtotal = $harga * $qty;
+                      ?>
+                      <?php
+                      if ($diskon != 0) :
+
+                        $harga_diskon = $harga - ($harga * ($diskon / 100));
+                        $subtotal_diskon = $harga_diskon * $qty;
+                        $total += $subtotal_diskon;
+                      ?>
+                        <strike>
+                          <h6 class="card-text text-danger position-relative">Rp. <?= number_format($subtotal) ?>
+                            <span class="badge bg-danger"><?= $diskon ?>%</span>
+                          </h6>
+                        </strike>
+                        <h6>
+                          Rp. <?= number_format($subtotal_diskon) ?>
+                        </h6>
+
+                      <?php else :
+                        $total += $subtotal;
+                      ?>
+                        <h6>
+                          Rp. <?= number_format($subtotal ?? 0) ?>
+                        </h6>
+                      <?php endif ?>
+                    </td>
 
                   </tr>
-                  <?php $total_berat += $produk['options']['berat'] * $produk['qty']; ?>
+                  <?php $total_berat += $produk['detail']['berat_produk'] * $produk['qty']; ?>
                 <?php endforeach ?>
               </tbody>
               <tfoot>
@@ -75,7 +104,7 @@
                     Sub Total
                   </h4>
                   <h4>
-                    Rp. <?= number_format($cart->total()) ?>
+                    Rp. <?= number_format($total) ?>
                   </h4>
                 </div>
               </div>
@@ -239,7 +268,7 @@
       ongkir = parseInt($(this).val());
       $('#ongkir').html(numberWithCommas(ongkir));
       $('#estimasi').html(estimasi + " Hari");
-      const total_pembayaran = <?= $cart->total() ?> + ongkir;
+      const total_pembayaran = <?= $total ?> + ongkir;
       $('#total_pembayaran').html(numberWithCommas(total_pembayaran));
       $('#ekspedisi').val($('option:selected', this).text());
     });
