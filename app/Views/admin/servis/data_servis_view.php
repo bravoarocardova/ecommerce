@@ -266,6 +266,7 @@
   </div>
 </div>
 
+
 <?= $this->endSection() ?>
 
 <?= $this->section('script') ?>
@@ -277,11 +278,44 @@
     $('#dataServis3').DataTable();
     $('#dataServis4').DataTable();
 
-    // $("#nama_pelanggan").autocomplete({
-    //   source: ["PHP", "Python", "Ruby", "JavaScript", "MySQL", "Oracle"]
-    // });
   });
 </script>
 
+<script>
+  $(document).ready(function() {
+    $("#nama_pelanggan").autocomplete({
+      minLength: 3,
+      source: function(request, response) {
+        $.ajax({
+          url: "<?= base_url() . '/api/autocomplete_servis' ?>",
+          type: "POST",
+          dataType: "json",
+          data: {
+            q: request.term,
+            limit: 10
+          },
+          success: function(data) {
+            console.log(data);
+            response($.map(data, function(item) {
+              // console.log(item);
+              return {
+                label: item.nama_pelanggan,
+                value: item.alamat_pelanggan
+
+              };
+            }));
+          }
+        });
+      },
+      select: function(event, ui) {
+        event.preventDefault();
+        console.log(ui);
+        $('#nama_pelanggan').val(ui.item.label);
+        $('#alamat_pelanggan').val(ui.item.value);
+      },
+      appendTo: $('.modal-body')
+    });
+  });
+</script>
 
 <?= $this->endSection() ?>

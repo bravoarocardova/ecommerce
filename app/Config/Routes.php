@@ -38,6 +38,7 @@ $routes->group('rajaongkir', function ($routes) {
 
 $routes->group('api', ['namespace' => 'App\Controllers\Api'], function ($routes) {
     $routes->get('getJumlahPesanan', 'ApiPelanggan::getCountPesanan');
+    $routes->post('autocomplete_servis', 'ApiAdmin::autocomplete_servis');
 });
 
 // routes group pelanggan
