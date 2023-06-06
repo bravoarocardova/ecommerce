@@ -3,6 +3,7 @@
 namespace App\Controllers\Pelanggan;
 
 use App\Controllers\BaseController;
+use App\Libraries\RajaOngkir;
 use App\Models\BarangServisM;
 use App\Models\DataServisM;
 use App\Models\HomepageModel;
@@ -90,6 +91,9 @@ class Home extends BaseController
 
   public function profile()
   {
+    $rajaOngkir = new RajaOngkir();
+    $provinsi = $rajaOngkir->rajaongkir('province');
+
     $id = session()->get('pelanggan')['id_pelanggan'];
     $profile = $this->pelangganM->find($id);
 
@@ -100,7 +104,8 @@ class Home extends BaseController
     return view(
       'pelanggan/profile_view',
       [
-        'profile' => $profile
+        'profile' => $profile,
+        'provinsi' => json_decode($provinsi)->rajaongkir->results,
       ]
     );
   }
@@ -211,6 +216,62 @@ class Home extends BaseController
             ];
             session()->set($newSession);
           }
+        }
+        break;
+      case 'alamat':
+        $ruleAlamat = [
+          'provinsi' => [
+            'label' => 'Provinsi',
+            'rules' => 'required|min_length[1]|max_length[5]',
+            'errors' => [
+              'required' => '{field} Harus diisi',
+              'min_length' => '{field} Minimal 1 Karakter',
+              'max_length' => '{field} Maksimal 5 Karakter',
+            ],
+          ],
+          'kabkot' => [
+            'label' => 'Kab/Kota',
+            'rules' => 'required|min_length[1]|max_length[5]',
+            'errors' => [
+              'required' => '{field} Harus diisi',
+              'min_length' => '{field} Minimal 1 Karakter',
+              'max_length' => '{field} Maksimal 5 Karakter',
+            ],
+          ],
+          'alamat_pelanggan' => [
+            'label' => 'Alamat Pelanggan',
+            'rules' => 'required|min_length[4]|max_length[100]',
+            'errors' => [
+              'required' => '{field} Harus diisi',
+              'min_length' => '{field} Minimal 4 Karakter',
+              'max_length' => '{field} Maksimal 100 Karakter',
+            ],
+          ],
+          'alamat_lengkap2' => [
+            'label' => 'Alamat Lengkap',
+            'rules' => 'required|min_length[4]|max_length[100]',
+            'errors' => [
+              'required' => '{field} Harus diisi',
+              'min_length' => '{field} Minimal 4 Karakter',
+              'max_length' => '{field} Maksimal 100 Karakter',
+            ],
+          ],
+        ];
+
+        if (!$this->validate($ruleAlamat)) {
+          $type = 'danger';
+          $msg = 'Gagal update alamat!.';
+        } else {
+
+          $data = [
+            'id_pelanggan' => session()->get('pelanggan')['id_pelanggan'],
+            'id_province' => $post['provinsi'],
+            'id_city' => $post['kabkot'],
+            'alamat_pelanggan' => $post['alamat_lengkap2']
+          ];
+          $this->pelangganM->save($data);
+          $type = 'success';
+          $msg = 'Berhasil update alamat!.';
         }
         break;
       case 'password':

@@ -28,8 +28,6 @@
 
             Berat : <?php echo number_format($pembelian['total_berat']); ?> g<br>
 
-            Ongkir : Rp. <?php echo number_format($pembelian['ongkir']); ?><br>
-
             Status : <?= ($pembelian['status_pembelian'] == 'Belum Bayar') ? "<span class='text-danger'>Bayar Sebelum (<span class='text-success'>" . date("Y-m-d H:i:s", strtotime($pembelian['created_at']) + 60 * 60) . "</span>)</span>" : $pembelian['status_pembelian'] ?> <br>
 
             No Resi : <?php echo $pembelian['no_resi']; ?><br>

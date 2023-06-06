@@ -126,6 +126,46 @@
 
                     <div class="row">
                       <div class="col-md-6 col-12">
+                        <div class="mb-3">
+                          <label for="provinsi" class="form-label">Provinsi</label>
+                          <select required class="form-select  <?= validation_show_error('provinsi') ? 'is-invalid' : '' ?>" id="provinsi" name="provinsi">
+                            <option value="">Pilih Provinsi</option>
+                            <?php foreach ($provinsi as $p) : ?>
+                              <option value="<?= $p->province_id ?>"><?= $p->province ?></option>
+                            <?php endforeach ?>
+                          </select>
+                          <div class="invalid-feedback">
+                            <?= validation_show_error('provinsi') ?>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="mb-3">
+                          <label for="kabkot" class="form-label">Kabupaten/Kota</label>
+                          <select required class="form-select  <?= validation_show_error('kabkot') ? 'is-invalid' : '' ?>" id="kabkot" name="kabkot">
+                            <option value="">Pilih Kabupaten/Kota</option>
+
+                          </select>
+                          <div class="invalid-feedback">
+                            <?= validation_show_error('kabkot') ?>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="mb-3">
+                        <label for="alamat_pelanggan" class="form-label">Alamat Pelanggan</label>
+                        <input type="hidden" name="alamat_lengkap" id="alamat_lengkap" value="<?= old('alamat_lengkap') ?>">
+                        <textarea required name="alamat_pelanggan" class="form-control <?= validation_show_error('alamat_pelanggan') ? 'is-invalid' : '' ?>" id="alamat_pelanggan" cols="30" rows="2"><?= old('alamat_pelanggan') ?></textarea>
+                        <div class="invalid-feedback">
+                          <?= validation_show_error('alamat_pelanggan') ?>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6 col-12">
                         <label>Password</label>
                         <div class="mb-3">
                           <input required type="password" name="password" class="form-control  <?= validation_show_error('password') ? 'is-invalid' : '' ?>" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
@@ -168,6 +208,51 @@
   </main>
 
   <?= $this->include('pelanggan/layout/_partials/js'); ?>
+  <script>
+    $('document').ready(function() {
+      let ongkir = 0;
+
+      $('#provinsi').on('change', function() {
+        $('#kabkot').empty();
+        $('#service').empty();
+        const province_id = $(this).val();
+        $.ajax({
+          url: "<?= base_url() . '/rajaongkir/getCity' ?>",
+          type: "GET",
+          data: {
+            'province_id': province_id
+          },
+          dataType: 'json',
+          success: function(data) {
+            const result = data['rajaongkir']['results'];
+            $('#kabkot').append($('<option>', {
+              text: "Pilih Kabupaten/Kota"
+            }));
+            $('#service').append($('<option>', {
+              text: "Pilih Service"
+            }));
+            for (const res of result) {
+              $('#kabkot').append($('<option>', {
+                value: res.city_id,
+                text: res.city_name
+              }));
+            }
+          }
+        })
+      });
+
+
+      $('#alamat_pelanggan').on('change', function() {
+        var provinsi = $('#provinsi option:selected').text();
+        var kabkot = $('#kabkot option:selected').text();
+        var alamat = $(this).val();
+        $("[type=submit]").prop('disabled', false);
+        var alamat_pelanggan = `${alamat}, ${kabkot}, Provinsi ${provinsi}`;
+        $('#alamat_lengkap').val(alamat_pelanggan);
+      });
+
+    });
+  </script>
 </body>
 
 </html>

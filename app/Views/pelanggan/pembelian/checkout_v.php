@@ -123,7 +123,7 @@
           <div class="card-body">
             <form action="" method="post">
               <div class="row">
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                   <label for="provinsi" class="form-label">Provinsi</label>
                   <select class="form-select  <?= validation_show_error('provinsi') ? 'is-invalid' : '' ?>" id="provinsi" name="provinsi">
                     <option value="">Pilih Provinsi</option>
@@ -144,6 +144,18 @@
                   <div class="invalid-feedback">
                     <?= validation_show_error('kabkot') ?>
                   </div>
+                </div> -->
+                <div class="mb-3">
+                  <label for="kurir" class="form-label">Kurir</label>
+                  <select class="form-select  <?= validation_show_error('kurir') ? 'is-invalid' : '' ?>" id="kurir" name="kurir">
+                    <option value="">Pilih Kurir</option>
+                    <option value="jne">JNE</option>
+                    <option value="pos">POS</option>
+                    <option value="tiki">TIKI</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    <?= validation_show_error('kurir') ?>
+                  </div>
                 </div>
                 <div class="mb-3">
                   <label for="ongkir" class="form-label">Service</label>
@@ -162,7 +174,7 @@
                 </div>
                 <div class="mb-3">
                   <label class="form-label" for="alamat_lengkap">Alamat Lengkap</label>
-                  <textarea disabled class="form-control <?= validation_show_error('alamat_lengkap') ? 'is-invalid' : '' ?>" name="alamat_lengkap" id="alamat_lengkap" cols="30" rows="2"><?= old('alamat_lengkap', '') ?></textarea>
+                  <textarea disabled class="form-control <?= validation_show_error('alamat_lengkap') ? 'is-invalid' : '' ?>" id="alamat_lengkap" cols="30" rows="2"><?= $pelanggan['alamat_pelanggan'] ?></textarea>
                   <div class="invalid-feedback">
                     <?= validation_show_error('alamat_lengkap') ?>
                   </div>
@@ -178,7 +190,7 @@
                   </div>
                 </div>
               </div>
-              <input type="hidden" name="tujuan" id="tujuan">
+              <input type="hidden" name="tujuan" id="tujuan" value="<?= $pelanggan['alamat_pelanggan'] ?>">
               <input type="hidden" name="ekspedisi" id="ekspedisi">
               <div class="row">
                 <div class="d-flex justify-content-evenly">
@@ -202,52 +214,21 @@
   $('document').ready(function() {
     let ongkir = 0;
 
-    $('#provinsi').on('change', function() {
-      $('#kabkot').empty();
-      $('#service').empty();
-      const province_id = $(this).val();
-      $.ajax({
-        url: "<?= base_url() . '/rajaongkir/getCity' ?>",
-        type: "GET",
-        data: {
-          'province_id': province_id
-        },
-        dataType: 'json',
-        success: function(data) {
-          const result = data['rajaongkir']['results'];
-          $('#kabkot').append($('<option>', {
-            text: "Pilih Kabupaten/Kota"
-          }));
-          $('#service').append($('<option>', {
-            text: "Pilih Service"
-          }));
-          for (const res of result) {
-            $('#kabkot').append($('<option>', {
-              value: res.city_id,
-              text: res.city_name
-            }));
-          }
-        }
-      })
-    });
 
-    $('#kabkot').on('change', function() {
-      const city_id = $(this).val();
+    $('#kurir').on('change', function() {
+      const kurir = $(this).val();
       $('#service').empty();
-      $('#alamat_lengkap').val('');
-      $("#alamat_lengkap").prop('disabled', true);
       $.ajax({
         url: "<?= base_url() . '/rajaongkir/getCost' ?>",
         type: "GET",
         data: {
           'origin': <?= App\Libraries\RajaOngkir::$origin ?>,
-          'destination': city_id,
+          'destination': <?= $pelanggan['id_city'] ?>,
           'weight': <?= $total_berat ?>,
-          'courier': 'jne'
+          'courier': kurir
         },
         dataType: 'json',
         success: function(data) {
-          $("#alamat_lengkap").prop('disabled', false);
           const result = data['rajaongkir']['results'][0]['costs'];
           $('#service').append($('<option>', {
             text: "Pilih Service"
@@ -271,16 +252,7 @@
       const total_pembayaran = <?= $total ?> + ongkir;
       $('#total_pembayaran').html(numberWithCommas(total_pembayaran));
       $('#ekspedisi').val($('option:selected', this).text());
-    });
-
-    $('#alamat_lengkap').on('change', function() {
-      var provinsi = $('#provinsi option:selected').text();
-      var kabkot = $('#kabkot option:selected').text();
-      var alamat = $(this).val();
       $("[type=submit]").prop('disabled', false);
-      console.log(provinsi + kabkot + alamat);
-      var alamat_lengkap = `${alamat}, ${kabkot}, ${provinsi}`;
-      $('#tujuan').val(alamat_lengkap);
     });
 
   });

@@ -13,7 +13,7 @@ class PelangganM extends Model
 
   protected $returnType     = 'array';
 
-  protected $allowedFields = ['username_pelanggan', 'nama_pelanggan', 'email_pelanggan', 'telepon_pelanggan', 'password', 'foto_pelanggan', 'is_active'];
+  protected $allowedFields = ['username_pelanggan', 'nama_pelanggan', 'email_pelanggan', 'telepon_pelanggan', 'password', 'foto_pelanggan', 'id_province', 'id_city', 'alamat_pelanggan', 'is_active'];
 
   // Dates
   protected $useTimestamps = true;

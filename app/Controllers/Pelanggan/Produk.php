@@ -5,6 +5,7 @@ namespace App\Controllers\Pelanggan;
 use App\Controllers\BaseController;
 use App\Libraries\RajaOngkir;
 use App\Models\HomepageModel;
+use App\Models\PelangganM;
 use App\Models\PembelianM;
 use App\Models\PembelianProdukM;
 use App\Models\ProdukM;
@@ -124,6 +125,9 @@ class Produk extends BaseController
     $rajaOngkir = new RajaOngkir();
     $provinsi = $rajaOngkir->rajaongkir('province');
 
+    $pelangganM = new PelangganM();
+    $myProfil = $pelangganM->find(session()->get('pelanggan')['id_pelanggan']);
+
     $cart = \Config\Services::cart();
 
     $cart_pr = [];
@@ -138,6 +142,7 @@ class Produk extends BaseController
         'cart' => $cart_pr,
         'produk_lain' => $this->produkM->orderBy('nama_produk', 'RANDOM')->findAll(8),
         'provinsi' => json_decode($provinsi)->rajaongkir->results,
+        'pelanggan' => $myProfil
       ]
     );
   }

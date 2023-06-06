@@ -19,12 +19,12 @@
           <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#account" role="tab" aria-selected="true">
             Account
           </a>
+          <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#alamat" role="tab" aria-selected="false" tabindex="-1">
+            Alamat
+          </a>
           <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#password" role="tab" aria-selected="false" tabindex="-1">
             Password
           </a>
-          <!-- <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#" role="tab" aria-selected="false" tabindex="-1">
-            Delete account
-          </a> -->
         </div>
       </div>
     </div>
@@ -108,6 +108,61 @@
           </div>
 
         </div>
+
+        <div class="tab-pane fade" id="alamat" role="tabpanel">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Alamat</h5>
+              <div class="mb-3">
+                <label class="form-label" for="alamat_lengkap">Alamat Sekarang</label>
+                <textarea disabled class="form-control" id="alamat_lengkap" cols="30" rows="2"><?= $profile['alamat_pelanggan'] ?></textarea>
+
+              </div>
+              <hr>
+              <h5>Ubah Alamat</h5>
+              <form action="" method="POST">
+                <?= csrf_field() ?>
+                <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="edit" value="alamat">
+
+                <div class="row">
+                  <div class="mb-3">
+                    <label for="provinsi" class="form-label">Provinsi</label>
+                    <select required class="form-select  <?= validation_show_error('provinsi') ? 'is-invalid' : '' ?>" id="provinsi" name="provinsi">
+                      <option value="">Pilih Provinsi</option>
+                      <?php foreach ($provinsi as $p) : ?>
+                        <option value="<?= $p->province_id ?>"><?= $p->province ?></option>
+                      <?php endforeach ?>
+                    </select>
+                    <div class="invalid-feedback">
+                      <?= validation_show_error('provinsi') ?>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="kabkot" class="form-label">Kabupaten/Kota</label>
+                    <select required class="form-select  <?= validation_show_error('kabkot') ? 'is-invalid' : '' ?>" id="kabkot" name="kabkot">
+                      <option value="">Pilih Kabupaten/Kota</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      <?= validation_show_error('kabkot') ?>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="alamat_pelanggan" class="form-label">Alamat</label>
+                    <input type="hidden" name="alamat_lengkap2" id="alamat_lengkap2" value="<?= old('alamat_lengkap2') ?>">
+                    <textarea required name="alamat_pelanggan" class="form-control <?= validation_show_error('alamat_pelanggan') ? 'is-invalid' : '' ?>" id="alamat_pelanggan" cols="30" rows="2"><?= old('alamat_pelanggan') ?></textarea>
+                    <div class="invalid-feedback">
+                      <?= validation_show_error('alamat_pelanggan') ?>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </form>
+
+            </div>
+          </div>
+        </div>
+
         <div class="tab-pane fade" id="password" role="tabpanel">
           <div class="card">
             <div class="card-body">
@@ -156,5 +211,54 @@
   </div>
 </div>
 
+
+<?= $this->endSection() ?>
+
+<?= $this->section('script') ?>
+
+<script>
+  $('document').ready(function() {
+    let ongkir = 0;
+
+    $('#provinsi').on('change', function() {
+      $('#kabkot').empty();
+      $('#service').empty();
+      const province_id = $(this).val();
+      $.ajax({
+        url: "<?= base_url() . '/rajaongkir/getCity' ?>",
+        type: "GET",
+        data: {
+          'province_id': province_id
+        },
+        dataType: 'json',
+        success: function(data) {
+          const result = data['rajaongkir']['results'];
+          $('#kabkot').append($('<option>', {
+            text: "Pilih Kabupaten/Kota"
+          }));
+          $('#service').append($('<option>', {
+            text: "Pilih Service"
+          }));
+          for (const res of result) {
+            $('#kabkot').append($('<option>', {
+              value: res.city_id,
+              text: res.city_name
+            }));
+          }
+        }
+      })
+    });
+
+
+    $('#alamat_pelanggan').on('change', function() {
+      var provinsi = $('#provinsi option:selected').text();
+      var kabkot = $('#kabkot option:selected').text();
+      var alamat = $(this).val();
+      var alamat_pelanggan = `${alamat}, ${kabkot}, Provinsi ${provinsi}`;
+      $('#alamat_lengkap2').val(alamat_pelanggan);
+    });
+
+  });
+</script>
 
 <?= $this->endSection() ?>

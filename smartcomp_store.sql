@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 27 Bulan Mei 2023 pada 14.06
+-- Waktu pembuatan: 06 Jun 2023 pada 22.36
 -- Versi server: 8.0.32-0ubuntu0.22.04.2
 -- Versi PHP: 8.1.2-1ubuntu2.11
 
@@ -66,17 +66,6 @@ CREATE TABLE `barang_servis` (
   `updated_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data untuk tabel `barang_servis`
---
-
-INSERT INTO `barang_servis` (`kd_barang_servis`, `no_transaksi`, `nama_barang_servis`, `kelengkapan`, `kerusakan`, `created_at`, `updated_at`) VALUES
-('KBS00000003', 'TSV00000002', 'Barang 12', '1234', '1234', '2023-02-23 15:20:58', '2023-02-23 15:20:58'),
-('KBS00000004', 'TSV00000003', 'Barang 1', 'casan, tas, laptop', 'tidak bisa hidup', '2023-02-24 15:14:09', '2023-02-24 15:14:09'),
-('KBS00000005', 'TSV00000006', 'Barang 1', 'casan, laptop', 'tidak bisa hidup', '2023-03-10 09:49:54', '2023-03-10 09:49:54'),
-('KBS00000007', 'TSV00000007', 'dgfsd', 'gvsd', 'dgvs', '2023-04-07 08:42:39', '2023-04-07 08:42:39'),
-('KBS00000008', 'TSV00000008', 'Barang 12', 'casan, tas, laptop', 'tidak bisa hidup', '2023-05-21 10:22:34', '2023-05-21 10:22:34');
-
 -- --------------------------------------------------------
 
 --
@@ -95,18 +84,6 @@ CREATE TABLE `data_servis` (
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `data_servis`
---
-
-INSERT INTO `data_servis` (`no_transaksi`, `nama_pelanggan`, `alamat_pelanggan`, `no_telp_pelanggan`, `status`, `teknisi`, `total_biaya`, `estimasi_servis`, `created_at`, `updated_at`) VALUES
-('TSV00000002', 'fros Gaming', 'ferw', '6282376434754', 'selesai', 1, 12000, '', '2023-02-23 15:19:41', '2023-02-26 13:19:24'),
-('TSV00000003', 'fros Gaming', 'iooijo', '6282376434754', 'dibatalkan', 1, 0, '', '2023-02-24 15:13:23', '2023-02-26 13:19:52'),
-('TSV00000006', 'fsda', 'asdfasdfads', '6282376434754', 'selesai', 1, 2147483647, '3 Hari', '2023-03-10 09:49:34', '2023-03-10 09:54:22'),
-('TSV00000007', 'fros Gaming', 'jl.ljj\r\n', '6282376434754', 'selesai', 1, 10000, '', '2023-04-07 08:42:05', '2023-04-07 08:45:55'),
-('TSV00000008', 'fros Gaming', 'adfada', '6282376434754', 'selesai', 1, 556973, '3 hari', '2023-05-21 10:20:26', '2023-05-21 15:32:09'),
-('TSV00000009', 'sdfafsd', 'fdas', '6233242342', NULL, NULL, 0, '3 hari', '2023-05-21 13:51:22', '2023-05-21 13:51:22');
 
 -- --------------------------------------------------------
 
@@ -128,8 +105,8 @@ CREATE TABLE `jasa_servis` (
 --
 
 INSERT INTO `jasa_servis` (`id_jasa_servis`, `nama_jasa`, `biaya_jasa`, `kategori`, `created_at`, `updated_at`) VALUES
-(1, 'Jasa 1', 10000, 'Laptop', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(8, 'Install ulang', 214740, 'Laptop', '2023-03-10 09:49:01', '2023-05-21 15:21:36');
+(1, 'Ganti Hardisk', 50000, 'Laptop', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(8, 'Install ulang', 150000, 'Laptop', '2023-03-10 09:49:01', '2023-05-21 15:21:36');
 
 -- --------------------------------------------------------
 
@@ -151,9 +128,9 @@ CREATE TABLE `part_produk` (
 --
 
 INSERT INTO `part_produk` (`id_part_produk`, `nama_part`, `biaya_part`, `kategori`, `created_at`, `updated_at`) VALUES
-(1, 'Jasa 1', 10000, 'Laptop', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(8, 'Install ulang', 214742, 'Laptop', '2023-03-10 09:49:01', '2023-05-21 15:21:44'),
-(9, 'Ram 4gb 2300mhz', 342233, 'Laptop', '2023-05-21 13:44:15', '2023-05-21 15:21:53');
+(1, 'LCD Acer', 1000000, 'Laptop', '0000-00-00 00:00:00', '2023-06-06 15:35:51'),
+(8, 'Harddisk 320 gb', 300000, 'Laptop', '2023-03-10 09:49:01', '2023-05-21 15:21:44'),
+(9, 'Ram 4gb 2300mhz', 350000, 'Laptop', '2023-05-21 13:44:15', '2023-05-21 15:21:53');
 
 -- --------------------------------------------------------
 
@@ -169,17 +146,6 @@ CREATE TABLE `part_servis` (
   `updated_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data untuk tabel `part_servis`
---
-
-INSERT INTO `part_servis` (`kd_barang_servis`, `id_part_produk`, `biaya_part_servis`, `created_at`, `updated_at`) VALUES
-('KBS00000005', 8, 2147483647, '2023-03-10 09:51:04', '2023-03-10 09:51:04'),
-('KBS00000005', 1, 10000, '2023-03-10 09:51:11', '2023-03-10 09:51:11'),
-('KBS00000007', 1, 10000, '2023-04-07 08:43:58', '2023-04-07 08:43:58'),
-('KBS00000006', 8, 2147483647, '2023-04-07 08:47:36', '2023-04-07 08:47:36'),
-('KBS00000008', 9, 342233, '2023-05-21 15:10:44', '2023-05-21 15:10:44');
-
 -- --------------------------------------------------------
 
 --
@@ -194,6 +160,9 @@ CREATE TABLE `pelanggan` (
   `nama_pelanggan` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `telepon_pelanggan` varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `foto_pelanggan` varchar(100) NOT NULL,
+  `id_province` int NOT NULL,
+  `id_city` int NOT NULL,
+  `alamat_pelanggan` text NOT NULL,
   `is_active` enum('0','1') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
@@ -203,9 +172,9 @@ CREATE TABLE `pelanggan` (
 -- Dumping data untuk tabel `pelanggan`
 --
 
-INSERT INTO `pelanggan` (`id_pelanggan`, `username_pelanggan`, `email_pelanggan`, `password`, `nama_pelanggan`, `telepon_pelanggan`, `foto_pelanggan`, `is_active`, `created_at`, `updated_at`) VALUES
-(5, 'fros', 'fros@gmail.com', '$2y$10$21l.ie1oGl4QXh9ov1Am1OWQCFNXjG4ZmItFUiWPw4s/nyzt0w2Ka', 'fros Gaming', '08909093', '1679929742_a07244d3c68a666b327b.png', '1', '2022-11-14 14:09:20', '2023-03-27 15:09:02'),
-(9, 'arnio', 'arnio@gmail.com', '$2y$10$7/F1.JfpZ/BEfxxL6ma3GuX7QuFxYFl4RHxTvIiQer/dow1O/Fn3G', 'arnio', '082349844', 'default.jpg', '1', '2022-12-02 12:37:23', '2023-03-27 14:46:46');
+INSERT INTO `pelanggan` (`id_pelanggan`, `username_pelanggan`, `email_pelanggan`, `password`, `nama_pelanggan`, `telepon_pelanggan`, `foto_pelanggan`, `id_province`, `id_city`, `alamat_pelanggan`, `is_active`, `created_at`, `updated_at`) VALUES
+(5, 'fros', 'fros@gmail.com', '$2y$10$21l.ie1oGl4QXh9ov1Am1OWQCFNXjG4ZmItFUiWPw4s/nyzt0w2Ka', 'fros Gaming', '08909093', '1679929742_a07244d3c68a666b327b.png', 8, 156, 'simpang rimbo, Jambi, Provinsi Jambi', '1', '2022-11-14 14:09:20', '2023-06-06 15:29:40'),
+(9, 'arnio', 'arnio@gmail.com', '$2y$10$7/F1.JfpZ/BEfxxL6ma3GuX7QuFxYFl4RHxTvIiQer/dow1O/Fn3G', 'arnio', '082349844', 'default.jpg', 8, 156, 'sdafasdf, Jambi, Jambi', '1', '2022-12-02 12:37:23', '2023-03-27 14:46:46');
 
 -- --------------------------------------------------------
 
@@ -224,13 +193,6 @@ CREATE TABLE `pemasok` (
   `updated_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data untuk tabel `pemasok`
---
-
-INSERT INTO `pemasok` (`id_pemasok`, `nama_pemasok`, `harga_beli`, `jumlah_beli`, `id_produk`, `total`, `created_at`, `updated_at`) VALUES
-(4, 'pemasok', 34324234, 23, 114, 789457382, '2023-05-27 02:38:26', '2023-05-27 02:38:26');
-
 -- --------------------------------------------------------
 
 --
@@ -247,14 +209,6 @@ CREATE TABLE `pembayaran` (
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `pembayaran`
---
-
-INSERT INTO `pembayaran` (`id_pembayaran`, `id_pembelian`, `nama`, `bank`, `jumlah`, `bukti`, `created_at`, `updated_at`) VALUES
-(1, 'PBR00000003', 'Nama Admin 2', 'bri', 11111, '1683038169_ac6adf5b18b6eada4ff3.jpeg', '2023-05-02 14:36:09', '2023-05-02 14:36:09'),
-(2, 'PBR00000006', 'Nama Admin 2', 'bri', 28510000, '1685169666_73a2600e917995e255ad.jpg', '2023-05-27 06:41:06', '2023-05-27 06:41:06');
 
 -- --------------------------------------------------------
 
@@ -277,18 +231,6 @@ CREATE TABLE `pembelian` (
   `updated_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data untuk tabel `pembelian`
---
-
-INSERT INTO `pembelian` (`id_pembelian`, `id_pelanggan`, `tujuan`, `ekspedisi`, `total_berat`, `ongkir`, `total_pembelian`, `status_pembelian`, `no_resi`, `id_admin`, `created_at`, `updated_at`) VALUES
-('PBR00000001', 5, 'kljoiajiof asf as, Jambi, Jambi', 'JNE City Courier (CTC)', 2, 10000, 4642, 'Dibatalkan', '', NULL, '2023-04-26 14:15:31', '2023-04-29 02:20:29'),
-('PBR00000002', 5, 'alamat lengkap, Jambi, Jambi', 'JNE City Courier (CTC)', 2, 10000, 6864, 'Dibatalkan', '', NULL, '2023-04-26 14:51:57', '2023-04-29 02:20:29'),
-('PBR00000003', 5, 'alamat lengkap ku, Jambi, Jambi', 'JNE City Courier (CTC)', 2, 10000, 1111, 'Selesai', 'sdaf', NULL, '2023-04-26 15:19:19', '2023-05-07 13:34:27'),
-('PBR00000004', 5, 'alamat lengkap saya sendiri, Jambi, Jambi', 'JNE City Courier (CTC)', 2, 10000, 1500000, 'Dibatalkan', '', NULL, '2023-05-02 13:46:37', '2023-05-02 14:46:40'),
-('PBR00000005', 5, 'alamat, Jambi, Jambi', 'JNE City Courier (CTCYES)', 2, 14000, 1500000, 'Dibatalkan', '', NULL, '2023-05-20 13:57:43', '2023-05-20 14:58:19'),
-('PBR00000006', 5, 'sdafsdf, Jambi, Jambi', 'JNE City Courier (CTC)', 6, 10000, 28500000, 'Selesai', 'sdaf', 1, '2023-05-27 06:16:40', '2023-05-27 07:04:51');
-
 -- --------------------------------------------------------
 
 --
@@ -304,20 +246,6 @@ CREATE TABLE `pembelian_produk` (
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `pembelian_produk`
---
-
-INSERT INTO `pembelian_produk` (`id_pembelian_produk`, `id_pembelian`, `id_produk`, `jumlah`, `subtotal`, `created_at`, `updated_at`) VALUES
-(5, 'PBR00000001', 108, 1, 4642, '2023-04-26 14:15:31', '2023-04-29 01:31:40'),
-(7, 'PBR00000002', 109, 2, 2222, '2023-04-26 14:51:57', '2023-04-29 01:31:40'),
-(8, 'PBR00000002', 108, 2, 4642, '2023-04-26 14:51:57', '2023-04-29 01:31:40'),
-(9, 'PBR00000003', 109, 4, 1111, '2023-04-26 15:19:19', '2023-04-29 01:31:40'),
-(10, 'PBR00000004', 108, 1, 1500000, '2023-05-02 13:46:37', '2023-05-02 13:46:37'),
-(11, 'PBR00000005', 108, 1, 1500000, '2023-05-20 13:57:43', '2023-05-20 13:57:43'),
-(12, 'PBR00000006', 109, 2, 27000000, '2023-05-27 06:16:40', '2023-05-27 06:16:40'),
-(13, 'PBR00000006', 108, 1, 1500000, '2023-05-27 06:16:40', '2023-05-27 06:16:40');
 
 --
 -- Trigger `pembelian_produk`
@@ -361,7 +289,7 @@ CREATE TABLE `produk` (
 INSERT INTO `produk` (`id_produk`, `nama_produk`, `harga_produk`, `foto_produk`, `kondisi_produk`, `deskripsi_produk`, `stok_produk`, `berat_produk`, `garansi`, `diskon`, `created_at`, `updated_at`) VALUES
 (102, 'Laptop Asus', 175000, '1682693730_857b82b7d1cd887d2296.jpeg', 'Baru', '<p>Technical Specifications of Asus X441M Intel N4000 DDR4 4GB 1TB 14 Inch Windows 10\r\nProcessor Type\r\n1.10 GHz - 2.70 GHz, 4 MB\r\nProcessor Onboard\r\nIntel Pentium N4000\r\nStandard Memory\r\n4GB DDR4\r\nDisplay Size\r\n14 Inch\r\nAudio Type\r\nIntegrated\r\nSpeakers Type\r\nIntegrated\r\nHard Drive Type\r\nHDD 1TB\r\nKeyboard Type\r\nStandard Keyboard\r\nCard Reader Provided\r\nYes\r\nInterface Provided\r\n1 x COMBO audio jack\r\n1 x VGA port\r\n1 x Type C USB3.0 (USB3.1 GEN1)\r\n1 x Type A USB3.0 (USB3.1 GEN1)\r\n1 x USB 2.0 port(s)\r\n1 x RJ45 LAN Jack for LAN insert\r\n1 x HDMI\r\n1 x AC adapter plug\r\n1 x SD Card Slot\r\n3 bulan part, 1 tahun servis</p>', 5, 1, '1 Tahun Distributor', 0, '2023-03-15 08:07:23', '2023-05-27 02:27:55'),
 (107, 'Laptop Acer', 1500000, '1682693762_0747e89aa1d66d36195a.jpeg', 'Second', '<p id=\"isPasted\" style=\"line-height: 1;\">Technical Specifications of Asus X441M&nbsp;</p><p style=\"line-height: 1;\">Intel N4000&nbsp;</p><p style=\"line-height: 1;\">DDR4 4GB 1TB&nbsp;</p><p style=\"line-height: 1;\">14 Inch&nbsp;</p><p style=\"line-height: 1;\">Windows 10</p><p style=\"line-height: 1;\">Processor Type1.10 GHz - 2.70 GHz, 4 MB</p><p style=\"line-height: 1;\">Processor OnboardIntel Pentium N4000</p><p style=\"line-height: 1;\">Standard Memory4GB DDR4</p><p style=\"line-height: 1;\">Display Size14 Inch</p><p style=\"line-height: 1;\">Audio TypeIntegrated</p><p style=\"line-height: 1;\">Speakers TypeIntegrated</p><p style=\"line-height: 1;\">Hard Drive TypeHDD 1TB</p><p style=\"line-height: 1;\">Keyboard TypeStandard Keyboard</p><p style=\"line-height: 1;\">Card Reader ProvidedYesInterface Provided</p><p style=\"line-height: 1;\">1 x COMBO audio jack</p><p style=\"line-height: 1;\">1 x VGA port</p><p style=\"line-height: 1;\">1 x Type C USB3.0 (USB3.1 GEN1)</p><p style=\"line-height: 1;\">1 x Type A USB3.0 (USB3.1 GEN1)</p><p style=\"line-height: 1;\">1 x USB 2.0 port(s)</p><p style=\"line-height: 1;\">1 x RJ45 LAN Jack for LAN insert</p><p style=\"line-height: 1;\">1 x HDMI</p><p style=\"line-height: 1;\">1 x AC adapter plug</p><p style=\"line-height: 1;\">1 x SD Card Slot</p><p style=\"line-height: 1;\">3 bulan part, 1 tahun servis</p>', 4, 4, '1 Tahun Distributor', 0, '2023-03-14 14:54:41', '2023-05-27 03:04:08'),
-(108, 'Laptop Lenovo', 1500000, '1682693781_5e8d14265d0a08e94501.jpeg', 'Baru', '<p id=\"isPasted\" style=\"line-height: 1;\">Technical Specifications of Asus X441M&nbsp;</p><p style=\"line-height: 1;\">Intel N4000&nbsp;</p><p style=\"line-height: 1;\">DDR4 4GB 1TB&nbsp;</p><p style=\"line-height: 1;\">14 Inch&nbsp;</p><p style=\"line-height: 1;\">Windows 10</p><p style=\"line-height: 1;\">Processor Type1.10 GHz - 2.70 GHz, 4 MB</p><p style=\"line-height: 1;\">Processor OnboardIntel Pentium N4000</p><p style=\"line-height: 1;\">Standard Memory4GB DDR4</p><p style=\"line-height: 1;\">Display Size14 Inch</p><p style=\"line-height: 1;\">Audio TypeIntegrated</p><p style=\"line-height: 1;\">Speakers TypeIntegrated</p><p style=\"line-height: 1;\">Hard Drive TypeHDD 1TB</p><p style=\"line-height: 1;\">Keyboard TypeStandard Keyboard</p><p style=\"line-height: 1;\">Card Reader ProvidedYesInterface Provided</p><p style=\"line-height: 1;\">1 x COMBO audio jack</p><p style=\"line-height: 1;\">1 x VGA port</p><p style=\"line-height: 1;\">1 x Type C USB3.0 (USB3.1 GEN1)</p><p style=\"line-height: 1;\">1 x Type A USB3.0 (USB3.1 GEN1)</p><p style=\"line-height: 1;\">1 x USB 2.0 port(s)</p><p style=\"line-height: 1;\">1 x RJ45 LAN Jack for LAN insert</p><p style=\"line-height: 1;\">1 x HDMI</p><p style=\"line-height: 1;\">1 x AC adapter plug</p><p style=\"line-height: 1;\">1 x SD Card Slot</p><p style=\"line-height: 1;\">3 bulan part, 1 tahun servis</p>', 34, 2, '1 Tahun Distributor', 0, '2023-03-15 14:19:41', '2023-05-27 02:32:44'),
+(108, 'Laptop Lenovo', 1500000, '1682693781_5e8d14265d0a08e94501.jpeg', 'Baru', '<p id=\"isPasted\" style=\"line-height: 1;\">Technical Specifications of Asus X441M&nbsp;</p><p style=\"line-height: 1;\">Intel N4000&nbsp;</p><p style=\"line-height: 1;\">DDR4 4GB 1TB&nbsp;</p><p style=\"line-height: 1;\">14 Inch&nbsp;</p><p style=\"line-height: 1;\">Windows 10</p><p style=\"line-height: 1;\">Processor Type1.10 GHz - 2.70 GHz, 4 MB</p><p style=\"line-height: 1;\">Processor OnboardIntel Pentium N4000</p><p style=\"line-height: 1;\">Standard Memory4GB DDR4</p><p style=\"line-height: 1;\">Display Size14 Inch</p><p style=\"line-height: 1;\">Audio TypeIntegrated</p><p style=\"line-height: 1;\">Speakers TypeIntegrated</p><p style=\"line-height: 1;\">Hard Drive TypeHDD 1TB</p><p style=\"line-height: 1;\">Keyboard TypeStandard Keyboard</p><p style=\"line-height: 1;\">Card Reader ProvidedYesInterface Provided</p><p style=\"line-height: 1;\">1 x COMBO audio jack</p><p style=\"line-height: 1;\">1 x VGA port</p><p style=\"line-height: 1;\">1 x Type C USB3.0 (USB3.1 GEN1)</p><p style=\"line-height: 1;\">1 x Type A USB3.0 (USB3.1 GEN1)</p><p style=\"line-height: 1;\">1 x USB 2.0 port(s)</p><p style=\"line-height: 1;\">1 x RJ45 LAN Jack for LAN insert</p><p style=\"line-height: 1;\">1 x HDMI</p><p style=\"line-height: 1;\">1 x AC adapter plug</p><p style=\"line-height: 1;\">1 x SD Card Slot</p><p style=\"line-height: 1;\">3 bulan part, 1 tahun servis</p>', 33, 2, '1 Tahun Distributor', 0, '2023-03-15 14:19:41', '2023-05-27 02:32:44'),
 (109, 'Laptop Hp', 15000000, '1682693800_318cc361982ab3cc9de6.jpeg', 'Baru', '<p id=\"isPasted\" style=\"line-height: 1.15;\">Technical Specifications of Asus X441M&nbsp;</p><p style=\"line-height: 1.15;\">Intel N4000&nbsp;</p><p style=\"line-height: 1.15;\">DDR4 4GB 1TB&nbsp;</p><p style=\"line-height: 1.15;\">14 Inch&nbsp;</p><p style=\"line-height: 1.15;\">Windows 10</p><p style=\"line-height: 1.15;\">Processor Type1.10 GHz - 2.70 GHz, 4 MB</p><p style=\"line-height: 1.15;\">Processor OnboardIntel Pentium N4000</p><p style=\"line-height: 1.15;\">Standard Memory4GB DDR4</p><p style=\"line-height: 1.15;\">Display Size14 Inch</p><p style=\"line-height: 1.15;\">Audio TypeIntegrated</p><p style=\"line-height: 1.15;\">Speakers TypeIntegrated</p><p style=\"line-height: 1.15;\">Hard Drive TypeHDD 1TB</p><p style=\"line-height: 1.15;\">Keyboard TypeStandard Keyboard</p><p style=\"line-height: 1.15;\">Card Reader ProvidedYesInterface Provided</p><p style=\"line-height: 1.15;\">1 x COMBO audio jack</p><p style=\"line-height: 1.15;\">1 x VGA port</p><p style=\"line-height: 1.15;\">1 x Type C USB3.0 (USB3.1 GEN1)</p><p style=\"line-height: 1.15;\">1 x Type A USB3.0 (USB3.1 GEN1)</p><p style=\"line-height: 1.15;\">1 x USB 2.0 port(s)</p><p style=\"line-height: 1.15;\">1 x RJ45 LAN Jack for LAN insert</p><p style=\"line-height: 1.15;\">1 x HDMI</p><p style=\"line-height: 1.15;\">1 x AC adapter plug</p><p style=\"line-height: 1.15;\">1 x SD Card Slot</p><p style=\"line-height: 1.15;\">3 bulan part, 1 tahun servis</p>', 75, 2, '1 Tahun Distributor', 10, '2023-03-23 11:53:08', '2023-05-27 03:06:12'),
 (115, 'Laptop Asus', 2343, '1685156281_1bb8d0554838585b34ba.jpg', 'Second', '<p>eraweerwae</p>', 23, 2, '1 Tahun Distributor', 2, '2023-05-27 02:58:01', '2023-05-27 02:58:01');
 
@@ -386,9 +314,8 @@ CREATE TABLE `promosi` (
 
 INSERT INTO `promosi` (`id_promosi`, `gambar`, `text`, `tipe_promosi`, `created_at`, `updated_at`) VALUES
 (2, '', 'text', 'text', '2023-05-21 10:44:25', '2023-05-21 10:44:25'),
-(8, '1684668711_174c756c9691fa7e9868.jpeg', '', 'gambar', '2023-05-21 11:31:51', '2023-05-21 11:31:51'),
-(9, '1684668760_cddd07ba0283383fdbff.jpeg', '', 'gambar', '2023-05-21 11:32:40', '2023-05-21 11:32:40'),
-(10, '', 'sdaf', 'text', '2023-05-21 11:40:36', '2023-05-21 11:40:36');
+(10, '', 'sdaf', 'text', '2023-05-21 11:40:36', '2023-05-21 11:40:36'),
+(11, '1685268750_010eae4074e781c6aec6.jpg', '', 'gambar', '2023-05-28 10:12:30', '2023-05-28 10:12:30');
 
 -- --------------------------------------------------------
 
@@ -403,16 +330,6 @@ CREATE TABLE `servis` (
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `servis`
---
-
-INSERT INTO `servis` (`kd_barang_servis`, `id_jasa_servis`, `biaya_servis`, `created_at`, `updated_at`) VALUES
-('KBS00000005', 8, 2147483647, '2023-03-10 09:51:04', '2023-03-10 09:51:04'),
-('KBS00000005', 1, 10000, '2023-03-10 09:51:11', '2023-03-10 09:51:11'),
-('KBS00000007', 1, 10000, '2023-04-07 08:43:58', '2023-04-07 08:43:58'),
-('KBS00000008', 8, 214740, '2023-05-21 15:11:54', '2023-05-21 15:11:54');
 
 -- --------------------------------------------------------
 
@@ -562,7 +479,7 @@ ALTER TABLE `part_produk`
 -- AUTO_INCREMENT untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `id_pelanggan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_pelanggan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT untuk tabel `pemasok`
@@ -580,7 +497,7 @@ ALTER TABLE `pembayaran`
 -- AUTO_INCREMENT untuk tabel `pembelian_produk`
 --
 ALTER TABLE `pembelian_produk`
-  MODIFY `id_pembelian_produk` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_pembelian_produk` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT untuk tabel `produk`
@@ -592,7 +509,7 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT untuk tabel `promosi`
 --
 ALTER TABLE `promosi`
-  MODIFY `id_promosi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_promosi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

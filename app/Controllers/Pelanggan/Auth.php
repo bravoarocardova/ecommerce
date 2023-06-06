@@ -3,6 +3,7 @@
 namespace App\Controllers\Pelanggan;
 
 use App\Controllers\BaseController;
+use App\Libraries\RajaOngkir;
 use App\Models\PelangganM;
 
 class auth extends BaseController
@@ -22,7 +23,12 @@ class auth extends BaseController
 
   public function register()
   {
-    return view('pelanggan/auth/register');
+    $rajaOngkir = new RajaOngkir();
+    $provinsi = $rajaOngkir->rajaongkir('province');
+
+    return view('pelanggan/auth/register', [
+      'provinsi' => json_decode($provinsi)->rajaongkir->results,
+    ]);
   }
 
   public function proses_login()
@@ -98,6 +104,42 @@ class auth extends BaseController
           'numeric' => '{field} Harus angka',
         ],
       ],
+      'provinsi' => [
+        'label' => 'Provinsi',
+        'rules' => 'required|min_length[1]|max_length[5]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 1 Karakter',
+          'max_length' => '{field} Maksimal 5 Karakter',
+        ],
+      ],
+      'kabkot' => [
+        'label' => 'Kab/Kota',
+        'rules' => 'required|min_length[1]|max_length[5]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 1 Karakter',
+          'max_length' => '{field} Maksimal 5 Karakter',
+        ],
+      ],
+      'alamat_pelanggan' => [
+        'label' => 'Alamat Pelanggan',
+        'rules' => 'required|min_length[4]|max_length[100]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+        ],
+      ],
+      'alamat_lengkap' => [
+        'label' => 'Alamat Lengkap',
+        'rules' => 'required|min_length[4]|max_length[100]',
+        'errors' => [
+          'required' => '{field} Harus diisi',
+          'min_length' => '{field} Minimal 4 Karakter',
+          'max_length' => '{field} Maksimal 100 Karakter',
+        ],
+      ],
       'password' => [
         'label' => 'Password',
         'rules' => 'required|min_length[4]|max_length[100]',
@@ -128,9 +170,13 @@ class auth extends BaseController
         'password' => password_hash($post['password'], PASSWORD_DEFAULT),
         'nama_pelanggan' => $post['nama_pelanggan'],
         'telepon_pelanggan' => $post['telepon_pelanggan'],
-        'foto' => 'default.jpg',
-        'is_active' => 1,
+        'id_province' => $post['provinsi'],
+        'id_city' => $post['kabkot'],
+        'alamat_pelanggan' => $post['alamat_lengkap'],
+        'foto_pelanggan' => 'default.jpg',
+        'is_active' => '1',
       ];
+
       $this->pelangganM->save($data);
       return redirect()->to(base_url() . '/auth/login')->with('msg', myAlert('success', 'Registrasi Berhasil, Silahkan login.'));
     }
