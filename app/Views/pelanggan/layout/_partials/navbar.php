@@ -12,6 +12,7 @@
                                                 ?>">Galeri</a> -->
         <!-- <a class="nav-link fw-bold" href="<?= (strtolower('$this->uri->segment(1)' ?? "") == '') ? '#lokasi' : base_url('#lokasi') ?>">Lokasi</a> -->
         <a class="nav-link fw-bold <?= (strtolower($uri->getSegment(1) ?? "") == 'cekservis') ? 'active' : '' ?>" href="<?= base_url('cekservis') ?>">Cek Servis</a>
+        <a class="nav-link fw-bold <?= (strtolower($uri->getSegment(1) ?? "") == 'biaya_servis') ? 'active' : '' ?>" href="<?= base_url('biaya_servis') ?>">Biaya Servis</a>
 
       </div>
       <div class="mt-sm-0 mt-2 me-md-0 me-sm-4">

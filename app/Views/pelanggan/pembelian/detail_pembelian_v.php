@@ -80,7 +80,11 @@
                   </div>
                 </td>
                 <td>
-                  <p class="text-xs font-weight-bold mb-0"><?= $r['nama_produk'] ?></p>
+                  <p class="text-xs font-weight-bold mb-0">
+                    <a href="<?= base_url() . 'produk/' . $r['id_produk'] ?>">
+                      <?= $r['nama_produk'] ?>
+                    </a>
+                  </p>
                 </td>
                 <td>
                   <p class="text-xs font-weight-bold mb-0"><?= $r['kondisi_produk'] ?></p>

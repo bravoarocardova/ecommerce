@@ -7,6 +7,8 @@ use App\Libraries\RajaOngkir;
 use App\Models\BarangServisM;
 use App\Models\DataServisM;
 use App\Models\HomepageModel;
+use App\Models\JasaServisM;
+use App\Models\PartProdukM;
 use App\Models\PelangganM;
 use App\Models\PromosiM;
 use App\Models\ServisM;
@@ -24,6 +26,8 @@ class Home extends BaseController
   private $settingM;
   private $promosiM;
   private $partServisM;
+  private $partProdukM;
+  private $jasaServisM;
 
   public function __construct()
   {
@@ -35,6 +39,8 @@ class Home extends BaseController
     $this->settingM = new SettingM();
     $this->promosiM = new PromosiM();
     $this->partServisM = new PartServisM();
+    $this->jasaServisM  = new JasaServisM();
+    $this->partProdukM  = new PartProdukM();
   }
 
   public function index()
@@ -87,6 +93,17 @@ class Home extends BaseController
       'detail_servis' => $detail_servis,
       'barang_servis' => $barang,
     ]);
+  }
+
+  public function biaya_servis()
+  {
+    return view(
+      'pelanggan/biaya_servis',
+      [
+        'jasa_servis' => $this->jasaServisM->findAll(),
+        'part_produk' => $this->partProdukM->findAll()
+      ]
+    );
   }
 
   public function profile()

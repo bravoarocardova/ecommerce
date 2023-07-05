@@ -45,6 +45,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], function ($routes)
 $routes->group('/', ['namespace' => 'App\Controllers\Pelanggan'], function ($routes) {
     $routes->get('', 'Home');
     $routes->get('cekservis', 'Home::cekservis');
+    $routes->get('biaya_servis', 'Home::biaya_servis');
     $routes->add('pembelian/(:segment)', 'Pembelian::detail_pembelian/$1');
     $routes->get('pesanan', 'Pembelian::pembelian');
 
