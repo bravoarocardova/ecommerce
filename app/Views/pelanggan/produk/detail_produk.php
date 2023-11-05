@@ -90,6 +90,14 @@
             <p class="font-weight-bolder"><?= $produk['deskripsi_produk'] ?></p>
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-4 col-4">
+            <p>Warna</p>
+          </div>
+          <div class="col-md-8 col-8">
+            <p class="font-weight-bolder"><?= $produk['warna'] ?></p>
+          </div>
+        </div>
 
         <div class="row">
           <div class="col-6">

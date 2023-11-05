@@ -88,11 +88,19 @@ class Produk extends BaseController
         ],
         'deskripsi' => [
           'label' => 'Deskripsi',
-          'rules' => 'required|min_length[4]|max_length[5000]',
+          'rules' => 'required|min_length[4]',
           'errors' => [
             'required' => '{field} Harus diisi',
             'min_length' => '{field} Minimal 4 Karakter',
-            'max_length' => '{field} Maksimal 5000 Karakter',
+          ],
+        ],
+        'warna' => [
+          'label' => 'Warna',
+          'rules' => 'required|min_length[1]|max_length[100]',
+          'errors' => [
+            'required' => '{field} Harus diisi',
+            'min_length' => '{field} Minimal 1 Karakter',
+            'max_length' => '{field} Maksimal 100 Karakter',
           ],
         ],
         'foto_produk' => [
@@ -122,6 +130,7 @@ class Produk extends BaseController
           'garansi' => $post['garansi'],
           'deskripsi_produk' => $post['deskripsi'],
           'diskon' => $post['diskon'],
+          'warna' => $post['warna']
         ];
 
         if ($this->produkM->save($data)) {
@@ -208,11 +217,19 @@ class Produk extends BaseController
         ],
         'deskripsi' => [
           'label' => 'Deskripsi',
-          'rules' => 'required|min_length[4]|max_length[5000]',
+          'rules' => 'required|min_length[4]',
           'errors' => [
             'required' => '{field} Harus diisi',
             'min_length' => '{field} Minimal 4 Karakter',
-            'max_length' => '{field} Maksimal 5000 Karakter',
+          ],
+        ],
+        'warna' => [
+          'label' => 'Warna',
+          'rules' => 'required|min_length[1]|max_length[100]',
+          'errors' => [
+            'required' => '{field} Harus diisi',
+            'min_length' => '{field} Minimal 1 Karakter',
+            'max_length' => '{field} Maksimal 100 Karakter',
           ],
         ],
         'foto_produk' => [
@@ -242,6 +259,7 @@ class Produk extends BaseController
           'garansi' => $post['garansi'],
           'deskripsi_produk' => $post['deskripsi'],
           'diskon' => $post['diskon'],
+          'warna' => $post['warna']
         ];
 
         if ($foto->isValid()) {

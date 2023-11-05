@@ -36,7 +36,6 @@
                 <th>Berat (g)</th>
                 <th>Garansi</th>
                 <th>Diskon (%)</th>
-                <th>Deskripsi</th>
                 <th></th>
               </tr>
             </thead>
@@ -63,7 +62,6 @@
                   <td><?= $r['berat_produk'] ?></td>
                   <td><?= $r['garansi'] ?></td>
                   <td><?= $r['diskon'] ?></td>
-                  <td class="w-25"><?= substr($r['deskripsi_produk'], 0, 50) ?>....</td>
                   <td class="d-print-none">
                     <a href="<?= base_url() . '/admin/produk/' . $r['id_produk'] ?>" class="btn btn-warning" title="Edit">
                       <i class="align-middle" data-feather="edit-3"></i>

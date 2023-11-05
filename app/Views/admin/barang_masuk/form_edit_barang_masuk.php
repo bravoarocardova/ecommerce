@@ -126,6 +126,15 @@
                         </div>
                       </div>
                     </div>
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label class="form-label" for="warna">Warna</label>
+                        <input type="text" class="form-control <?= validation_show_error('warna') ? 'is-invalid' : '' ?>" id="warna" name="warna" placeholder="Warna" value="<?= old('warna', $produk['warna']) ?>" disabled>
+                        <div class="invalid-feedback">
+                          <?= validation_show_error('warna') ?>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div class="mb-3">
                     <label class="form-label" for="garansi">Garansi</label>

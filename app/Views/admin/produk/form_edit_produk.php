@@ -110,6 +110,13 @@
                         <?= validation_show_error('diskon') ?>
                       </div>
                     </div>
+                    <div class="mb-3">
+                      <label class="form-label" for="warna">Warna</label>
+                      <input type="text" class="form-control <?= validation_show_error('warna') ? 'is-invalid' : '' ?>" id="warna" name="warna" placeholder="Warna" value="<?= old('warna', $data_produk['warna']) ?>">
+                      <div class="invalid-feedback">
+                        <?= validation_show_error('warna') ?>
+                      </div>
+                    </div>
                   </div>
                   <div class="col-md-4">
                     <div class="text-center mb-3">

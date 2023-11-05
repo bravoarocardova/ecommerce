@@ -122,6 +122,15 @@ class BarangMasuk extends BaseController
             'max_length' => '{field} Maksimal 100 Karakter',
           ],
         ],
+        'warna' => [
+          'label' => 'Warna',
+          'rules' => 'required|min_length[1]|max_length[100]',
+          'errors' => [
+            'required' => '{field} Harus diisi',
+            'min_length' => '{field} Minimal 1 Karakter',
+            'max_length' => '{field} Maksimal 100 Karakter',
+          ],
+        ],
         'deskripsi' => [
           'label' => 'Deskripsi',
           'rules' => 'required|min_length[4]|max_length[5000]',
@@ -156,7 +165,8 @@ class BarangMasuk extends BaseController
           'foto_produk' => $newFoto,
           'berat_produk' => $post['berat'],
           'garansi' => $post['garansi'],
-          'deskripsi_produk' => $post['deskripsi']
+          'deskripsi_produk' => $post['deskripsi'],
+          'warna' => $post['warna']
         ];
 
         if ($this->produkM->save($data)) {
